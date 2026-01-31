@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { getAreas, getAreaDetails } from "./services/homeAssistant";
 import HouseView from "./components/HouseView";
 import DeviceModal from "./components/DeviceModal";
+import HistoryTab from "./components/HistoryTab";
 import "./App.css";
 
 export default function App() {
@@ -9,6 +10,7 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [error, setError] = useState(null);
+  const [activeTab, setActiveTab] = useState("home");
 
   useEffect(() => {
     loadAreas();
@@ -45,18 +47,36 @@ export default function App() {
     <div className="app">
       <header className="header">
         <h1>Home</h1>
+        <nav className="tabs">
+          <button
+            className={`tab ${activeTab === "home" ? "active" : ""}`}
+            onClick={() => setActiveTab("home")}
+          >
+            Floor Plan
+          </button>
+          <button
+            className={`tab ${activeTab === "history" ? "active" : ""}`}
+            onClick={() => setActiveTab("history")}
+          >
+            Activity
+          </button>
+        </nav>
       </header>
 
       <main className="main">
-        {loading ? (
-          <div className="loading">Loading rooms...</div>
-        ) : error ? (
-          <div className="error">
-            <p>{error}</p>
-            <button onClick={loadAreas}>Retry</button>
-          </div>
+        {activeTab === "home" ? (
+          loading ? (
+            <div className="loading">Loading rooms...</div>
+          ) : error ? (
+            <div className="error">
+              <p>{error}</p>
+              <button onClick={loadAreas}>Retry</button>
+            </div>
+          ) : (
+            <HouseView onRoomClick={handleRoomClick} areas={areas} />
+          )
         ) : (
-          <HouseView onRoomClick={handleRoomClick} areas={areas} />
+          <HistoryTab />
         )}
       </main>
 

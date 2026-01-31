@@ -1,0 +1,200 @@
+.history-tab {
+  padding: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.history-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.time-filter {
+  display: flex;
+  gap: 0.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.time-filter button {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.time-filter button:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.time-filter button.active {
+  background: rgba(74, 162, 245, 0.3);
+  color: #4aa2f5;
+}
+
+.entity-summary {
+  display: flex;
+  gap: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.event-group {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.event-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.event-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.event-item.selected {
+  background: rgba(74, 162, 245, 0.15);
+}
+
+.event-icon {
+  font-size: 1.25rem;
+  width: 2rem;
+  text-align: center;
+}
+
+.event-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.event-name {
+  color: #fff;
+  font-size: 0.95rem;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-message {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-time {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.automation-suggestions {
+  padding: 8px 12px 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.suggestions-header {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.suggestions-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.suggestion-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(74, 162, 245, 0.15);
+  border: 1px solid rgba(74, 162, 245, 0.3);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+}
+
+.suggestion-btn:hover {
+  background: rgba(74, 162, 245, 0.25);
+  border-color: rgba(74, 162, 245, 0.5);
+}
+
+.suggestion-icon {
+  font-size: 1.1rem;
+}
+
+.suggestion-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.suggestion-label {
+  color: #4aa2f5;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.suggestion-desc {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.7rem;
+}
+
+.loading,
+.error,
+.empty {
+  text-align: center;
+  padding: 3rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.error button {
+  margin-top: 1rem;
+  background: rgba(74, 162, 245, 0.2);
+  border: 1px solid rgba(74, 162, 245, 0.4);
+  color: #4aa2f5;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.error button:hover {
+  background: rgba(74, 162, 245, 0.3);
+}

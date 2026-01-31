@@ -105,3 +105,25 @@ export async function setClimateTemperature(entityId, temperature) {
     temperature,
   });
 }
+
+export async function getHistory(entityIds = [], hoursBack = 24) {
+  const endTime = new Date().toISOString();
+  const startTime = new Date(Date.now() - hoursBack * 60 * 60 * 1000).toISOString();
+
+  let path = `history/period/${startTime}?end_time=${encodeURIComponent(endTime)}&minimal_response`;
+  if (entityIds.length > 0) {
+    path += `&filter_entity_id=${entityIds.join(',')}`;
+  }
+
+  const response = await fetch(getApiUrl(path), { headers });
+  return response.json();
+}
+
+export async function getLogbook(hoursBack = 24) {
+  const endTime = new Date().toISOString();
+  const startTime = new Date(Date.now() - hoursBack * 60 * 60 * 1000).toISOString();
+
+  const path = `logbook/${startTime}?end_time=${encodeURIComponent(endTime)}`;
+  const response = await fetch(getApiUrl(path), { headers });
+  return response.json();
+}
