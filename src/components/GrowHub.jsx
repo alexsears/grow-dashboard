@@ -1,18 +1,9 @@
 import { useState, useEffect } from "react";
-import { getStates, toggleEntity, callService } from "../services/homeAssistant";
+import { getStates, toggleEntity, getEntityHistory } from "../services/homeAssistant";
 import "./GrowHub.css";
 
-// Zone configuration with specific entity IDs
+// Zone configuration
 const ZONES = [
-  {
-    id: "lab",
-    name: "Lab",
-    vpd: "sensor.lab_vpd",
-    temp: "sensor.lab_climate2_temperature",
-    humidity: "sensor.lab_climate2_humidity",
-    altTemp: "sensor.lab_lab_temperature",
-    altHumidity: "sensor.lab_lab_humidity",
-  },
   {
     id: "flower",
     name: "Flower",
@@ -21,6 +12,11 @@ const ZONES = [
     humidity: "sensor.avg_flower_humidity",
     altTemp: "sensor.flower_climate_1_temperature",
     altHumidity: "sensor.flower_climate_1_humidity",
+    water: [
+      { id: "switch.mister", name: "Mister" },
+      { id: "switch.lab_water_2", name: "Lab Water" },
+      { id: "switch.water_refill", name: "Refill" },
+    ],
   },
   {
     id: "mother",
@@ -30,6 +26,10 @@ const ZONES = [
     humidity: "sensor.moth_a_mother_humidity",
     altTemp: "sensor.garage2_mother_3_temperature",
     altHumidity: "sensor.garage2_mother_3_humidity",
+    water: [
+      { id: "switch.mother_water", name: "Water 1" },
+      { id: "switch.mother_water_2", name: "Water 2" },
+    ],
   },
   {
     id: "garage",
@@ -39,25 +39,21 @@ const ZONES = [
     humidity: "sensor.garage_climate_humidity",
     altTemp: "sensor.garage_tent_room_temperature",
     altHumidity: "sensor.garage_tent_room_humidity",
+    water: [
+      { id: "switch.garage_water_1", name: "Water 1" },
+      { id: "switch.garage_water_2", name: "Water 2" },
+    ],
   },
-];
-
-// Water-related entities
-const WATER_ENTITIES = [
-  "switch.garage_water_1",
-  "switch.garage_water_2",
-  "switch.lab_water_2",
-  "switch.mother_water",
-  "switch.mother_water_2",
-  "switch.water_refill",
-  "counter.water",
-  "counter.water_1a",
-  "counter.water_1b",
-  "counter.water_2a",
-  "counter.water_2b",
-  "counter.refill_water",
-  "timer.tent_water",
-  "timer.water_1a",
+  {
+    id: "lab",
+    name: "Lab",
+    vpd: "sensor.lab_vpd",
+    temp: "sensor.lab_climate2_temperature",
+    humidity: "sensor.lab_climate2_humidity",
+    altTemp: "sensor.lab_lab_temperature",
+    altHumidity: "sensor.lab_lab_humidity",
+    water: [],
+  },
 ];
 
 function getVPDZone(vpd) {
@@ -76,14 +72,56 @@ function formatValue(state, fallback = "--") {
   return isNaN(num) ? fallback : num.toFixed(1);
 }
 
+function formatDuration(seconds) {
+  if (!seconds || seconds < 1) return "0s";
+  if (seconds < 60) return `${Math.round(seconds)}s`;
+  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ${Math.round(seconds % 60)}s`;
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  return `${h}h ${m}m`;
+}
+
+// Calculate how long a switch was ON in history
+function calculateOnTime(history) {
+  if (!history || history.length === 0) return 0;
+
+  let totalOnSeconds = 0;
+  let lastOnTime = null;
+
+  for (const entry of history) {
+    const time = new Date(entry.last_changed || entry.last_updated);
+    const state = entry.state;
+
+    if (state === "on") {
+      lastOnTime = time;
+    } else if (state === "off" && lastOnTime) {
+      totalOnSeconds += (time - lastOnTime) / 1000;
+      lastOnTime = null;
+    }
+  }
+
+  // If still on, count until now
+  if (lastOnTime) {
+    totalOnSeconds += (Date.now() - lastOnTime) / 1000;
+  }
+
+  return totalOnSeconds;
+}
+
 export default function GrowHub() {
   const [states, setStates] = useState({});
+  const [runtimes, setRuntimes] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadStates();
-    const interval = setInterval(loadStates, 5000);
-    return () => clearInterval(interval);
+    loadRuntimes();
+    const stateInterval = setInterval(loadStates, 5000);
+    const runtimeInterval = setInterval(loadRuntimes, 60000); // Update runtime every minute
+    return () => {
+      clearInterval(stateInterval);
+      clearInterval(runtimeInterval);
+    };
   }, []);
 
   async function loadStates() {
@@ -98,36 +136,38 @@ export default function GrowHub() {
     setLoading(false);
   }
 
+  async function loadRuntimes() {
+    const waterSwitches = ZONES.flatMap(z => z.water.map(w => w.id));
+    const newRuntimes = {};
+
+    await Promise.all(waterSwitches.map(async (entityId) => {
+      try {
+        const history = await getEntityHistory(entityId, 24);
+        newRuntimes[entityId] = calculateOnTime(history);
+      } catch (err) {
+        console.error(`Failed to load history for ${entityId}:`, err);
+      }
+    }));
+
+    setRuntimes(newRuntimes);
+  }
+
   async function handleToggle(entityId) {
-    const domain = entityId.split(".")[0];
-    if (domain === "switch" || domain === "input_boolean") {
-      await toggleEntity(entityId);
-      setTimeout(loadStates, 500);
-    }
+    await toggleEntity(entityId);
+    setTimeout(loadStates, 500);
   }
 
   function getEntityValue(entityId) {
-    const state = states[entityId];
-    return state?.state;
-  }
-
-  function getEntityName(entityId) {
-    const state = states[entityId];
-    return state?.attributes?.friendly_name || entityId.split(".")[1].replace(/_/g, " ");
+    return states[entityId]?.state;
   }
 
   if (loading) {
     return <div className="grow-hub"><div className="loading">Loading...</div></div>;
   }
 
-  // Get water entities that exist
-  const waterEntities = WATER_ENTITIES
-    .map(id => states[id])
-    .filter(Boolean);
-
   return (
     <div className="grow-hub">
-      {/* VPD Zone Cards */}
+      {/* Zone Cards */}
       <div className="zone-grid">
         {ZONES.map(zone => {
           const vpd = getEntityValue(zone.vpd);
@@ -162,42 +202,42 @@ export default function GrowHub() {
                   <span className="reading-value">{formatValue(humidity)}%</span>
                 </div>
               </div>
+
+              {/* Water controls for this zone */}
+              {zone.water.length > 0 && (
+                <div className="zone-water">
+                  {zone.water.map(w => {
+                    const state = states[w.id];
+                    const isOn = state?.state === "on";
+                    const runtime = runtimes[w.id] || 0;
+
+                    return (
+                      <div
+                        key={w.id}
+                        className={`water-btn ${isOn ? "on" : "off"}`}
+                        onClick={() => handleToggle(w.id)}
+                      >
+                        <div className="water-btn-top">
+                          <span className="water-icon">🚿</span>
+                          <span className="water-name">{w.name}</span>
+                        </div>
+                        <div className="water-btn-bottom">
+                          <span className={`water-status ${isOn ? "on" : ""}`}>
+                            {isOn ? "ON" : "OFF"}
+                          </span>
+                          <span className="water-runtime">
+                            {formatDuration(runtime)}/day
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           );
         })}
       </div>
-
-      {/* Water Controls */}
-      {waterEntities.length > 0 && (
-        <div className="water-section">
-          <h3>Water</h3>
-          <div className="water-grid">
-            {waterEntities.map(entity => {
-              const domain = entity.entity_id.split(".")[0];
-              const isSwitch = domain === "switch";
-              const isOn = entity.state === "on";
-              const name = entity.attributes?.friendly_name ||
-                          entity.entity_id.split(".")[1].replace(/_/g, " ");
-              const value = entity.state;
-              const unit = entity.attributes?.unit_of_measurement || "";
-
-              return (
-                <div
-                  key={entity.entity_id}
-                  className={`water-card ${isSwitch ? "switch" : "sensor"} ${isOn ? "on" : ""}`}
-                  onClick={isSwitch ? () => handleToggle(entity.entity_id) : undefined}
-                >
-                  <span className="water-icon">{isSwitch ? "🚿" : "💧"}</span>
-                  <span className="water-name">{name}</span>
-                  <span className={`water-value ${isOn ? "active" : ""}`}>
-                    {isSwitch ? (isOn ? "ON" : "OFF") : `${value}${unit}`}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
 
       {/* VPD Legend */}
       <div className="vpd-legend">

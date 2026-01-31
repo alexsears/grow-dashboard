@@ -34,11 +34,11 @@
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  padding: 1.5rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 180px;
+  gap: 0.75rem;
+  min-height: 200px;
 }
 
 .zone-header {
@@ -109,70 +109,77 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Water Section */
-.water-section {
-  flex-shrink: 0;
-}
-
-.water-section h3 {
-  font-size: 1rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0 0 0.75rem 0;
-}
-
-.water-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+/* Zone Water Controls */
+.zone-water {
+  display: flex;
   gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.water-card {
+.water-btn {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.75rem;
+  gap: 4px;
+  padding: 0.5rem;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
+  border-radius: 8px;
+  cursor: pointer;
   transition: all 0.2s;
 }
 
-.water-card.switch {
-  cursor: pointer;
-}
-
-.water-card.switch:hover {
+.water-btn:hover {
   background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
-.water-card.on {
-  background: rgba(59, 130, 246, 0.2);
-  border-color: rgba(59, 130, 246, 0.4);
+.water-btn.on {
+  background: rgba(59, 130, 246, 0.25);
+  border-color: rgba(59, 130, 246, 0.5);
 }
 
-.water-icon {
-  font-size: 1.25rem;
+.water-btn-top {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.water-name {
+.water-btn .water-icon {
+  font-size: 0.9rem;
+}
+
+.water-btn .water-name {
   font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.6);
-  text-align: center;
-  text-transform: capitalize;
-  line-height: 1.2;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.water-value {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.5);
+.water-btn-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.water-value.active {
+.water-status {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+}
+
+.water-status.on {
   color: #3b82f6;
+}
+
+.water-runtime {
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-variant-numeric: tabular-nums;
 }
 
 /* VPD Legend */

@@ -127,3 +127,13 @@ export async function getLogbook(hoursBack = 24) {
   const response = await fetch(getApiUrl(path), { headers });
   return response.json();
 }
+
+export async function getEntityHistory(entityId, hoursBack = 24) {
+  const endTime = new Date().toISOString();
+  const startTime = new Date(Date.now() - hoursBack * 60 * 60 * 1000).toISOString();
+
+  const path = `history/period/${startTime}?end_time=${encodeURIComponent(endTime)}&filter_entity_id=${entityId}&minimal_response&no_attributes`;
+  const response = await fetch(getApiUrl(path), { headers });
+  const data = await response.json();
+  return data[0] || [];
+}
