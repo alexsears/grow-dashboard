@@ -1,15 +1,16 @@
-// Use proxy in dev, direct URL in production
-const HA_URL = import.meta.env.DEV ? '' : import.meta.env.VITE_HA_URL;
-const API_PATH = import.meta.env.DEV ? '/ha-api' : '/api';
-const HA_TOKEN = import.meta.env.VITE_HA_TOKEN;
+// Use local proxy in dev, Vercel serverless proxy in production
+const API_PATH = import.meta.env.DEV ? '/ha-api' : '/api/ha';
 
 const headers = {
-  Authorization: `Bearer ${HA_TOKEN}`,
   "Content-Type": "application/json",
+  // Token only needed in dev (production uses server-side env var)
+  ...(import.meta.env.DEV && import.meta.env.VITE_HA_TOKEN
+    ? { Authorization: `Bearer ${import.meta.env.VITE_HA_TOKEN}` }
+    : {}),
 };
 
 export async function getAreas() {
-  const response = await fetch(`${HA_URL}${API_PATH}/template`, {
+  const response = await fetch(`${API_PATH}/template`, {
     method: "POST",
     headers,
     body: JSON.stringify({
@@ -21,7 +22,7 @@ export async function getAreas() {
 }
 
 export async function getAreaDetails(areaId) {
-  const response = await fetch(`${HA_URL}${API_PATH}/template`, {
+  const response = await fetch(`${API_PATH}/template`, {
     method: "POST",
     headers,
     body: JSON.stringify({
@@ -33,7 +34,7 @@ export async function getAreaDetails(areaId) {
 
 export async function getDevicesByArea(areaId) {
   console.log(`Fetching devices for area: ${areaId}`);
-  const response = await fetch(`${HA_URL}${API_PATH}/template`, {
+  const response = await fetch(`${API_PATH}/template`, {
     method: "POST",
     headers,
     body: JSON.stringify({
@@ -49,19 +50,19 @@ export async function getDevicesByArea(areaId) {
 
 export async function getStates() {
   console.log("Fetching all states...");
-  const response = await fetch(`${HA_URL}${API_PATH}/states`, { headers });
+  const response = await fetch(`${API_PATH}/states`, { headers });
   const states = await response.json();
   console.log(`Got ${states.length} states`);
   return states;
 }
 
 export async function getState(entityId) {
-  const response = await fetch(`${HA_URL}${API_PATH}/states/${entityId}`, { headers });
+  const response = await fetch(`${API_PATH}/states/${entityId}`, { headers });
   return response.json();
 }
 
 export async function callService(domain, service, data = {}) {
-  const response = await fetch(`${HA_URL}${API_PATH}/services/${domain}/${service}`, {
+  const response = await fetch(`${API_PATH}/services/${domain}/${service}`, {
     method: "POST",
     headers,
     body: JSON.stringify(data),
