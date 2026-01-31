@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   const HA_URL = process.env.HA_URL;
   const HA_TOKEN = process.env.HA_TOKEN;
 
@@ -33,4 +33,4 @@ export default async function handler(req, res) {
     console.error('Proxy error:', error);
     res.status(500).json({ error: 'Failed to connect to Home Assistant', details: error.message });
   }
-}
+};
