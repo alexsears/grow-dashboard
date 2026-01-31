@@ -1,11 +1,5 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "framework": "vite",
-  "functions": {
-    "api/ha.js": {
-      "runtime": "nodejs20.x",
-      "maxDuration": 30
-    }
-  }
+  "framework": "vite"
 }
