@@ -1,153 +1,172 @@
 .grow-hub {
-  padding: 1rem;
   width: 100%;
   height: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   overflow-y: auto;
   box-sizing: border-box;
 }
 
-.grow-header {
-  margin-bottom: 1.5rem;
-}
-
-.grow-header h2 {
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: #fff;
-  margin: 0;
-}
-
-/* Zone Cards Grid */
+/* Zone Cards Grid - fill available space */
 .zone-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
-  margin-bottom: 2rem;
+  flex: 1;
+  min-height: 0;
+}
+
+@media (max-width: 900px) {
+  .zone-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .zone-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .zone-card {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1rem;
-  position: relative;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
 }
 
-.zone-card h3 {
-  font-size: 1rem;
+.zone-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.zone-header h3 {
+  font-size: 1.25rem;
   font-weight: 500;
   color: #fff;
-  margin: 0 0 0.75rem 0;
+  margin: 0;
+}
+
+.vpd-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #000;
+  text-transform: uppercase;
+}
+
+.zone-vpd {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.vpd-value {
+  font-size: 3rem;
+  font-weight: 300;
+  font-variant-numeric: tabular-nums;
+}
+
+.vpd-unit {
+  font-size: 1rem;
+  opacity: 0.7;
+  margin-left: 4px;
 }
 
 .zone-readings {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  justify-content: space-around;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.reading-row {
+.reading {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  gap: 4px;
 }
 
-.reading-row .label {
+.reading-label {
+  font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.5);
-  font-size: 0.85rem;
+  text-transform: uppercase;
 }
 
-.reading-row .value {
-  font-size: 1rem;
+.reading-value {
+  font-size: 1.1rem;
   font-weight: 500;
   color: #fff;
-}
-
-.vpd-row .value {
-  font-weight: 600;
-}
-
-.vpd-badge {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #000;
-}
-
-.empty-zones {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 2rem;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.empty-zones .hint {
-  font-size: 0.85rem;
-  margin-top: 0.5rem;
-  color: rgba(255, 255, 255, 0.3);
+  font-variant-numeric: tabular-nums;
 }
 
 /* Water Section */
 .water-section {
-  margin-bottom: 2rem;
+  flex-shrink: 0;
 }
 
 .water-section h3 {
   font-size: 1rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.7);
-  margin: 0 0 1rem 0;
+  margin: 0 0 0.75rem 0;
 }
 
 .water-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.5rem;
 }
 
 .water-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  padding: 1rem;
+  gap: 0.25rem;
+  padding: 0.75rem;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   transition: all 0.2s;
 }
 
-.water-card.clickable {
+.water-card.switch {
   cursor: pointer;
 }
 
-.water-card.clickable:hover {
+.water-card.switch:hover {
   background: rgba(255, 255, 255, 0.1);
   transform: translateY(-2px);
 }
 
 .water-card.on {
-  background: rgba(59, 130, 246, 0.15);
-  border-color: rgba(59, 130, 246, 0.3);
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
 }
 
 .water-icon {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
 .water-name {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.6);
   text-align: center;
   text-transform: capitalize;
+  line-height: 1.2;
 }
 
 .water-value {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.5);
 }
@@ -158,28 +177,23 @@
 
 /* VPD Legend */
 .vpd-legend {
+  flex-shrink: 0;
+  padding: 0.75rem;
   background: rgba(255, 255, 255, 0.03);
   border-radius: 10px;
-  padding: 1rem;
-}
-
-.vpd-legend h4 {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.5);
-  margin: 0 0 0.75rem 0;
 }
 
 .legend-items {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.6);
 }
@@ -190,19 +204,11 @@
   border-radius: 50%;
 }
 
-/* Loading/Error states */
-.loading, .error {
-  text-align: center;
-  padding: 3rem;
+/* Loading */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
   color: rgba(255, 255, 255, 0.5);
-}
-
-.error button {
-  margin-top: 1rem;
-  background: rgba(74, 162, 245, 0.2);
-  border: 1px solid rgba(74, 162, 245, 0.4);
-  color: #4aa2f5;
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
 }

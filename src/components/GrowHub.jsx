@@ -1,195 +1,196 @@
 import { useState, useEffect } from "react";
-import { getStates, toggleEntity } from "../services/homeAssistant";
+import { getStates, toggleEntity, callService } from "../services/homeAssistant";
 import "./GrowHub.css";
 
-// VPD calculation
-function calculateVPD(tempF, humidity) {
-  const tempC = (tempF - 32) * (5 / 9);
-  const leafTempC = tempC - 2;
-  const svpLeaf = 0.6108 * Math.exp((17.27 * leafTempC) / (leafTempC + 237.3));
-  const svpAir = 0.6108 * Math.exp((17.27 * tempC) / (tempC + 237.3));
-  const avp = svpAir * (humidity / 100);
-  return Math.max(0, svpLeaf - avp);
-}
+// Zone configuration with specific entity IDs
+const ZONES = [
+  {
+    id: "lab",
+    name: "Lab",
+    vpd: "sensor.lab_vpd",
+    temp: "sensor.lab_climate2_temperature",
+    humidity: "sensor.lab_climate2_humidity",
+    altTemp: "sensor.lab_lab_temperature",
+    altHumidity: "sensor.lab_lab_humidity",
+  },
+  {
+    id: "flower",
+    name: "Flower",
+    vpd: "sensor.flower_vpd",
+    temp: "sensor.avg_flower_temp",
+    humidity: "sensor.avg_flower_humidity",
+    altTemp: "sensor.flower_climate_1_temperature",
+    altHumidity: "sensor.flower_climate_1_humidity",
+  },
+  {
+    id: "mother",
+    name: "Mother",
+    vpd: "sensor.mother_vpd",
+    temp: "sensor.moth_a_mother_temperature",
+    humidity: "sensor.moth_a_mother_humidity",
+    altTemp: "sensor.garage2_mother_3_temperature",
+    altHumidity: "sensor.garage2_mother_3_humidity",
+  },
+  {
+    id: "garage",
+    name: "Garage",
+    vpd: "sensor.garage_vpd",
+    temp: "sensor.garage_climate_temperature",
+    humidity: "sensor.garage_climate_humidity",
+    altTemp: "sensor.garage_tent_room_temperature",
+    altHumidity: "sensor.garage_tent_room_humidity",
+  },
+];
+
+// Water-related entities
+const WATER_ENTITIES = [
+  "switch.garage_water_1",
+  "switch.garage_water_2",
+  "switch.lab_water_2",
+  "switch.mother_water",
+  "switch.mother_water_2",
+  "switch.water_refill",
+  "counter.water",
+  "counter.water_1a",
+  "counter.water_1b",
+  "counter.water_2a",
+  "counter.water_2b",
+  "counter.refill_water",
+  "timer.tent_water",
+  "timer.water_1a",
+];
 
 function getVPDZone(vpd) {
-  if (vpd < 0.4) return { zone: "low", label: "Low", color: "#60a5fa" };
-  if (vpd < 0.8) return { zone: "seedling", label: "Clone", color: "#4ade80" };
-  if (vpd < 1.2) return { zone: "veg", label: "Veg", color: "#22c55e" };
-  if (vpd < 1.6) return { zone: "flower", label: "Flower", color: "#84cc16" };
-  return { zone: "high", label: "High", color: "#f97316" };
+  const v = parseFloat(vpd);
+  if (isNaN(v)) return { label: "--", color: "#666" };
+  if (v < 0.4) return { label: "Low", color: "#60a5fa" };
+  if (v < 0.8) return { label: "Clone", color: "#4ade80" };
+  if (v < 1.2) return { label: "Veg", color: "#22c55e" };
+  if (v < 1.6) return { label: "Flower", color: "#84cc16" };
+  return { label: "High", color: "#f97316" };
 }
 
-function formatNum(value) {
-  if (value === undefined || value === null || value === "unavailable" || value === "unknown") return "--";
-  const num = parseFloat(value);
-  return isNaN(num) ? "--" : num.toFixed(1);
+function formatValue(state, fallback = "--") {
+  if (!state || state === "unavailable" || state === "unknown") return fallback;
+  const num = parseFloat(state);
+  return isNaN(num) ? fallback : num.toFixed(1);
 }
-
-// Grow zones to monitor
-const GROW_ZONES = ["lab", "flower", "mother", "garage"];
 
 export default function GrowHub() {
-  const [zones, setZones] = useState({});
-  const [waters, setWaters] = useState([]);
+  const [states, setStates] = useState({});
   const [loading, setLoading] = useState(true);
-  const [allStates, setAllStates] = useState({});
 
   useEffect(() => {
-    loadSensors();
-    const interval = setInterval(loadSensors, 10000);
+    loadStates();
+    const interval = setInterval(loadStates, 5000);
     return () => clearInterval(interval);
   }, []);
 
-  async function loadSensors() {
+  async function loadStates() {
     try {
-      const states = await getStates();
+      const allStates = await getStates();
       const stateMap = {};
-      states.forEach(s => { stateMap[s.entity_id] = s; });
-      setAllStates(stateMap);
-
-      // Find zone sensors
-      const zoneData = {};
-      GROW_ZONES.forEach(zone => {
-        const zoneLower = zone.toLowerCase();
-
-        // Find temp sensor for this zone
-        const tempSensor = states.find(s =>
-          s.entity_id.toLowerCase().includes(zoneLower) &&
-          (s.attributes.device_class === "temperature" ||
-           s.attributes.unit_of_measurement === "°F" ||
-           s.attributes.unit_of_measurement === "°C" ||
-           s.entity_id.includes("temperature") ||
-           s.entity_id.includes("temp"))
-        );
-
-        // Find humidity sensor
-        const humiditySensor = states.find(s =>
-          s.entity_id.toLowerCase().includes(zoneLower) &&
-          (s.attributes.device_class === "humidity" ||
-           s.entity_id.includes("humidity"))
-        );
-
-        if (tempSensor || humiditySensor) {
-          const temp = tempSensor ? parseFloat(tempSensor.state) : null;
-          const humidity = humiditySensor ? parseFloat(humiditySensor.state) : null;
-
-          zoneData[zone] = {
-            name: zone.charAt(0).toUpperCase() + zone.slice(1),
-            temp,
-            humidity,
-            tempUnit: tempSensor?.attributes.unit_of_measurement || "°F",
-            vpd: (temp && humidity) ? calculateVPD(temp, humidity) : null,
-          };
-        }
-      });
-      setZones(zoneData);
-
-      // Find water switches and sensors
-      const waterEntities = states.filter(s =>
-        s.entity_id.includes("water") ||
-        s.entity_id.includes("moisture") ||
-        s.entity_id.includes("reservoir") ||
-        s.entity_id.includes("tank") ||
-        s.entity_id.includes("pump") ||
-        s.entity_id.includes("irrigation") ||
-        s.attributes.device_class === "moisture"
-      );
-      setWaters(waterEntities);
-
+      allStates.forEach(s => { stateMap[s.entity_id] = s; });
+      setStates(stateMap);
     } catch (err) {
-      console.error("Failed to load sensors:", err);
+      console.error("Failed to load states:", err);
     }
     setLoading(false);
   }
 
-  if (loading) {
-    return <div className="grow-hub"><div className="loading">Loading grow data...</div></div>;
+  async function handleToggle(entityId) {
+    const domain = entityId.split(".")[0];
+    if (domain === "switch" || domain === "input_boolean") {
+      await toggleEntity(entityId);
+      setTimeout(loadStates, 500);
+    }
   }
 
-  const zoneList = Object.values(zones);
+  function getEntityValue(entityId) {
+    const state = states[entityId];
+    return state?.state;
+  }
+
+  function getEntityName(entityId) {
+    const state = states[entityId];
+    return state?.attributes?.friendly_name || entityId.split(".")[1].replace(/_/g, " ");
+  }
+
+  if (loading) {
+    return <div className="grow-hub"><div className="loading">Loading...</div></div>;
+  }
+
+  // Get water entities that exist
+  const waterEntities = WATER_ENTITIES
+    .map(id => states[id])
+    .filter(Boolean);
 
   return (
     <div className="grow-hub">
-      <div className="grow-header">
-        <h2>Grow Hub</h2>
-      </div>
-
-      {/* VPD Overview Cards */}
+      {/* VPD Zone Cards */}
       <div className="zone-grid">
-        {zoneList.length > 0 ? (
-          zoneList.map(zone => {
-            const vpdInfo = zone.vpd ? getVPDZone(zone.vpd) : null;
-            return (
-              <div key={zone.name} className="zone-card">
+        {ZONES.map(zone => {
+          const vpd = getEntityValue(zone.vpd);
+          const temp = getEntityValue(zone.temp) || getEntityValue(zone.altTemp);
+          const humidity = getEntityValue(zone.humidity) || getEntityValue(zone.altHumidity);
+          const vpdInfo = getVPDZone(vpd);
+          const tempUnit = states[zone.temp]?.attributes?.unit_of_measurement || "°F";
+
+          return (
+            <div key={zone.id} className="zone-card">
+              <div className="zone-header">
                 <h3>{zone.name}</h3>
-                <div className="zone-readings">
-                  <div className="reading-row">
-                    <span className="label">Temp</span>
-                    <span className="value">{formatNum(zone.temp)}{zone.tempUnit}</span>
-                  </div>
-                  <div className="reading-row">
-                    <span className="label">RH</span>
-                    <span className="value">{formatNum(zone.humidity)}%</span>
-                  </div>
-                  {zone.vpd !== null && (
-                    <div className="reading-row vpd-row">
-                      <span className="label">VPD</span>
-                      <span className="value" style={{ color: vpdInfo?.color }}>
-                        {zone.vpd.toFixed(2)} kPa
-                      </span>
-                    </div>
-                  )}
-                </div>
-                {vpdInfo && (
+                {vpd && vpd !== "unavailable" && (
                   <div className="vpd-badge" style={{ background: vpdInfo.color }}>
                     {vpdInfo.label}
                   </div>
                 )}
               </div>
-            );
-          })
-        ) : (
-          <div className="empty-zones">
-            <p>No grow zone sensors found</p>
-            <p className="hint">Looking for sensors in: {GROW_ZONES.join(", ")}</p>
-          </div>
-        )}
+
+              <div className="zone-vpd" style={{ color: vpdInfo.color }}>
+                <span className="vpd-value">{formatValue(vpd)}</span>
+                <span className="vpd-unit">kPa</span>
+              </div>
+
+              <div className="zone-readings">
+                <div className="reading">
+                  <span className="reading-label">Temp</span>
+                  <span className="reading-value">{formatValue(temp)}{tempUnit}</span>
+                </div>
+                <div className="reading">
+                  <span className="reading-label">RH</span>
+                  <span className="reading-value">{formatValue(humidity)}%</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
-      {/* Water Switches & Sensors */}
-      {waters.length > 0 && (
+      {/* Water Controls */}
+      {waterEntities.length > 0 && (
         <div className="water-section">
-          <h3>Water & Irrigation</h3>
+          <h3>Water</h3>
           <div className="water-grid">
-            {waters.map(entity => {
-              const name = entity.attributes.friendly_name ||
+            {waterEntities.map(entity => {
+              const domain = entity.entity_id.split(".")[0];
+              const isSwitch = domain === "switch";
+              const isOn = entity.state === "on";
+              const name = entity.attributes?.friendly_name ||
                           entity.entity_id.split(".")[1].replace(/_/g, " ");
               const value = entity.state;
-              const unit = entity.attributes.unit_of_measurement || "";
-              const domain = entity.entity_id.split(".")[0];
-              const isSwitch = domain === "switch" || domain === "input_boolean";
-              const isOn = value === "on" || value === "wet" || value === "detected";
-              const isOff = value === "off" || value === "dry" || value === "clear";
-
-              async function handleToggle() {
-                if (isSwitch) {
-                  await toggleEntity(entity.entity_id);
-                  setTimeout(loadSensors, 500);
-                }
-              }
+              const unit = entity.attributes?.unit_of_measurement || "";
 
               return (
                 <div
                   key={entity.entity_id}
-                  className={`water-card ${isOn ? "on" : "off"} ${isSwitch ? "clickable" : ""}`}
-                  onClick={isSwitch ? handleToggle : undefined}
+                  className={`water-card ${isSwitch ? "switch" : "sensor"} ${isOn ? "on" : ""}`}
+                  onClick={isSwitch ? () => handleToggle(entity.entity_id) : undefined}
                 >
                   <span className="water-icon">{isSwitch ? "🚿" : "💧"}</span>
                   <span className="water-name">{name}</span>
                   <span className={`water-value ${isOn ? "active" : ""}`}>
-                    {isSwitch ? (isOn ? "ON" : "OFF") :
-                     (isOn ? "Wet" : isOff ? "Dry" : `${formatNum(value)}${unit}`)}
+                    {isSwitch ? (isOn ? "ON" : "OFF") : `${value}${unit}`}
                   </span>
                 </div>
               );
@@ -198,15 +199,14 @@ export default function GrowHub() {
         </div>
       )}
 
-      {/* VPD Chart Legend */}
+      {/* VPD Legend */}
       <div className="vpd-legend">
-        <h4>VPD Zones</h4>
         <div className="legend-items">
-          <div className="legend-item"><span className="dot" style={{background: "#60a5fa"}} />Low (&lt;0.4)</div>
-          <div className="legend-item"><span className="dot" style={{background: "#4ade80"}} />Clone (0.4-0.8)</div>
-          <div className="legend-item"><span className="dot" style={{background: "#22c55e"}} />Veg (0.8-1.2)</div>
-          <div className="legend-item"><span className="dot" style={{background: "#84cc16"}} />Flower (1.2-1.6)</div>
-          <div className="legend-item"><span className="dot" style={{background: "#f97316"}} />High (&gt;1.6)</div>
+          <div className="legend-item"><span className="dot" style={{background: "#60a5fa"}} />&lt;0.4 Low</div>
+          <div className="legend-item"><span className="dot" style={{background: "#4ade80"}} />0.4-0.8 Clone</div>
+          <div className="legend-item"><span className="dot" style={{background: "#22c55e"}} />0.8-1.2 Veg</div>
+          <div className="legend-item"><span className="dot" style={{background: "#84cc16"}} />1.2-1.6 Flower</div>
+          <div className="legend-item"><span className="dot" style={{background: "#f97316"}} />&gt;1.6 High</div>
         </div>
       </div>
     </div>
