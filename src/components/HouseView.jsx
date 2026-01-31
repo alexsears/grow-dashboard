@@ -388,6 +388,7 @@ export default function HouseView({ onRoomClick, areas }) {
           width={VIEWBOX_WIDTH}
           height={VIEWBOX_HEIGHT}
           preserveAspectRatio="xMidYMid slice"
+          style={{ pointerEvents: 'none' }}
         />
 
         {/* Placed entity icons */}
