@@ -1,0 +1,779 @@
+entity_id,friendly_name,domain,area_id,area_name,state,suggested_usage,reason
+binary_sensor.sean_room, Sean room,binary_sensor,bedroom,Bedroom,on,map,MAP: Show state indicator
+binary_sensor.all_doors,All Doors,binary_sensor,,,unavailable,map,MAP: Show door/window open/closed state
+binary_sensor.automation_suggestions_available,Automation Suggestions Available,binary_sensor,,,on,map,MAP: Show state indicator
+binary_sensor.back_back_watering,Back back Watering,binary_sensor,,,off,map,MAP: Show state indicator
+binary_sensor.backups_stale,Backups Stale,binary_sensor,,,off,map,MAP: Show state indicator
+binary_sensor.breakfast_closet_door,Breakfast closet door,binary_sensor,kitchen,Kitchen,on,map,MAP: Show door/window open/closed state
+binary_sensor.entry_all_occupancy,Entry All occupancy,binary_sensor,entry,Entry,off,map,MAP: Show person icon when occupied/motion detected
+binary_sensor.entry_motion,Entry Motion,binary_sensor,entry,Entry,on,map,MAP: Show person icon when occupied/motion detected
+binary_sensor.entry_person_occupancy,Entry Person occupancy,binary_sensor,entry,Entry,off,map,MAP: Show person icon when occupied/motion detected
+binary_sensor.entry_bark_sound,Entry bark sound,binary_sensor,entry,Entry,off,map,MAP: Show door/window open/closed state
+binary_sensor.entry_cry_sound,Entry cry sound,binary_sensor,entry,Entry,off,map,MAP: Show door/window open/closed state
+binary_sensor.entry_scream_sound,Entry scream sound,binary_sensor,entry,Entry,off,map,MAP: Show door/window open/closed state
+binary_sensor.entry_speech_sound,Entry speech sound,binary_sensor,entry,Entry,off,map,MAP: Show door/window open/closed state
+binary_sensor.entry_yell_sound,Entry yell sound,binary_sensor,entry,Entry,off,map,MAP: Show door/window open/closed state
+binary_sensor.front_all_occupancy,Front All occupancy,binary_sensor,entry,Entry,off,map,MAP: Show person icon when occupied/motion detected
+binary_sensor.front_motion,Front Motion,binary_sensor,entry,Entry,on,map,MAP: Show person icon when occupied/motion detected
+binary_sensor.front_person_occupancy,Front Person occupancy,binary_sensor,entry,Entry,off,map,MAP: Show person icon when occupied/motion detected
+binary_sensor.front_bark_sound,Front bark sound,binary_sensor,entry,Entry,off,map,MAP: Highlight room when sound detected
+binary_sensor.front_center_watering,Front center Watering,binary_sensor,entry,Entry,off,map,MAP: Show state indicator
+binary_sensor.front_cry_sound,Front cry sound,binary_sensor,entry,Entry,off,map,MAP: Highlight room when sound detected
+binary_sensor.front_flower_bed_watering,Front flower bed Watering,binary_sensor,entry,Entry,off,map,MAP: Show state indicator
+binary_sensor.front_left_watering,Front left Watering,binary_sensor,entry,Entry,off,map,MAP: Show state indicator
+binary_sensor.front_right_watering,Front right Watering,binary_sensor,entry,Entry,off,map,MAP: Show state indicator
+binary_sensor.front_right_back_watering,Front right back Watering,binary_sensor,entry,Entry,off,map,MAP: Show state indicator
+binary_sensor.front_right_sidewalk_watering,Front right sidewalk Watering,binary_sensor,entry,Entry,off,map,MAP: Show state indicator
+binary_sensor.front_scream_sound,Front scream sound,binary_sensor,entry,Entry,off,map,MAP: Highlight room when sound detected
+binary_sensor.front_speech_sound,Front speech sound,binary_sensor,entry,Entry,off,map,MAP: Highlight room when sound detected
+binary_sensor.front_yell_sound,Front yell sound,binary_sensor,entry,Entry,off,map,MAP: Highlight room when sound detected
+binary_sensor.game_door,Game door ,binary_sensor,,,on,map,MAP: Show door/window open/closed state
+binary_sensor.garagecam_all_occupancy,Garagecam All occupancy,binary_sensor,garage,Garage,off,map,MAP: Show person icon when occupied/motion detected
+binary_sensor.garagecam_motion,Garagecam Motion,binary_sensor,garage,Garage,off,map,MAP: Show person icon when occupied/motion detected
+binary_sensor.garagecam_person_occupancy,Garagecam Person occupancy,binary_sensor,garage,Garage,off,map,MAP: Show person icon when occupied/motion detected
+binary_sensor.garagecam_bark_sound,Garagecam bark sound,binary_sensor,garage,Garage,off,map,MAP: Highlight room when sound detected
+binary_sensor.garagecam_cry_sound,Garagecam cry sound,binary_sensor,garage,Garage,off,map,MAP: Highlight room when sound detected
+binary_sensor.garagecam_scream_sound,Garagecam scream sound,binary_sensor,garage,Garage,off,map,MAP: Highlight room when sound detected
+binary_sensor.garagecam_speech_sound,Garagecam speech sound,binary_sensor,garage,Garage,off,map,MAP: Highlight room when sound detected
+binary_sensor.garagecam_yell_sound,Garagecam yell sound,binary_sensor,garage,Garage,off,map,MAP: Highlight room when sound detected
+binary_sensor.guest_closet_door,Guest closet door,binary_sensor,guest_room,Guest room,off,map,MAP: Show door/window open/closed state
+binary_sensor.laundry_door,Laundry Door,binary_sensor,garage,Garage,on,map,MAP: Show door/window open/closed state
+binary_sensor.left_side_watering,Left side Watering,binary_sensor,,,off,map,MAP: Show state indicator
+binary_sensor.lights_on,Lights on,binary_sensor,,,off,map,MAP: Show state indicator
+binary_sensor.living_all_occupancy,Living All occupancy,binary_sensor,living_room,Living Room,off,map,MAP: Show person icon when occupied/motion detected
+binary_sensor.living_motion,Living Motion,binary_sensor,living_room,Living Room,on,map,MAP: Show person icon when occupied/motion detected
+binary_sensor.living_person_occupancy,Living Person occupancy,binary_sensor,living_room,Living Room,off,map,MAP: Show person icon when occupied/motion detected
+binary_sensor.living_bark_sound,Living bark sound,binary_sensor,living_room,Living Room,off,map,MAP: Highlight room when sound detected
+binary_sensor.living_cry_sound,Living cry sound,binary_sensor,living_room,Living Room,off,map,MAP: Highlight room when sound detected
+binary_sensor.living_scream_sound,Living scream sound,binary_sensor,living_room,Living Room,off,map,MAP: Highlight room when sound detected
+binary_sensor.living_speech_sound,Living speech sound,binary_sensor,living_room,Living Room,off,map,MAP: Highlight room when sound detected
+binary_sensor.living_yell_sound,Living yell sound,binary_sensor,living_room,Living Room,off,map,MAP: Highlight room when sound detected
+binary_sensor.mud_room,Mud room,binary_sensor,,,off,map,MAP: Show state indicator
+binary_sensor.nursery_all_occupancy,Nursery All occupancy,binary_sensor,nursery,Nursery,on,map,MAP: Show person icon when occupied/motion detected
+binary_sensor.nursery_motion,Nursery Motion,binary_sensor,nursery,Nursery,on,map,MAP: Show person icon when occupied/motion detected
+binary_sensor.nursery_person_occupancy,Nursery Person occupancy,binary_sensor,nursery,Nursery,on,map,MAP: Show person icon when occupied/motion detected
+binary_sensor.nursery_bark_sound,Nursery bark sound,binary_sensor,nursery,Nursery,off,map,MAP: Highlight room when sound detected
+binary_sensor.nursery_closet_door,Nursery closet door,binary_sensor,nursery,Nursery,off,map,MAP: Show door/window open/closed state
+binary_sensor.nursery_cry_sound,Nursery cry sound,binary_sensor,nursery,Nursery,off,map,MAP: Highlight room when sound detected
+binary_sensor.nursery_scream_sound,Nursery scream sound,binary_sensor,nursery,Nursery,off,map,MAP: Highlight room when sound detected
+binary_sensor.nursery_speech_sound,Nursery speech sound,binary_sensor,nursery,Nursery,off,map,MAP: Highlight room when sound detected
+binary_sensor.nursery_yell_sound,Nursery yell sound,binary_sensor,nursery,Nursery,off,map,MAP: Highlight room when sound detected
+binary_sensor.pantry_door,Pantry door,binary_sensor,kitchen,Kitchen,off,map,MAP: Show door/window open/closed state
+binary_sensor.rain_man_connectivity,Rain man Connectivity,binary_sensor,,,on,map,MAP: Show state indicator
+binary_sensor.remote_ui,Remote UI,binary_sensor,,,on,map,MAP: Show state indicator
+binary_sensor.right_backyard_watering,Right backyard Watering,binary_sensor,patio,patio,off,map,MAP: Show state indicator
+binary_sensor.right_side_watering,Right side Watering,binary_sensor,,,off,map,MAP: Show state indicator
+binary_sensor.sean_bathroom_door,Sean Bathroom Door,binary_sensor,bathroom,Bathroom,on,map,MAP: Show door/window open/closed state
+binary_sensor.sean_crying,Sean Crying,binary_sensor,,,unknown,map,MAP: Highlight room when sound detected
+binary_sensor.sean_bathroom_closet_door,Sean bathroom closet door,binary_sensor,bathroom,Bathroom,off,map,MAP: Show door/window open/closed state
+binary_sensor.sean_room_closet_door,Sean room closet door ,binary_sensor,bedroom,Bedroom,on,map,MAP: Show door/window open/closed state
+binary_sensor.baby_noise_15,baby_noise_-15,binary_sensor,,,unavailable,map,MAP: Highlight room when sound detected
+binary_sensor.baby_noise_5,baby_noise_-5,binary_sensor,,,unavailable,map,MAP: Highlight room when sound detected
+binary_sensor.living_noise_15,living_noise_-15,binary_sensor,,,unavailable,map,MAP: Highlight room when sound detected
+binary_sensor.living_noise_5,living_noise_-5,binary_sensor,,,unavailable,map,MAP: Highlight room when sound detected
+binary_sensor.nursery_noise_15,nursery_noise_-15,binary_sensor,,,off,map,MAP: Highlight room when sound detected
+binary_sensor.nursery_noise_5,nursery_noise_-5,binary_sensor,,,off,map,MAP: Highlight room when sound detected
+camera.entry,Entry,camera,entry,Entry,recording,both,MAP: Show camera icon | CONTROL: View feed/snapshot
+camera.front,Front,camera,entry,Entry,recording,both,MAP: Show camera icon | CONTROL: View feed/snapshot
+camera.garagecam,Garagecam,camera,garage,Garage,unavailable,both,MAP: Show camera icon | CONTROL: View feed/snapshot
+camera.living,Living,camera,living_room,Living Room,recording,both,MAP: Show camera icon | CONTROL: View feed/snapshot
+camera.nursery,Nursery,camera,nursery,Nursery,recording,both,MAP: Show camera icon | CONTROL: View feed/snapshot
+climate.guest_thermostat,Guest thermostat,climate,guest_room,Guest room,heat,both,MAP: Show current temp on room | CONTROL: Thermostat settings
+climate.nursery_thermostat,Nursery Thermostat,climate,nursery,Nursery,heat,both,MAP: Show current temp on room | CONTROL: Thermostat settings
+climate.office_heater,Office heater,climate,office,Office,off,both,MAP: Show current temp on room | CONTROL: Thermostat settings
+cover.main,Main,cover,,,closed,both,MAP: Show open/closed state | CONTROL: Open/close/stop
+cover.second_door,Second Door,cover,,,open,both,MAP: Show open/closed state | CONTROL: Open/close/stop
+fan.game_room_fan,Game room fan ,fan,living_room,Living Room,on,both,"MAP: Show spinning icon when on | CONTROL: Toggle, speed"
+fan.sonoff_1001f721e0,Guest 2 fan,fan,guest_room,Guest room,unavailable,both,"MAP: Show spinning icon when on | CONTROL: Toggle, speed"
+fan.sonoff_1001f72743,Guest 3 fan,fan,guest_room,Guest room,unavailable,both,"MAP: Show spinning icon when on | CONTROL: Toggle, speed"
+fan.guest_fan,Guest fan ,fan,guest_room,Guest room,off,both,"MAP: Show spinning icon when on | CONTROL: Toggle, speed"
+fan.sonoff_1001f72185,Living room fan,fan,living_room,Living Room,unavailable,both,"MAP: Show spinning icon when on | CONTROL: Toggle, speed"
+fan.living_room_fan,Living room fan ,fan,living_room,Living Room,on,both,"MAP: Show spinning icon when on | CONTROL: Toggle, speed"
+fan.sonoff_1001f724be,Master fan ,fan,master,Master,unavailable,both,"MAP: Show spinning icon when on | CONTROL: Toggle, speed"
+fan.master_fan,Master fan ,fan,master,Master,off,both,"MAP: Show spinning icon when on | CONTROL: Toggle, speed"
+fan.sonoff_1001f721db,Nursery fan,fan,nursery,Nursery,unavailable,both,"MAP: Show spinning icon when on | CONTROL: Toggle, speed"
+fan.nursery_fan,Nursery fan ,fan,nursery,Nursery,on,both,"MAP: Show spinning icon when on | CONTROL: Toggle, speed"
+fan.sean_fan,Sean fan ,fan,bedroom,Bedroom,off,both,"MAP: Show spinning icon when on | CONTROL: Toggle, speed"
+light.living_room_dimmer,,light,living_room,Living Room,unavailable,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.bathroom_lights,Bathroom lights,light,bathroom,Bathroom,unavailable,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.breakfast_dimmer,Breakfast dimmer ,light,kitchen,Kitchen,off,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.dining_room_dimmer,Dining room dimmer ,light,dining,Dining,off,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.entry_dimmer,Entry Dimmer ,light,entry,Entry,off,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.decora_smart_800_series_dimmer,Foyer dimmer ,light,entry,Entry,off,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.game_room_dimmer,Game room Dimmer ,light,living_room,Living Room,off,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.sonoff_1001f721e0_1,Guest 2 fan,light,guest_room,Guest room,unavailable,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.sonoff_1001f72743_1,Guest 3 fan,light,guest_room,Guest room,unavailable,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.guest_dimmer,Guest Dimmer ,light,guest_room,Guest room,off,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.kitchen_dimmer,Kitchen dimmer ,light,kitchen,Kitchen,off,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.sonoff_1001f72185_1,Living room fan,light,living_room,Living Room,unavailable,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.living_room_lamp_light_2,Living room lamp light 2,light,living_room,Living Room,unavailable,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.master_dimmer,Master Dimmer ,light,master,Master,off,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.master_bath_lights,Master bath lights ,light,master,Master,off,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.sonoff_1001f724be_1,Master fan ,light,master,Master,unavailable,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.nursery_dimmer,Nursery Dimmer ,light,nursery,Nursery,off,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.sonoff_1001f721db_1,Nursery fan,light,nursery,Nursery,unavailable,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.nursery_lamp,Nursery lamp,light,nursery,Nursery,unavailable,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.nursery_lamp_2,Nursery lamp 2,light,office,Office,on,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.office_bulb_1,Office bulb 1,light,office,Office,unavailable,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.office_led_lamp,Office led lamp,light,office,Office,on,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.sean_fan_dimmer,Sean fan dimmer ,light,bedroom,Bedroom,off,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+light.sean_light_2,Sean light 2 ,light,bedroom,Bedroom,off,both,"MAP: Room glows when on | CONTROL: Toggle, brightness"
+media_player.googlehome9064,Bedroom speaker,media_player,bedroom,Bedroom,off,both,"MAP: Show playing icon | CONTROL: Play/pause, volume"
+media_player.home_group,Home group,media_player,living_room,Living Room,off,both,"MAP: Show playing icon | CONTROL: Play/pause, volume"
+media_player.lab_and_kitchen,Lab and kitchen,media_player,kitchen,Kitchen,off,both,"MAP: Show playing icon | CONTROL: Play/pause, volume"
+media_player.googlehome8763,Living Room speaker 2,media_player,living_room,Living Room,off,both,"MAP: Show playing icon | CONTROL: Play/pause, volume"
+media_player.louder_louder_esp32,Louder Louder‑ESP32,media_player,,,unavailable,both,"MAP: Show playing icon | CONTROL: Play/pause, volume"
+media_player.googlehome5789,Nursery speaker,media_player,nursery,Nursery,off,both,"MAP: Show playing icon | CONTROL: Play/pause, volume"
+media_player.office_party,Office party,media_player,office,Office,off,both,"MAP: Show playing icon | CONTROL: Play/pause, volume"
+media_player.office_speaker,Office speaker,media_player,office,Office,off,both,"MAP: Show playing icon | CONTROL: Play/pause, volume"
+media_player.samsung_7_series_55,Samsung 7 Series (55),media_player,living_room,Living Room,off,both,"MAP: Show playing icon | CONTROL: Play/pause, volume"
+media_player.samsung_the_frame_43,Samsung The Frame 43,media_player,living_room,Living Room,unavailable,both,"MAP: Show playing icon | CONTROL: Play/pause, volume"
+media_player.samsung_the_frame_43_2,Samsung The Frame 43,media_player,living_room,Living Room,off,both,"MAP: Show playing icon | CONTROL: Play/pause, volume"
+media_player.googlehome2236,Sean,media_player,,,off,both,"MAP: Show playing icon | CONTROL: Play/pause, volume"
+media_player.tv_living_room_tv,[TV] living room tv,media_player,living_room,Living Room,unavailable,both,"MAP: Show playing icon | CONTROL: Play/pause, volume"
+media_player.lab_display,lab display,media_player,lab,Lab,off,both,"MAP: Show playing icon | CONTROL: Play/pause, volume"
+media_player.living_room_tv,living room tv,media_player,living_room,Living Room,off,both,"MAP: Show playing icon | CONTROL: Play/pause, volume"
+media_player.googlehome4264,media_player.googlehome4264,media_player,,,unavailable,both,"MAP: Show playing icon | CONTROL: Play/pause, volume"
+media_player.nursery_speaker,media_player.nursery_speaker,media_player,nursery,Nursery,unavailable,both,"MAP: Show playing icon | CONTROL: Play/pause, volume"
+sensor.sean_room_battery, Sean room Battery,sensor,bedroom,Bedroom,62.5,remove,Diagnostic/internal - not useful for dashboard
+sensor.1_mini_split_energy_this_month,1. mini split Energy This Month,sensor,lab,Lab,94.6253493349542,remove,Diagnostic/internal - not useful for dashboard
+sensor.1_mini_split_energy_today,1. mini split Energy Today,sensor,lab,Lab,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.1_mini_split_power_minute_average,1. mini split Power Minute Average,sensor,lab,Lab,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.10_master_energy_this_month,10. master Energy This Month,sensor,master,Master,13.0105176513651,remove,Diagnostic/internal - not useful for dashboard
+sensor.10_master_energy_today,10. master Energy Today,sensor,master,Master,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.10_master_power_minute_average,10. master Power Minute Average,sensor,master,Master,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.11_oven_energy_this_month,11. oven Energy This Month,sensor,kitchen,Kitchen,2.25372319751316e-05,remove,Diagnostic/internal - not useful for dashboard
+sensor.11_oven_energy_today,11. oven Energy Today,sensor,kitchen,Kitchen,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.11_oven_power_minute_average,11. oven Power Minute Average,sensor,kitchen,Kitchen,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.12_energy_this_month,12. Energy This Month,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.12_energy_today,12. Energy Today,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.12_power_minute_average,12. Power Minute Average,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.13_energy_this_month,13. Energy This Month,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.13_energy_today,13. Energy Today,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.13_power_minute_average,13. Power Minute Average,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.14_energy_this_month,14. Energy This Month,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.14_energy_today,14. Energy Today,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.14_power_minute_average,14. Power Minute Average,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.15_energy_this_month,15. Energy This Month,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.15_energy_today,15. Energy Today,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.15_power_minute_average,15. Power Minute Average,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.16_energy_this_month,16. Energy This Month,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.16_energy_today,16. Energy Today,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.16_power_minute_average,16. Power Minute Average,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.2_lab_plug_1_energy_this_month,2. lab plug 1 Energy This Month,sensor,lab,Lab,244.822709776991,remove,Diagnostic/internal - not useful for dashboard
+sensor.2_lab_plug_1_energy_today,2. lab plug 1 Energy Today,sensor,lab,Lab,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.2_lab_plug_1_power_minute_average,2. lab plug 1 Power Minute Average,sensor,lab,Lab,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.3_lab_plug_2_energy_this_month,3. lab plug 2 Energy This Month,sensor,lab,Lab,208.675830522173,remove,Diagnostic/internal - not useful for dashboard
+sensor.3_lab_plug_2_energy_today,3. lab plug 2 Energy Today,sensor,lab,Lab,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.3_lab_plug_2_power_minute_average,3. lab plug 2 Power Minute Average,sensor,lab,Lab,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.4_ac2_energy_this_month,4. ac2 Energy This Month,sensor,bedroom,Bedroom,11.7034811213048,remove,Diagnostic/internal - not useful for dashboard
+sensor.4_ac2_energy_today,4. ac2 Energy Today,sensor,bedroom,Bedroom,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.4_ac2_power_minute_average,4. ac2 Power Minute Average,sensor,bedroom,Bedroom,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.5_ac1_energy_this_month,5. ac1 Energy This Month,sensor,living_room,Living Room,51.852415698577,remove,Diagnostic/internal - not useful for dashboard
+sensor.5_ac1_energy_today,5. ac1 Energy Today,sensor,living_room,Living Room,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.5_ac1_power_minute_average,5. ac1 Power Minute Average,sensor,living_room,Living Room,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.6_garage_gfi_energy_this_month,6. garage gfi Energy This Month,sensor,garage,Garage,69.7308844182141,remove,Diagnostic/internal - not useful for dashboard
+sensor.6_garage_gfi_energy_today,6. garage gfi Energy Today,sensor,garage,Garage,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.6_garage_gfi_power_minute_average,6. garage gfi Power Minute Average,sensor,garage,Garage,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.7_furnace_energy_this_month,7. furnace Energy This Month,sensor,living_room,Living Room,24.6523612285201,remove,Diagnostic/internal - not useful for dashboard
+sensor.7_furnace_energy_today,7. furnace Energy Today,sensor,living_room,Living Room,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.7_furnace_power_minute_average,7. furnace Power Minute Average,sensor,living_room,Living Room,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.8_garage_gfi_energy_this_month,8. garage gfi Energy This Month,sensor,garage,Garage,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.8_garage_gfi_energy_today,8. garage gfi Energy Today,sensor,garage,Garage,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.8_garage_gfi_power_minute_average,8. garage gfi Power Minute Average,sensor,garage,Garage,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.800_series_long_range_usb_controller_status,800 Series Long Range USB Controller Status,sensor,,,ready,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.9_living_room_energy_this_month,9. living room Energy This Month,sensor,living_room,Living Room,35.5424476323064,remove,Diagnostic/internal - not useful for dashboard
+sensor.9_living_room_energy_today,9. living room Energy Today,sensor,living_room,Living Room,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.9_living_room_power_minute_average,9. living room Power Minute Average,sensor,living_room,Living Room,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.alex_note_25_battery_level,Alex note 25 Battery level,sensor,,,22,remove,Diagnostic/internal - not useful for dashboard
+sensor.alex_note_25_battery_state,Alex note 25 Battery state,sensor,,,discharging,remove,Diagnostic/internal - not useful for dashboard
+sensor.alex_note_25_charger_type,Alex note 25 Charger type,sensor,,,none,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.auto_light_hours,Auto Light Hours,sensor,,,12,map,MAP: Show brightness level
+sensor.automation_suggestions_count,Automation Suggestions Count,sensor,,,1,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.automation_suggestions_last_analysis,Automation Suggestions Last analysis,sensor,,,2026-01-30T01:54:09+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.automation_suggestions_stale_automations_count,Automation Suggestions Stale Automations Count,sensor,,,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.automation_suggestions_top,Automation Suggestions Top,sensor,,,1,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.avg_flower_humidity,Avg Flower Humidity,sensor,,,68.73,map,MAP: Show humidity percentage
+sensor.avg_flower_temp,Avg Flower Temp,sensor,,,75.9,map,MAP: Show temperature on room
+sensor.back_back_daily_active_watering_time,Back back Daily active watering time,sensor,,,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.back_back_next_cycle,Back back Next cycle,sensor,,,2026-02-07T10:45:00+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.back_back_remaining_watering_time,Back back Remaining watering time,sensor,,,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.back_door_sensor_node_status,Back door sensor Node status,sensor,entry,Entry,asleep,remove,Diagnostic/internal - not useful for dashboard
+sensor.backup_backup_manager_state,Backup Backup Manager state,sensor,,,idle,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.backup_last_attempted_automatic_backup,Backup Last attempted automatic backup,sensor,,,2026-01-30T11:27:47+00:00,map,MAP: Show temperature on room
+sensor.backup_last_successful_automatic_backup,Backup Last successful automatic backup,sensor,,,2026-01-30T11:28:39+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.backup_next_scheduled_automatic_backup,Backup Next scheduled automatic backup,sensor,,,2026-01-31T10:46:00+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.backup_state,Backup State,sensor,,,backed_up,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.backyard_floodlights_node_status,Backyard floodlights Node status,sensor,patio,patio,dead,remove,Diagnostic/internal - not useful for dashboard
+sensor.balance_energy_this_month,Balance Energy This Month,sensor,,,328.230140327911,remove,Diagnostic/internal - not useful for dashboard
+sensor.balance_energy_today,Balance Energy Today,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.breakfast_closet_door_battery,Breakfast closet door Battery,sensor,kitchen,Kitchen,91.5,remove,Diagnostic/internal - not useful for dashboard
+sensor.breakfast_dimmer_node_status,Breakfast dimmer Node status,sensor,kitchen,Kitchen,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.breakfast_pantry_switch_node_status,Breakfast pantry Switch Node status,sensor,kitchen,Kitchen,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.co_bend_energy_this_month,Co. Bend Energy This Month,sensor,,,1082.84616024955,remove,Diagnostic/internal - not useful for dashboard
+sensor.co_bend_energy_today,Co. Bend Energy Today,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.co_bend_power_minute_average,Co. Bend Power Minute Average,sensor,,,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.coffee_instantaneous_demand,Coffee Instantaneous demand,sensor,,,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.coffee_summation_delivered,Coffee Summation delivered,sensor,,,1.2767,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.node_85_node_status,Decora Smart 800 Series Dimmer Node status,sensor,,,dead,remove,Diagnostic/internal - not useful for dashboard
+sensor.dehu_control_state,Dehu control state,sensor,,,Day: should be OFF (RH 53% < 60),remove,"Sensor data - likely diagnostic, review if needed"
+sensor.dining_room_dimmer_node_status,Dining room dimmer Node status,sensor,dining,Dining,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.drain,Drain,sensor,,,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.drain_total,Drain Total,sensor,,,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.entry_all_active_count,Entry All Active Count,sensor,entry,Entry,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.entry_all_count,Entry All count,sensor,entry,Entry,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.entry_dimmer_node_status_2,Entry Dimmer Node status,sensor,entry,Entry,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.entry_person_active_count,Entry Person Active Count,sensor,entry,Entry,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.entry_person_count,Entry Person count,sensor,entry,Entry,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.entry_dimmer_node_status,Entry dimmer Node status,sensor,entry,Entry,dead,remove,Diagnostic/internal - not useful for dashboard
+sensor.entry_sound_level,Entry sound level,sensor,entry,Entry,-39,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.flash_closet_lights_node_status,Flash closet lights Node status,sensor,bedroom,Bedroom,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.flower_big_fan_2_instantaneous_demand,Flower Big fan 2 Instantaneous demand,sensor,lab,Lab,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.flower_big_fan_2_summation_delivered,Flower Big fan 2 Summation delivered,sensor,lab,Lab,6.7753,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.flower_flower_humidity,Flower Flower Humidity,sensor,lab,Lab,unavailable,map,MAP: Show humidity percentage
+sensor.flower_flower_temperature,Flower Flower Temperature,sensor,lab,Lab,unavailable,map,MAP: Show temperature on room
+sensor.flower_vpd,Flower VPD,sensor,,,0.96,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.flower_week,Flower Week,sensor,,,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.flower_climate_1_battery,Flower climate 1 Battery,sensor,,,100.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.flower_climate_1_humidity,Flower climate 1 Humidity,sensor,,,67.88,map,MAP: Show humidity percentage
+sensor.flower_climate_1_temperature,Flower climate 1 Temperature,sensor,,,77.252,map,MAP: Show temperature on room
+sensor.flower_climate_2_battery,Flower climate 2 Battery,sensor,,,100.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.flower_climate_2_humidity,Flower climate 2 Humidity,sensor,,,69.58,map,MAP: Show humidity percentage
+sensor.flower_climate_2_temperature,Flower climate 2 Temperature,sensor,,,74.552,map,MAP: Show temperature on room
+sensor.flower_small_fan_2_instantaneous_demand,Flower small fan 2 Instantaneous demand,sensor,lab,Lab,1.2,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.flower_small_fan_2_summation_delivered,Flower small fan 2 Summation delivered,sensor,lab,Lab,0.3983,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.node_83_node_status,Foyer dimmer Node status,sensor,,,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.front_all_active_count,Front All Active Count,sensor,entry,Entry,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_all_count,Front All count,sensor,entry,Entry,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_battery,Front Battery,sensor,entry,Entry,0,remove,Diagnostic/internal - not useful for dashboard
+sensor.front_person_active_count,Front Person Active Count,sensor,entry,Entry,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_person_count,Front Person count,sensor,entry,Entry,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_center_daily_active_watering_time,Front center Daily active watering time,sensor,entry,Entry,5.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_center_next_cycle,Front center Next cycle,sensor,entry,Entry,2026-02-07T10:05:00+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_center_remaining_watering_time,Front center Remaining watering time,sensor,entry,Entry,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_door_sensor_node_status,Front door sensor Node status,sensor,entry,Entry,asleep,remove,Diagnostic/internal - not useful for dashboard
+sensor.front_floodlights_node_status,Front floodlights Node status,sensor,entry,Entry,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.front_flower_bed_daily_active_watering_time,Front flower bed Daily active watering time,sensor,entry,Entry,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_flower_bed_next_cycle,Front flower bed Next cycle,sensor,entry,Entry,2026-02-07T10:10:00+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_flower_bed_remaining_watering_time,Front flower bed Remaining watering time,sensor,entry,Entry,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_left_daily_active_watering_time,Front left Daily active watering time,sensor,entry,Entry,8.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_left_next_cycle,Front left Next cycle,sensor,entry,Entry,2026-02-07T10:00:00+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_left_remaining_watering_time,Front left Remaining watering time,sensor,entry,Entry,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_porchlight_node_status,Front porchlight Node status,sensor,entry,Entry,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.front_right_daily_active_watering_time,Front right Daily active watering time,sensor,entry,Entry,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_right_next_cycle,Front right Next cycle,sensor,entry,Entry,2026-02-07T10:15:00+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_right_remaining_watering_time,Front right Remaining watering time,sensor,entry,Entry,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_right_back_daily_active_watering_time,Front right back Daily active watering time,sensor,entry,Entry,25.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_right_back_next_cycle,Front right back Next cycle,sensor,entry,Entry,2026-02-07T10:25:00+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_right_back_remaining_watering_time,Front right back Remaining watering time,sensor,entry,Entry,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_right_sidewalk_daily_active_watering_time,Front right sidewalk Daily active watering time,sensor,entry,Entry,4.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_right_sidewalk_next_cycle,Front right sidewalk Next cycle,sensor,entry,Entry,2026-02-07T10:20:00+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_right_sidewalk_remaining_watering_time,Front right sidewalk Remaining watering time,sensor,entry,Entry,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.front_sound_level,Front sound level,sensor,entry,Entry,-52,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.game_door_battery,Game door  Battery,sensor,,,83.5,remove,Diagnostic/internal - not useful for dashboard
+sensor.game_room_dimmer_node_status,Game room Dimmer Node status,sensor,living_room,Living Room,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.game_room_climate_battery,Game room climate  Battery,sensor,living_room,Living Room,100.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.game_room_climate_humidity,Game room climate  Humidity,sensor,living_room,Living Room,39.6,map,MAP: Show humidity percentage
+sensor.game_room_climate_temperature,Game room climate  Temperature,sensor,living_room,Living Room,74.894,map,MAP: Show temperature on room
+sensor.game_room_fan_node_status,Game room fan Node status,sensor,living_room,Living Room,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.garage_vpd,Garage VPD,sensor,,,1.14,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garage_climate_battery,Garage climate Battery,sensor,,,100.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.garage_climate_humidity,Garage climate Humidity,sensor,,,47.87,map,MAP: Show humidity percentage
+sensor.garage_climate_temperature,Garage climate Temperature,sensor,,,66.056,map,MAP: Show temperature on room
+sensor.garage_tent_pm1_0,Garage tent PM1.0,sensor,garage,Garage,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.garage_tent_pm10_0,Garage tent PM10.0,sensor,garage,Garage,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.garage_tent_pm2_5,Garage tent PM2.5,sensor,garage,Garage,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.garage_tent_pmc_0_3mm,Garage tent PMC >0.3µm,sensor,garage,Garage,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.garage_tent_pmc_0_5mm,Garage tent PMC >0.5µm,sensor,garage,Garage,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.garage_tent_pmc_10mm,Garage tent PMC >10µm,sensor,garage,Garage,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.garage_tent_pmc_1mm,Garage tent PMC >1µm,sensor,garage,Garage,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.garage_tent_pmc_2_5mm,Garage tent PMC >2.5µm,sensor,garage,Garage,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.garage_tent_pmc_5mm,Garage tent PMC >5µm,sensor,garage,Garage,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.garage_tent_room_co2,Garage tent Room CO2,sensor,garage,Garage,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.garage_tent_room_humidity,Garage tent Room Humidity,sensor,garage,Garage,unavailable,map,MAP: Show humidity percentage
+sensor.garage_tent_room_temperature,Garage tent Room Temperature,sensor,garage,Garage,unavailable,map,MAP: Show temperature on room
+sensor.garage_water_2_instantaneous_demand,Garage water 2 Instantaneous demand,sensor,garage,Garage,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garage_water_2_summation_delivered,Garage water 2 Summation delivered,sensor,garage,Garage,0.0095,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garagecam_all_active_count,Garagecam All Active Count,sensor,garage,Garage,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garagecam_all_count,Garagecam All count,sensor,garage,Garage,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garagecam_person_active_count,Garagecam Person Active Count,sensor,garage,Garage,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garagecam_person_count,Garagecam Person count,sensor,garage,Garage,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garagecam_sound_level,Garagecam sound level,sensor,garage,Garage,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garden_mister_flow_rate,Garden Mister Flow Rate,sensor,,,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garden_water_this_month,Garden Water This Month,sensor,,,24679.7,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garden_water_today,Garden Water Today,sensor,,,3153.1,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garden_water_today_calc,Garden Water Today Calc,sensor,,,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.guest_dimmer_node_status,Guest Dimmer Node status,sensor,guest_room,Guest room,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.guest_climate_battery,Guest climate Battery,sensor,guest_room,Guest room,100.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.guest_climate_humidity,Guest climate Humidity,sensor,guest_room,Guest room,39.5,map,MAP: Show humidity percentage
+sensor.guest_climate_temperature,Guest climate Temperature,sensor,guest_room,Guest room,71.402,map,MAP: Show temperature on room
+sensor.guest_closet_node_status,Guest closet Node status,sensor,guest_room,Guest room,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.guest_closet_door_battery,Guest closet door Battery,sensor,guest_room,Guest room,61.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.guest_fan_node_status,Guest fan Node status,sensor,guest_room,Guest room,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.guest_room_guest_2_co2,Guest-Room Guest 2 CO2,sensor,guest_room,Guest room,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.guest_room_guest_2_humidity,Guest-Room Guest 2 Humidity,sensor,guest_room,Guest room,unavailable,map,MAP: Show humidity percentage
+sensor.guest_room_guest_2_temperature,Guest-Room Guest 2 Temperature,sensor,guest_room,Guest room,unavailable,map,MAP: Show temperature on room
+sensor.guest_room_guest_humidity,Guest-Room Guest Humidity,sensor,guest_room,Guest room,unavailable,map,MAP: Show humidity percentage
+sensor.guest_room_guest_pm1_0,Guest-Room Guest PM1.0,sensor,guest_room,Guest room,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.guest_room_guest_pm10_0,Guest-Room Guest PM10.0,sensor,guest_room,Guest room,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.guest_room_guest_pm2_5,Guest-Room Guest PM2.5,sensor,guest_room,Guest room,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.guest_room_guest_temperature,Guest-Room Guest Temperature,sensor,guest_room,Guest room,unavailable,map,MAP: Show temperature on room
+sensor.kitchen_dimmer_node_status,Kitchen dimmer Node status,sensor,kitchen,Kitchen,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.kitchen_sink_light_node_status,Kitchen sink light Node status,sensor,kitchen,Kitchen,dead,remove,Diagnostic/internal - not useful for dashboard
+sensor.kitchen_5_kitchen_co2,Kitchen-5 Kitchen CO2,sensor,kitchen,Kitchen,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.kitchen_5_kitchen_humidity,Kitchen-5 Kitchen Humidity,sensor,kitchen,Kitchen,unavailable,map,MAP: Show humidity percentage
+sensor.kitchen_5_kitchen_pm1_0,Kitchen-5 Kitchen PM1.0,sensor,kitchen,Kitchen,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.kitchen_5_kitchen_pm10_0,Kitchen-5 Kitchen PM10.0,sensor,kitchen,Kitchen,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.kitchen_5_kitchen_pm2_5,Kitchen-5 Kitchen PM2.5,sensor,kitchen,Kitchen,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.kitchen_5_kitchen_pmc_0_3mm,Kitchen-5 Kitchen PMC <0.3µm,sensor,kitchen,Kitchen,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.kitchen_5_kitchen_pmc_0_5mm,Kitchen-5 Kitchen PMC <0.5µm,sensor,kitchen,Kitchen,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.kitchen_5_kitchen_pmc_10mm,Kitchen-5 Kitchen PMC <10µm,sensor,kitchen,Kitchen,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.kitchen_5_kitchen_pmc_1mm,Kitchen-5 Kitchen PMC <1µm,sensor,kitchen,Kitchen,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.kitchen_5_kitchen_pmc_2_5mm,Kitchen-5 Kitchen PMC <2.5µm,sensor,kitchen,Kitchen,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.kitchen_5_kitchen_pmc_5mm,Kitchen-5 Kitchen PMC <5µm,sensor,kitchen,Kitchen,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.kitchen_5_kitchen_temperature,Kitchen-5 Kitchen Temperature,sensor,kitchen,Kitchen,unavailable,map,MAP: Show temperature on room
+sensor.kitchen_5_kitchen2_gas_resistance,Kitchen-5 Kitchen2 Gas Resistance,sensor,kitchen,Kitchen,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.kitchen_5_kitchen2_humidity,Kitchen-5 Kitchen2 Humidity,sensor,kitchen,Kitchen,unavailable,map,MAP: Show humidity percentage
+sensor.kitchen_5_kitchen2_pressure,Kitchen-5 Kitchen2 Pressure,sensor,kitchen,Kitchen,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.kitchen_5_kitchen2_temperature,Kitchen-5 Kitchen2 Temperature,sensor,kitchen,Kitchen,unavailable,map,MAP: Show temperature on room
+sensor.lab_1_instantaneous_demand,Lab 1 Instantaneous demand,sensor,lab,Lab,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.lab_1_summation_delivered,Lab 1 Summation delivered,sensor,lab,Lab,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.lab_diablo_instantaneous_demand,Lab Diablo Instantaneous demand,sensor,lab,Lab,572,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.lab_diablo_summation_delivered,Lab Diablo Summation delivered,sensor,lab,Lab,95.9386,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.lab_lab_humidity,Lab Lab Humidity,sensor,lab,Lab,unavailable,map,MAP: Show humidity percentage
+sensor.lab_lab_temperature,Lab Lab Temperature,sensor,lab,Lab,unavailable,map,MAP: Show temperature on room
+sensor.lab_vpd,Lab VPD,sensor,,,1.09,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.lab_climate2_battery,Lab climate2 Battery,sensor,lab,Lab,100.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.lab_climate2_humidity,Lab climate2 Humidity,sensor,lab,Lab,57.92,map,MAP: Show humidity percentage
+sensor.lab_climate2_temperature,Lab climate2 Temperature,sensor,lab,Lab,70.934,map,MAP: Show temperature on room
+sensor.lab_exhaust_instantaneous_demand,Lab exhaust Instantaneous demand,sensor,lab,Lab,10.3,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.lab_exhaust_summation_delivered,Lab exhaust Summation delivered,sensor,lab,Lab,2.6234,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.lab_lab_pm1_0,Lab lab PM1.0,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.lab_lab_pm10_0,Lab lab PM10.0,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.lab_lab_pm2_5,Lab lab PM2.5,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.lab_lab_pmc_0_3mm,Lab lab PMC <0.3µm,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.lab_lab_pmc_0_5mm,Lab lab PMC <0.5µm,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.lab_lab_pmc_10mm,Lab lab PMC <10µm,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.lab_lab_pmc_1mm,Lab lab PMC <1µm,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.lab_lab_pmc_2_5mm,Lab lab PMC <2.5µm,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.lab_lab_pmc_5mm,Lab lab PMC <5µm,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.lab_water_2_instantaneous_demand,Lab water 2 Instantaneous demand,sensor,lab,Lab,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.lab_water_2_summation_delivered,Lab water 2 Summation delivered,sensor,lab,Lab,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.lab1a_instantaneous_demand,Lab1a Instantaneous demand,sensor,lab,Lab,719,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.lab1a_summation_delivered,Lab1a Summation delivered,sensor,lab,Lab,109.1157,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.laundry_door_battery,Laundry Door Battery,sensor,garage,Garage,90.5,remove,Diagnostic/internal - not useful for dashboard
+sensor.left_side_daily_active_watering_time,Left side Daily active watering time,sensor,,,8.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.left_side_next_cycle,Left side Next cycle,sensor,,,2026-02-07T10:30:00+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.left_side_remaining_watering_time,Left side Remaining watering time,sensor,,,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.light_schedule_status,Light Schedule Status,sensor,,,Lights ON,map,MAP: Show brightness level
+sensor.lights_off_time,Lights Off Time,sensor,,,00:00,map,MAP: Show brightness level
+sensor.living_all_active_count,Living All Active Count,sensor,living_room,Living Room,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.living_all_count,Living All count,sensor,living_room,Living Room,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.living_person_active_count,Living Person Active Count,sensor,living_room,Living Room,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.living_person_count,Living Person count,sensor,living_room,Living Room,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.living_room_climate_2_battery,Living Room Climate 2 Battery,sensor,living_room,Living Room,100.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.living_room_climate_2_humidity,Living Room Climate 2 Humidity,sensor,living_room,Living Room,35.49,map,MAP: Show humidity percentage
+sensor.living_room_climate_2_temperature,Living Room Climate 2 Temperature,sensor,living_room,Living Room,73.166,map,MAP: Show temperature on room
+sensor.living_room_dimmer_node_status_2,Living room dimmer  Node status,sensor,,,dead,remove,Diagnostic/internal - not useful for dashboard
+sensor.living_room_dimmer_node_status,Living room dimmer Node status,sensor,living_room,Living Room,dead,remove,Diagnostic/internal - not useful for dashboard
+sensor.living_room_fan_node_status,Living room fan Node status,sensor,living_room,Living Room,dead,remove,Diagnostic/internal - not useful for dashboard
+sensor.living_room_fan_node_status_2,Living room fan Node status,sensor,,,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.living_room_fan_dimmer_node_status,Living room fan dimmer Node status,sensor,living_room,Living Room,dead,remove,Diagnostic/internal - not useful for dashboard
+sensor.living_room_lamp_light_2_instantaneous_demand,Living room lamp light 2 Instantaneous demand,sensor,living_room,Living Room,unavailable,map,MAP: Show brightness level
+sensor.living_room_lamp_light_2_summation_delivered,Living room lamp light 2 Summation delivered,sensor,living_room,Living Room,unavailable,map,MAP: Show brightness level
+sensor.living_sound_level,Living sound level,sensor,living_room,Living Room,-46,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.master_dimmer_node_status,Master Dimmer Node status,sensor,master,Master,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.master_bath_climate_2_battery,Master bath climate 2 Battery,sensor,master,Master,100.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.master_bath_climate_2_humidity,Master bath climate 2 Humidity,sensor,master,Master,37.09,map,MAP: Show humidity percentage
+sensor.master_bath_climate_2_temperature,Master bath climate 2 Temperature,sensor,master,Master,73.364,map,MAP: Show temperature on room
+sensor.master_bath_fan_node_status,Master bath fan Node status,sensor,master,Master,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.master_bath_lights_node_status,Master bath lights Node status,sensor,master,Master,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.master_climate_3_battery,Master climate 3 Battery,sensor,master,Master,100.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.master_climate_3_humidity,Master climate 3 Humidity,sensor,master,Master,39.47,map,MAP: Show humidity percentage
+sensor.master_climate_3_temperature,Master climate 3 Temperature,sensor,master,Master,70.916,map,MAP: Show temperature on room
+sensor.master_fan_node_status,Master fan Node status,sensor,master,Master,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.master2_master_humidity,Master2 Master Humidity,sensor,master,Master,unavailable,map,MAP: Show humidity percentage
+sensor.master2_master_pm1_0,Master2 Master PM1.0,sensor,master,Master,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.master2_master_pm10_0,Master2 Master PM10.0,sensor,master,Master,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.master2_master_pm2_5,Master2 Master PM2.5,sensor,master,Master,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.master2_master_temperature,Master2 Master Temperature,sensor,master,Master,unavailable,map,MAP: Show temperature on room
+sensor.master2_master2_gas_resistance,Master2 Master2 Gas Resistance,sensor,master,Master,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.master2_master2_humidity,Master2 Master2 Humidity,sensor,master,Master,unavailable,map,MAP: Show humidity percentage
+sensor.master2_master2_pressure,Master2 Master2 Pressure,sensor,master,Master,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.master2_master2_temperature,Master2 Master2 Temperature,sensor,master,Master,unavailable,map,MAP: Show temperature on room
+sensor.master2_master3_humidity,Master2 Master3 Humidity,sensor,master,Master,unavailable,map,MAP: Show humidity percentage
+sensor.master2_master3_pm1_0,Master2 Master3 PM1.0,sensor,master,Master,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.master2_master3_pm10_0,Master2 Master3 PM10.0,sensor,master,Master,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.master2_master3_pm2_5,Master2 Master3 PM2.5,sensor,master,Master,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.master2_master3_temperature,Master2 Master3 Temperature,sensor,master,Master,unavailable,map,MAP: Show temperature on room
+sensor.mister_flow_rate,Mister Flow Rate,sensor,,,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.mister_instantaneous_demand,Mister Instantaneous demand,sensor,lab,Lab,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.mister_summation_delivered,Mister Summation delivered,sensor,lab,Lab,0.0382,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.mister_total_gallons,Mister Total Gallons,sensor,,,24734.8,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.moth_a_mother_co2,Moth-A Mother CO2,sensor,lab,Lab,601.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.moth_a_mother_humidity,Moth-A Mother Humidity,sensor,lab,Lab,48.8235473632812,map,MAP: Show humidity percentage
+sensor.moth_a_mother_temperature,Moth-A Mother Temperature,sensor,lab,Lab,75.0802764892578,map,MAP: Show temperature on room
+sensor.moth2_mother_2_co2,Moth2 Mother 2 CO2,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.moth2_mother_2_humidity,Moth2 Mother 2 Humidity,sensor,lab,Lab,unavailable,map,MAP: Show humidity percentage
+sensor.moth2_mother_2_temperature,Moth2 Mother 2 Temperature,sensor,lab,Lab,unavailable,map,MAP: Show temperature on room
+sensor.mother_vpd,Mother VPD,sensor,,,1.52,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.mother_light_instantaneous_demand,Mother light Instantaneous demand,sensor,lab,Lab,242,map,MAP: Show brightness level
+sensor.mother_light_summation_delivered,Mother light Summation delivered,sensor,lab,Lab,45.1763,map,MAP: Show brightness level
+sensor.mother_water_2_instantaneous_demand,Mother water 2 Instantaneous demand,sensor,lab,Lab,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.mother_water_2_summation_delivered,Mother water 2 Summation delivered,sensor,lab,Lab,0.0008,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.mud_room_battery,Mud room Battery,sensor,,,65.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.new_front_battery,New Front Battery,sensor,entry,Entry,90,remove,Diagnostic/internal - not useful for dashboard
+sensor.node_21_node_status,Node 21 Node status,sensor,,,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.node_37_node_status,Node 37 Node status,sensor,,,dead,remove,Diagnostic/internal - not useful for dashboard
+sensor.node_47_node_status,Node 47 Node status,sensor,,,dead,remove,Diagnostic/internal - not useful for dashboard
+sensor.node_84_node_status,Node 84 Node status,sensor,,,dead,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_all_active_count,Nursery All Active Count,sensor,nursery,Nursery,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.nursery_all_count,Nursery All count,sensor,nursery,Nursery,1,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.nursery_dimmer_node_status,Nursery Dimmer Node status,sensor,nursery,Nursery,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_nursery_gas_resistance,Nursery Nursery Gas Resistance,sensor,nursery,Nursery,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_nursery_humidity,Nursery Nursery Humidity,sensor,nursery,Nursery,unavailable,map,MAP: Show humidity percentage
+sensor.nursery_nursery_pm1_0,Nursery Nursery PM1.0,sensor,nursery,Nursery,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_nursery_pm10_0,Nursery Nursery PM10.0,sensor,nursery,Nursery,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_nursery_pm2_5,Nursery Nursery PM2.5,sensor,nursery,Nursery,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_nursery_pmc_0_3mm,Nursery Nursery PMC <0.3µm,sensor,nursery,Nursery,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_nursery_pmc_0_5mm,Nursery Nursery PMC <0.5µm,sensor,nursery,Nursery,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_nursery_pmc_10mm,Nursery Nursery PMC <10µm,sensor,nursery,Nursery,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_nursery_pmc_1mm,Nursery Nursery PMC <1µm,sensor,nursery,Nursery,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_nursery_pmc_2_5mm,Nursery Nursery PMC <2.5µm,sensor,nursery,Nursery,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_nursery_pmc_5mm,Nursery Nursery PMC <5µm,sensor,nursery,Nursery,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_nursery_pressure,Nursery Nursery Pressure,sensor,nursery,Nursery,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_nursery_temperature,Nursery Nursery Temperature,sensor,nursery,Nursery,unavailable,map,MAP: Show temperature on room
+sensor.nursery_nursery2_humidity,Nursery Nursery2 Humidity,sensor,nursery,Nursery,unavailable,map,MAP: Show humidity percentage
+sensor.nursery_nursery2_temperature,Nursery Nursery2 Temperature,sensor,nursery,Nursery,unavailable,map,MAP: Show temperature on room
+sensor.nursery_nursery3_co2,Nursery Nursery3 CO2,sensor,nursery,Nursery,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_nursery3_humidity,Nursery Nursery3 Humidity,sensor,nursery,Nursery,unavailable,map,MAP: Show humidity percentage
+sensor.nursery_nursery3_temperature,Nursery Nursery3 Temperature,sensor,nursery,Nursery,unavailable,map,MAP: Show temperature on room
+sensor.nursery_person_active_count,Nursery Person Active Count,sensor,nursery,Nursery,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.nursery_person_count,Nursery Person count,sensor,nursery,Nursery,1,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.nursery_bath_climate_2_battery,Nursery bath climate 2 Battery,sensor,nursery,Nursery,100.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_bath_climate_2_humidity,Nursery bath climate 2 Humidity,sensor,nursery,Nursery,40.86,map,MAP: Show humidity percentage
+sensor.nursery_bath_climate_2_temperature,Nursery bath climate 2 Temperature,sensor,nursery,Nursery,68.648,map,MAP: Show temperature on room
+sensor.nursery_bath_lights_node_status,Nursery bath lights Node status,sensor,nursery,Nursery,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_climate_2_battery,Nursery climate 2 Battery,sensor,nursery,Nursery,100.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_climate_2_humidity,Nursery climate 2 Humidity,sensor,nursery,Nursery,38.0,map,MAP: Show humidity percentage
+sensor.nursery_climate_2_temperature,Nursery climate 2 Temperature,sensor,nursery,Nursery,72.122,map,MAP: Show temperature on room
+sensor.nursery_closet_door_battery,Nursery closet door Battery,sensor,nursery,Nursery,74.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_closet_light_node_status,Nursery closet light Node status,sensor,nursery,Nursery,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_fan_node_status,Nursery fan Node status,sensor,nursery,Nursery,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.nursery_lamp_2_instantaneous_demand,Nursery lamp 2 Instantaneous demand,sensor,office,Office,1.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.nursery_lamp_2_summation_delivered,Nursery lamp 2 Summation delivered,sensor,office,Office,0.0919,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.nursery_sound_level,Nursery sound level,sensor,nursery,Nursery,-61,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.office_climate_2_battery,Office Climate 2 Battery,sensor,office,Office,100.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.office_climate_2_humidity,Office Climate 2 Humidity,sensor,office,Office,35.01,map,MAP: Show humidity percentage
+sensor.office_climate_2_temperature,Office Climate 2 Temperature,sensor,office,Office,72.392,map,MAP: Show temperature on room
+sensor.office_bulb_1_instantaneous_demand,Office bulb 1 Instantaneous demand,sensor,office,Office,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.office_bulb_1_summation_delivered,Office bulb 1 Summation delivered,sensor,office,Office,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.office_9_office_co2,Office-9 Office CO2,sensor,office,Office,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.office_9_office_humidity,Office-9 Office Humidity,sensor,office,Office,unavailable,map,MAP: Show humidity percentage
+sensor.office_9_office_pm1_0,Office-9 Office PM1.0,sensor,office,Office,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.office_9_office_pm10_0,Office-9 Office PM10.0,sensor,office,Office,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.office_9_office_pm2_5,Office-9 Office PM2.5,sensor,office,Office,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.office_9_office_pmc_0_3mm,Office-9 Office PMC <0.3µm,sensor,office,Office,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.office_9_office_pmc_0_5mm,Office-9 Office PMC <0.5µm,sensor,office,Office,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.office_9_office_pmc_10mm,Office-9 Office PMC <10µm,sensor,office,Office,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.office_9_office_pmc_1mm,Office-9 Office PMC <1µm,sensor,office,Office,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.office_9_office_pmc_2_5mm,Office-9 Office PMC <2.5µm,sensor,office,Office,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.office_9_office_pmc_5mm,Office-9 Office PMC <5µm,sensor,office,Office,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.office_9_office_temp,Office-9 Office Temp,sensor,office,Office,unavailable,map,MAP: Show temperature on room
+sensor.office_9_office2_gas_resistance,Office-9 Office2 Gas Resistance,sensor,office,Office,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.office_9_office2_humidity,Office-9 Office2 Humidity,sensor,office,Office,unavailable,map,MAP: Show humidity percentage
+sensor.office_9_office2_pressure,Office-9 Office2 Pressure,sensor,office,Office,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.office_9_office2_temperature,Office-9 Office2 Temperature,sensor,office,Office,unavailable,map,MAP: Show temperature on room
+sensor.openweathermap_apparent_temperature,OpenWeatherMap Apparent temperature,sensor,,,48.128,map,MAP: Show temperature on room
+sensor.openweathermap_cloud_coverage,OpenWeatherMap Cloud coverage,sensor,,,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.openweathermap_condition,OpenWeatherMap Condition,sensor,,,sunny,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.openweathermap_dew_point_temperature,OpenWeatherMap Dew point temperature,sensor,,,34.79,map,MAP: Show temperature on room
+sensor.openweathermap_humidity,OpenWeatherMap Humidity,sensor,,,54,map,MAP: Show humidity percentage
+sensor.openweathermap_precipitation_kind,OpenWeatherMap Precipitation kind,sensor,,,None,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.openweathermap_pressure,OpenWeatherMap Pressure,sensor,,,14.8663687494715,remove,Diagnostic/internal - not useful for dashboard
+sensor.openweathermap_rain_intensity,OpenWeatherMap Rain intensity,sensor,,,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.openweathermap_snow_intensity,OpenWeatherMap Snow intensity,sensor,,,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.openweathermap_temperature,OpenWeatherMap Temperature,sensor,,,50.81,map,MAP: Show temperature on room
+sensor.openweathermap_uv_index,OpenWeatherMap UV index,sensor,,,2.12,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.openweathermap_visibility,OpenWeatherMap Visibility,sensor,,,32808.3989501312,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.openweathermap_weather,OpenWeatherMap Weather,sensor,,,clear sky,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.openweathermap_weather_code,OpenWeatherMap Weather code,sensor,,,800,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.openweathermap_wind_direction,OpenWeatherMap Wind direction,sensor,,,360,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.openweathermap_wind_gust_speed,OpenWeatherMap Wind gust speed,sensor,,,unknown,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.openweathermap_wind_speed,OpenWeatherMap Wind speed,sensor,,,14.965103793844,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.pantry_door_battery,Pantry door Battery,sensor,kitchen,Kitchen,64.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.pantry_switch_node_status,Pantry switch Node status,sensor,kitchen,Kitchen,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.patio_lights_node_status,Patio lights Node status,sensor,patio,patio,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.patio2_patio_humidity,Patio2 Patio Humidity,sensor,patio,patio,unavailable,map,MAP: Show humidity percentage
+sensor.patio2_patio_pm1_0,Patio2 Patio PM1.0,sensor,patio,patio,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.patio2_patio_pm10_0,Patio2 Patio PM10.0,sensor,patio,patio,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.patio2_patio_pm2_5,Patio2 Patio PM2.5,sensor,patio,patio,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.patio2_patio_pmc_0_3mm,Patio2 Patio PMC <0.3µm,sensor,patio,patio,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.patio2_patio_pmc_0_5mm,Patio2 Patio PMC <0.5µm,sensor,patio,patio,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.patio2_patio_pmc_10mm,Patio2 Patio PMC <10µm,sensor,patio,patio,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.patio2_patio_pmc_1mm,Patio2 Patio PMC <1µm,sensor,patio,patio,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.patio2_patio_pmc_2_5mm,Patio2 Patio PMC <2.5µm,sensor,patio,patio,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.patio2_patio_pmc_5mm,Patio2 Patio PMC <5µm,sensor,patio,patio,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.patio2_patio_temperature,Patio2 Patio Temperature,sensor,patio,patio,unavailable,map,MAP: Show temperature on room
+sensor.patio2_patio2_gas_resistance,Patio2 Patio2 Gas Resistance,sensor,patio,patio,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.patio2_patio2_humidity,Patio2 Patio2 Humidity,sensor,patio,patio,unavailable,map,MAP: Show humidity percentage
+sensor.patio2_patio2_pressure,Patio2 Patio2 Pressure,sensor,patio,patio,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.patio2_patio2_temperature,Patio2 Patio2 Temperature,sensor,patio,patio,unavailable,map,MAP: Show temperature on room
+sensor.rain_man_daily_active_watering_time,Rain man Daily active watering time,sensor,,,50.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.right_backyard_daily_active_watering_time,Right backyard Daily active watering time,sensor,patio,patio,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.right_backyard_next_cycle,Right backyard Next cycle,sensor,patio,patio,2026-02-07T10:40:00+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.right_backyard_remaining_watering_time,Right backyard Remaining watering time,sensor,patio,patio,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.right_side_daily_active_watering_time,Right side Daily active watering time,sensor,,,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.right_side_next_cycle,Right side Next cycle,sensor,,,2026-02-07T10:35:00+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.right_side_remaining_watering_time,Right side Remaining watering time,sensor,,,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.sm_n981u_battery_level,SM-N981U Battery level,sensor,,,2,remove,Diagnostic/internal - not useful for dashboard
+sensor.sm_n981u_battery_state,SM-N981U Battery state,sensor,,,discharging,remove,Diagnostic/internal - not useful for dashboard
+sensor.sm_n981u_charger_type,SM-N981U Charger type,sensor,,,ac,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.sean_bathroom_door_battery,Sean Bathroom Door Battery,sensor,bathroom,Bathroom,83.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.sean_bath_climate_battery,Sean bath climate Battery,sensor,bathroom,Bathroom,100.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.sean_bath_climate_humidity,Sean bath climate Humidity,sensor,bathroom,Bathroom,39.36,map,MAP: Show humidity percentage
+sensor.sean_bath_climate_temperature,Sean bath climate Temperature,sensor,bathroom,Bathroom,72.194,map,MAP: Show temperature on room
+sensor.sean_bath_closet_switch_node_status,Sean bath closet Switch Node status,sensor,bathroom,Bathroom,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.sean_bathroom_node_status,Sean bathroom Node status,sensor,bathroom,Bathroom,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.sean_bathroom_closet_door_battery,Sean bathroom closet door Battery,sensor,bathroom,Bathroom,85.5,remove,Diagnostic/internal - not useful for dashboard
+sensor.sean_bathroom_fan_node_status,Sean bathroom fan Node status,sensor,bathroom,Bathroom,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.sean_closet_node_status,Sean closet Node status,sensor,bedroom,Bedroom,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.sean_fan_node_status,Sean fan Node status,sensor,bedroom,Bedroom,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.sean_fan_dimmer_node_status,Sean fan dimmer Node status,sensor,bedroom,Bedroom,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.sean_light_2_node_status,Sean light 2 Node status,sensor,bedroom,Bedroom,alive,remove,Diagnostic/internal - not useful for dashboard
+sensor.sean_room_climate_battery_2,Sean room climate Battery,sensor,bedroom,Bedroom,100.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.sean_room_climate_humidity_2,Sean room climate Humidity,sensor,bedroom,Bedroom,33.39,map,MAP: Show humidity percentage
+sensor.sean_room_climate_temperature_2,Sean room climate Temperature,sensor,bedroom,Bedroom,74.984,map,MAP: Show temperature on room
+sensor.sean_room_closet_door_battery,Sean room closet door  Battery,sensor,bedroom,Bedroom,87.5,remove,Diagnostic/internal - not useful for dashboard
+sensor.sean_room_fan_dimmer_node_status,Sean room fan Dimmer Node status,sensor,bedroom,Bedroom,dead,remove,Diagnostic/internal - not useful for dashboard
+sensor.soil_moisture_battery,Soil moisture Battery,sensor,,,100.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.soil_moisture_humidity,Soil moisture Humidity,sensor,,,65.58,map,MAP: Show humidity percentage
+sensor.soil_moisture_soil_moisture,Soil moisture Soil moisture,sensor,,,65.58,map,MAP: Show humidity percentage
+sensor.soil_moisture_temperature,Soil moisture Temperature,sensor,,,71.42,map,MAP: Show temperature on room
+sensor.soil_moisture_1_soil1a,Soil-Moisture-1 Soil1a,sensor,living_room,Living Room,unavailable,map,MAP: Show humidity percentage
+sensor.soil_moisture_1_soil1b,Soil-Moisture-1 Soil1b,sensor,living_room,Living Room,unavailable,map,MAP: Show humidity percentage
+sensor.sun_next_dawn,Sun Next dawn,sensor,,,2026-01-31T12:48:31+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.sun_next_dusk,Sun Next dusk,sensor,,,2026-01-31T00:24:54+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.sun_next_midnight,Sun Next midnight,sensor,,,2026-01-31T06:36:57+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.sun_next_noon,Sun Next noon,sensor,,,2026-01-31T18:36:51+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.sun_next_rising,Sun Next rising,sensor,,,2026-01-31T13:14:01+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.sun_next_setting,Sun Next setting,sensor,,,2026-01-30T23:59:21+00:00,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.system_monitor_disk_free,System Monitor Disk free /,sensor,,,15.5,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.system_monitor_disk_usage,System Monitor Disk usage /,sensor,,,47.6,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.system_monitor_disk_use,System Monitor Disk use /,sensor,,,14.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.system_monitor_memory_free,System Monitor Memory free,sensor,,,3882.8,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.system_monitor_memory_usage,System Monitor Memory usage,sensor,,,34.3,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.system_monitor_memory_use,System Monitor Memory use,sensor,,,2029.3,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.system_monitor_processor_use,System Monitor Processor use,sensor,,,2,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.vpd_active_target,VPD Active Target,sensor,,,0.8,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.vpd_lower_bound,VPD Lower Bound,sensor,,,0.65,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.vpd_target_day,VPD Target Day,sensor,,,1.1,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.vpd_target_day_dynamic,VPD Target Day Dynamic,sensor,,,0.8,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.vpd_target_night,VPD Target Night,sensor,,,1.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.vpd_target_night_dynamic,VPD Target Night Dynamic,sensor,,,0.7,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.vpd_upper_bound,VPD Upper Bound,sensor,,,0.95,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.water,Water,sensor,,,0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.water_refill_instantaneous_demand,Water refill Instantaneous demand,sensor,,,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.water_refill_summation_delivered,Water refill Summation delivered,sensor,,,0.0094,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.weeks_since_flip,Weeks Since Flip,sensor,,,1,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.bl4_mic_level_mv,bl4 Mic Level (mV),sensor,,,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.bl4_polar_h10_1_heart_rate,bl4 Polar H10 #1 Heart Rate,sensor,,,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.bl4_polar_h10_2_heart_rate,bl4 Polar H10 #2 Heart Rate,sensor,,,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.bl5_bl5_bme680_gas_resistance,bl5 BL5 BME680 Gas Resistance,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.bl5_bl5_bme680_humidity,bl5 BL5 BME680 Humidity,sensor,lab,Lab,unavailable,map,MAP: Show humidity percentage
+sensor.bl5_bl5_bme680_pressure,bl5 BL5 BME680 Pressure,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.bl5_bl5_bme680_temperature,bl5 BL5 BME680 Temperature,sensor,lab,Lab,unavailable,map,MAP: Show temperature on room
+sensor.bl5_bl5_co2,bl5 BL5 CO2,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.bl5_bl5_esphome_version,bl5 BL5 ESPHome Version,sensor,lab,Lab,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.bl5_bl5_pm1_0,bl5 BL5 PM1.0,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.bl5_bl5_pm10,bl5 BL5 PM10,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.bl5_bl5_pm2_5,bl5 BL5 PM2.5,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.bl5_bl5_scd40_humidity,bl5 BL5 SCD40 Humidity,sensor,lab,Lab,unavailable,map,MAP: Show humidity percentage
+sensor.bl5_bl5_scd40_temperature,bl5 BL5 SCD40 Temperature,sensor,lab,Lab,unavailable,map,MAP: Show temperature on room
+sensor.bl5_bl5_sht40_humidity,bl5 BL5 SHT40 Humidity,sensor,lab,Lab,unavailable,map,MAP: Show humidity percentage
+sensor.bl5_bl5_sht40_temperature,bl5 BL5 SHT40 Temperature,sensor,lab,Lab,unavailable,map,MAP: Show temperature on room
+sensor.bl6_bl6_bme680_gas_resistance,bl6 BL6 BME680 Gas Resistance,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.bl6_bl6_bme680_humidity,bl6 BL6 BME680 Humidity,sensor,lab,Lab,unavailable,map,MAP: Show humidity percentage
+sensor.bl6_bl6_bme680_pressure,bl6 BL6 BME680 Pressure,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.bl6_bl6_bme680_temperature,bl6 BL6 BME680 Temperature,sensor,lab,Lab,unavailable,map,MAP: Show temperature on room
+sensor.bl6_bl6_co2,bl6 BL6 CO2,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.bl6_bl6_esphome_version,bl6 BL6 ESPHome Version,sensor,lab,Lab,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.bl6_bl6_heart_rate,bl6 BL6 Heart Rate,sensor,lab,Lab,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.bl6_bl6_pm1_0,bl6 BL6 PM1.0,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.bl6_bl6_pm10,bl6 BL6 PM10,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.bl6_bl6_pm2_5,bl6 BL6 PM2.5,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.bl6_bl6_scd40_humidity,bl6 BL6 SCD40 Humidity,sensor,lab,Lab,unavailable,map,MAP: Show humidity percentage
+sensor.bl6_bl6_scd40_temperature,bl6 BL6 SCD40 Temperature,sensor,lab,Lab,unavailable,map,MAP: Show temperature on room
+sensor.bl6_bl6_sht40_humidity,bl6 BL6 SHT40 Humidity,sensor,lab,Lab,unavailable,map,MAP: Show humidity percentage
+sensor.bl6_bl6_sht40_temperature,bl6 BL6 SHT40 Temperature,sensor,lab,Lab,unavailable,map,MAP: Show temperature on room
+sensor.ble_mac_6b734de90f63ccc890fa0fb586eb0027,ble mac 6B734DE90F63CCC890FA0FB586EB0027,sensor,,,unknown,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.ble_mac_6b73cb631663d682e18729ba34f9d0db,ble mac 6B73CB631663D682E18729BA34F9D0DB,sensor,,,unknown,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.ble_major_6b734de90f63ccc890fa0fb586eb0027,ble major 6B734DE90F63CCC890FA0FB586EB0027,sensor,,,unknown,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.ble_major_6b73cb631663d682e18729ba34f9d0db,ble major 6B73CB631663D682E18729BA34F9D0DB,sensor,,,unknown,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.ble_measured_power_6b734de90f63ccc890fa0fb586eb0027,ble measured power 6B734DE90F63CCC890FA0FB586EB0027,sensor,,,unknown,remove,Energy monitoring - probably not needed on map
+sensor.ble_measured_power_6b73cb631663d682e18729ba34f9d0db,ble measured power 6B73CB631663D682E18729BA34F9D0DB,sensor,,,unknown,remove,Energy monitoring - probably not needed on map
+sensor.ble_minor_6b734de90f63ccc890fa0fb586eb0027,ble minor 6B734DE90F63CCC890FA0FB586EB0027,sensor,,,unknown,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.ble_minor_6b73cb631663d682e18729ba34f9d0db,ble minor 6B73CB631663D682E18729BA34F9D0DB,sensor,,,unknown,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.ble_rssi_6b734de90f63ccc890fa0fb586eb0027,ble rssi 6B734DE90F63CCC890FA0FB586EB0027,sensor,,,unknown,remove,Diagnostic/internal - not useful for dashboard
+sensor.ble_rssi_6b73cb631663d682e18729ba34f9d0db,ble rssi 6B73CB631663D682E18729BA34F9D0DB,sensor,,,unknown,remove,Diagnostic/internal - not useful for dashboard
+sensor.coffee_roaster_sht40_air_temperature,coffee roaster SHT40 Air Temperature,sensor,kitchen,Kitchen,unavailable,map,MAP: Show temperature on room
+sensor.coffee_roaster_sht40_humidity,coffee roaster SHT40 Humidity,sensor,kitchen,Kitchen,unavailable,map,MAP: Show humidity percentage
+sensor.coffee_roaster_thermocouple_temperature,coffee roaster Thermocouple Temperature,sensor,kitchen,Kitchen,unavailable,map,MAP: Show temperature on room
+sensor.drain_counter_drain_flow,drain-counter Drain Flow,sensor,lab,Lab,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.drain_counter_drain_full,drain-counter Drain Full,sensor,lab,Lab,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.drain_counter_total_drain_flow,drain-counter Total Drain Flow,sensor,lab,Lab,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.flow_meter_drain_drain_flow,flow-meter-drain Drain Flow,sensor,lab,Lab,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.flow_meter_drain_drain_full,flow-meter-drain Drain Full,sensor,lab,Lab,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.flow_meter_drain_total_drain_flow,flow-meter-drain Total Drain Flow,sensor,lab,Lab,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.flow_meter_watera_total_water_flow,flow-meter-watera Total Water Flow,sensor,lab,Lab,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.flow_meter_watera_water_flow,flow-meter-watera Water Flow,sensor,lab,Lab,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.flow_meter_watera_water_full,flow-meter-watera Water Full,sensor,lab,Lab,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.flower_co2_flower_2_co2,flower-co2 Flower 2 CO2,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.flower_co2_flower_2_humidity,flower-co2 Flower 2 Humidity,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.flower_co2_flower_2_temp,flower-co2 Flower 2 Temp,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.flower_co2_flower_2_voc_index,flower-co2 Flower 2 VOC Index,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.flower_co2_flower_2a_gas_resistance,flower-co2 Flower 2a Gas Resistance,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.flower_co2_flower_2a_humidity,flower-co2 Flower 2a Humidity,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.flower_co2_flower_2a_pressure,flower-co2 Flower 2a Pressure,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.flower_co2_flower_2a_temperature,flower-co2 Flower 2a Temperature,sensor,lab,Lab,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.garage_garage_flow,garage Garage Flow,sensor,garage,Garage,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garage_garage_full,garage Garage Full,sensor,garage,Garage,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garage_garage_humidity,garage Garage Humidity,sensor,garage,Garage,unavailable,map,MAP: Show humidity percentage
+sensor.garage_garage_temperature,garage Garage Temperature,sensor,garage,Garage,unavailable,map,MAP: Show temperature on room
+sensor.garage_garage_ultrasonic_sensor,garage Garage Ultrasonic Sensor,sensor,garage,Garage,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garage_garage_voc_index,garage Garage VOC Index,sensor,garage,Garage,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.garage_total_garage_flow,garage Total Garage Flow,sensor,garage,Garage,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garage_drain_drain_flow,garage-drain Drain Flow,sensor,garage,Garage,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garage_drain_drain_full,garage-drain Drain Full,sensor,garage,Garage,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garage_drain_total_drain_flow,garage-drain Total Drain Flow,sensor,garage,Garage,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garage_water_mother_co2,garage-water Mother CO2,sensor,garage,Garage,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.garage_water_mother_humidity,garage-water Mother Humidity,sensor,garage,Garage,unavailable,map,MAP: Show humidity percentage
+sensor.garage_water_mother_temperature,garage-water Mother Temperature,sensor,garage,Garage,unavailable,map,MAP: Show temperature on room
+sensor.garage_water_total_water_flow,garage-water Total Water Flow,sensor,garage,Garage,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garage_water_water_flow,garage-water Water Flow,sensor,garage,Garage,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garage_water_water_full,garage-water Water Full,sensor,garage,Garage,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.garage2_mother_3_humidity,garage2 Mother 3 Humidity,sensor,garage,Garage,unavailable,map,MAP: Show humidity percentage
+sensor.garage2_mother_3_temperature,garage2 Mother 3 Temperature,sensor,garage,Garage,unavailable,map,MAP: Show temperature on room
+sensor.garage2_seedling_humidity,garage2 Seedling Humidity,sensor,garage,Garage,57.6638450622559,map,MAP: Show humidity percentage
+sensor.garage2_seedling_temperature,garage2 Seedling Temperature,sensor,garage,Garage,71.6310363769531,map,MAP: Show temperature on room
+sensor.guest_heater_instantaneous_demand,guest heater Instantaneous demand,sensor,guest_room,Guest room,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.guest_heater_summation_delivered,guest heater Summation delivered,sensor,guest_room,Guest room,30.2262,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.lab3_lab_humidity,lab3 Lab Humidity,sensor,lab,Lab,53.2393379211426,map,MAP: Show humidity percentage
+sensor.lab3_lab_temperature,lab3 Lab Temperature,sensor,lab,Lab,73.7891906738281,map,MAP: Show temperature on room
+sensor.lab3_lab_pm1_0,lab3 lab PM1.0,sensor,lab,Lab,234.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.lab3_lab_pm10_0,lab3 lab PM10.0,sensor,lab,Lab,421.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.lab3_lab_pm2_5,lab3 lab PM2.5,sensor,lab,Lab,405.0,remove,Diagnostic/internal - not useful for dashboard
+sensor.newhouse_esphome_version,newhouse ESPHome Version,sensor,living_room,Living Room,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.newhouse_house_pm1_0,newhouse House PM1.0,sensor,living_room,Living Room,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.newhouse_house_pm10,newhouse House PM10,sensor,living_room,Living Room,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.newhouse_house_pm2_5,newhouse House PM2.5,sensor,living_room,Living Room,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.newhouse_scd41_co2,newhouse SCD41 CO2,sensor,living_room,Living Room,unavailable,remove,Diagnostic/internal - not useful for dashboard
+sensor.newhouse_scd41_humidity,newhouse SCD41 Humidity,sensor,living_room,Living Room,unavailable,map,MAP: Show humidity percentage
+sensor.newhouse_scd41_temperature,newhouse SCD41 Temperature,sensor,living_room,Living Room,unavailable,map,MAP: Show temperature on room
+sensor.newhouse_sht40_humidity,newhouse SHT40 Humidity,sensor,living_room,Living Room,unavailable,map,MAP: Show humidity percentage
+sensor.newhouse_sht40_temperature,newhouse SHT40 Temperature,sensor,living_room,Living Room,unavailable,map,MAP: Show temperature on room
+sensor.sean_esp_mic_level_mv,sean esp Mic Level (mV),sensor,bedroom,Bedroom,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.sean_esp_polar_h10_heart_rate,sean esp Polar H10 Heart Rate,sensor,bedroom,Bedroom,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.sengled_e1c_nb7_instantaneous_demand_4,sengled E1C-NB7 Instantaneous demand,sensor,,,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.sengled_e1c_nb7_summation_delivered_4,sengled E1C-NB7 Summation delivered,sensor,,,0.0,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.soil_moisture2_soil_moisture_2a,soil-moisture2 Soil Moisture 2a,sensor,living_room,Living Room,unavailable,map,MAP: Show humidity percentage
+sensor.soil_moisture2_soil_moisture_2b,soil-moisture2 Soil Moisture 2b,sensor,living_room,Living Room,unavailable,map,MAP: Show humidity percentage
+sensor.soil_moisture2_soil_moisture_2c,soil-moisture2 Soil Moisture 2c,sensor,living_room,Living Room,unavailable,map,MAP: Show humidity percentage
+sensor.soil_moisture2_soil_moisture_2d,soil-moisture2 Soil Moisture 2d,sensor,living_room,Living Room,unavailable,map,MAP: Show humidity percentage
+sensor.soil_moisture2_soil_moisture_2e,soil-moisture2 Soil Moisture 2e,sensor,living_room,Living Room,unavailable,map,MAP: Show humidity percentage
+sensor.water_counter_total_water_flow,water-counter Total Water Flow,sensor,lab,Lab,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.water_counter_water_flow,water-counter Water Flow,sensor,lab,Lab,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+sensor.water_counter_water_full,water-counter Water Full,sensor,lab,Lab,unavailable,remove,"Sensor data - likely diagnostic, review if needed"
+switch.backyard_floodlights,,switch,patio,patio,unavailable,control,CONTROL: Toggle on/off
+switch.kitchen_sink_light,,switch,kitchen,Kitchen,unavailable,control,CONTROL: Toggle on/off
+switch.back_back_automatic_watering,Back back Automatic watering,switch,,,off,control,CONTROL: Irrigation toggle
+switch.back_back_manual_watering,Back back Manual watering,switch,,,off,control,CONTROL: Irrigation toggle
+switch.breakfast_pantry_switch,Breakfast pantry Switch ,switch,kitchen,Kitchen,off,control,CONTROL: Toggle on/off
+switch.coffee,Coffee,switch,kitchen,Kitchen,off,control,CONTROL: Toggle on/off
+switch.entry_audio_detection,Entry Audio Detection,switch,entry,Entry,on,map,MAP: Show detection status on room
+switch.entry_detect,Entry Detect,switch,entry,Entry,on,map,MAP: Show detection status on room
+switch.entry_motion,Entry Motion,switch,entry,Entry,on,remove,Camera setting - not needed
+switch.entry_recordings,Entry Recordings,switch,entry,Entry,on,remove,Camera setting - not needed
+switch.entry_snapshots,Entry Snapshots,switch,entry,Entry,on,remove,Camera setting - not needed
+switch.flash_closet_lights,Flash closet lights ,switch,bedroom,Bedroom,off,control,CONTROL: Toggle on/off
+switch.flower_big_fan_1,Flower Big fan 1,switch,lab,Lab,on,both,MAP: Show active state | CONTROL: Toggle
+switch.flower_big_fan_2,Flower Big fan 2,switch,lab,Lab,on,both,MAP: Show active state | CONTROL: Toggle
+switch.flower_small_fan_1,Flower small fan 1,switch,lab,Lab,off,both,MAP: Show active state | CONTROL: Toggle
+switch.flower_small_fan_2,Flower small fan 2,switch,lab,Lab,on,both,MAP: Show active state | CONTROL: Toggle
+switch.front_audio,Front Audio,switch,entry,Entry,on,control,CONTROL: Toggle on/off
+switch.front_audio_detection,Front Audio Detection,switch,entry,Entry,on,map,MAP: Show detection status on room
+switch.front_detect,Front Detect,switch,entry,Entry,on,map,MAP: Show detection status on room
+switch.front_led,Front LED,switch,entry,Entry,on,control,CONTROL: Toggle on/off
+switch.front_motion,Front Motion,switch,entry,Entry,on,remove,Camera setting - not needed
+switch.front_recordings,Front Recordings,switch,entry,Entry,on,remove,Camera setting - not needed
+switch.front_secure_screen,Front Secure Screen,switch,entry,Entry,on,control,CONTROL: Toggle on/off
+switch.front_snapshots,Front Snapshots,switch,entry,Entry,on,remove,Camera setting - not needed
+switch.front_center_automatic_watering,Front center Automatic watering,switch,entry,Entry,on,control,CONTROL: Irrigation toggle
+switch.front_center_manual_watering,Front center Manual watering,switch,entry,Entry,off,control,CONTROL: Irrigation toggle
+switch.front_floodlights,Front floodlights ,switch,entry,Entry,off,control,CONTROL: Toggle on/off
+switch.front_flower_bed_automatic_watering,Front flower bed Automatic watering,switch,entry,Entry,on,control,CONTROL: Irrigation toggle
+switch.front_flower_bed_manual_watering,Front flower bed Manual watering,switch,entry,Entry,off,control,CONTROL: Irrigation toggle
+switch.front_left_automatic_watering,Front left Automatic watering,switch,entry,Entry,on,control,CONTROL: Irrigation toggle
+switch.front_left_manual_watering,Front left Manual watering,switch,entry,Entry,off,control,CONTROL: Irrigation toggle
+switch.front_porchlight,Front porchlight ,switch,entry,Entry,off,control,CONTROL: Toggle on/off
+switch.front_right_automatic_watering,Front right Automatic watering,switch,entry,Entry,on,control,CONTROL: Irrigation toggle
+switch.front_right_manual_watering,Front right Manual watering,switch,entry,Entry,off,control,CONTROL: Irrigation toggle
+switch.front_right_back_automatic_watering,Front right back Automatic watering,switch,entry,Entry,on,control,CONTROL: Irrigation toggle
+switch.front_right_back_manual_watering,Front right back Manual watering,switch,entry,Entry,off,control,CONTROL: Irrigation toggle
+switch.front_right_sidewalk_automatic_watering,Front right sidewalk Automatic watering,switch,entry,Entry,on,control,CONTROL: Irrigation toggle
+switch.front_right_sidewalk_manual_watering,Front right sidewalk Manual watering,switch,entry,Entry,off,control,CONTROL: Irrigation toggle
+switch.garage_heater,Garage heater,switch,garage,Garage,on,both,MAP: Show active state | CONTROL: Toggle
+switch.garage_light_timer,Garage light timer,switch,garage,Garage,off,control,CONTROL: Toggle on/off
+switch.garage_water_1,Garage water 1,switch,garage,Garage,off,control,CONTROL: Toggle on/off
+switch.garage_water_2,Garage water 2,switch,garage,Garage,off,control,CONTROL: Toggle on/off
+switch.garagecam_audio_detection,Garagecam Audio Detection,switch,garage,Garage,on,map,MAP: Show detection status on room
+switch.garagecam_detect,Garagecam Detect,switch,garage,Garage,on,map,MAP: Show detection status on room
+switch.garagecam_motion,Garagecam Motion,switch,garage,Garage,on,remove,Camera setting - not needed
+switch.garagecam_recordings,Garagecam Recordings,switch,garage,Garage,on,remove,Camera setting - not needed
+switch.garagecam_snapshots,Garagecam Snapshots,switch,garage,Garage,on,remove,Camera setting - not needed
+switch.lab_1,Lab 1,switch,lab,Lab,on,control,CONTROL: Toggle on/off
+switch.lab_diablo,Lab Diablo,switch,lab,Lab,on,control,CONTROL: Toggle on/off
+switch.lab_exhaust,Lab exhaust,switch,lab,Lab,on,control,CONTROL: Toggle on/off
+switch.lab_water_2,Lab water 2,switch,lab,Lab,off,control,CONTROL: Toggle on/off
+switch.lab1a,Lab1a,switch,lab,Lab,on,control,CONTROL: Toggle on/off
+switch.left_side_automatic_watering,Left side Automatic watering,switch,,,on,control,CONTROL: Irrigation toggle
+switch.left_side_manual_watering,Left side Manual watering,switch,,,off,control,CONTROL: Irrigation toggle
+switch.living_audio_detection,Living Audio Detection,switch,living_room,Living Room,on,map,MAP: Show detection status on room
+switch.living_detect,Living Detect,switch,living_room,Living Room,on,map,MAP: Show detection status on room
+switch.living_motion,Living Motion,switch,living_room,Living Room,on,remove,Camera setting - not needed
+switch.living_recordings,Living Recordings,switch,living_room,Living Room,on,remove,Camera setting - not needed
+switch.living_snapshots,Living Snapshots,switch,living_room,Living Room,on,remove,Camera setting - not needed
+switch.master_bath_fan,Master bath fan ,switch,master,Master,off,both,MAP: Show active state | CONTROL: Toggle
+switch.mister,Mister,switch,lab,Lab,off,control,CONTROL: Toggle on/off
+switch.mother_fan,Mother fan,switch,lab,Lab,off,both,MAP: Show active state | CONTROL: Toggle
+switch.mother_intake_fan,Mother intake fan,switch,lab,Lab,on,both,MAP: Show active state | CONTROL: Toggle
+switch.mother_light,Mother light,switch,lab,Lab,on,control,CONTROL: Toggle on/off
+switch.mother_water,Mother water,switch,lab,Lab,off,control,CONTROL: Toggle on/off
+switch.mother_water_2,Mother water 2,switch,lab,Lab,off,control,CONTROL: Toggle on/off
+switch.new_front_audio,New Front Audio,switch,entry,Entry,on,control,CONTROL: Toggle on/off
+switch.new_front_led,New Front LED,switch,entry,Entry,off,control,CONTROL: Toggle on/off
+switch.new_front_secure_screen,New Front Secure Screen,switch,entry,Entry,on,control,CONTROL: Toggle on/off
+switch.nursery_audio_detection,Nursery Audio Detection,switch,nursery,Nursery,on,map,MAP: Show detection status on room
+switch.nursery_detect,Nursery Detect,switch,nursery,Nursery,on,map,MAP: Show detection status on room
+switch.nursery_motion,Nursery Motion,switch,nursery,Nursery,on,remove,Camera setting - not needed
+switch.nursery_recordings,Nursery Recordings,switch,nursery,Nursery,on,remove,Camera setting - not needed
+switch.nursery_snapshots,Nursery Snapshots,switch,nursery,Nursery,on,remove,Camera setting - not needed
+switch.nursery_bath_lights,Nursery bath lights ,switch,nursery,Nursery,off,control,CONTROL: Toggle on/off
+switch.nursery_closet_light,Nursery closet light ,switch,nursery,Nursery,off,control,CONTROL: Toggle on/off
+switch.nursery_heater,Nursery heater,switch,nursery,Nursery,off,both,MAP: Show active state | CONTROL: Toggle
+switch.office_heater,Office heater,switch,office,Office,off,both,MAP: Show active state | CONTROL: Toggle
+switch.office_9_test_gpio_output,Office-9 Test GPIO Output,switch,office,Office,unavailable,control,CONTROL: Toggle on/off
+switch.pantry_switch,Pantry switch ,switch,kitchen,Kitchen,off,control,CONTROL: Toggle on/off
+switch.patio_lights,Patio lights ,switch,patio,patio,off,control,CONTROL: Toggle on/off
+switch.right_backyard_automatic_watering,Right backyard Automatic watering,switch,patio,patio,off,control,CONTROL: Irrigation toggle
+switch.right_backyard_manual_watering,Right backyard Manual watering,switch,patio,patio,off,control,CONTROL: Irrigation toggle
+switch.right_side_automatic_watering,Right side Automatic watering,switch,,,off,control,CONTROL: Irrigation toggle
+switch.right_side_manual_watering,Right side Manual watering,switch,,,off,control,CONTROL: Irrigation toggle
+switch.sean_bath_closet_switch,Sean bath closet Switch ,switch,bathroom,Bathroom,off,control,CONTROL: Toggle on/off
+switch.sean_bathroom,Sean bathroom ,switch,bathroom,Bathroom,off,control,CONTROL: Toggle on/off
+switch.sean_bathroom_fan,Sean bathroom fan ,switch,bathroom,Bathroom,off,both,MAP: Show active state | CONTROL: Toggle
+switch.soil_moisture_1_water1a,Soil-Moisture-1 Water1a,switch,living_room,Living Room,unavailable,control,CONTROL: Toggle on/off
+switch.soil_moisture_1_water1b,Soil-Moisture-1 Water1b,switch,living_room,Living Room,unavailable,control,CONTROL: Toggle on/off
+switch.water_refill,Water refill,switch,lab,Lab,off,control,CONTROL: Toggle on/off
+switch.guest_heater,guest heater,switch,guest_room,Guest room,off,both,MAP: Show active state | CONTROL: Toggle
+switch.sengled_e1c_nb7_4,sengled E1C-NB7,switch,,,off,control,CONTROL: Toggle on/off

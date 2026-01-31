@@ -1,0 +1,274 @@
+/* Entity animations and styles */
+
+/* Base entity styles */
+.entity {
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+/* Clickable entities */
+.entity.clickable {
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.entity.clickable .clickable-area {
+  transition: fill 0.15s ease;
+  pointer-events: all;
+}
+
+.entity.clickable:hover .clickable-area {
+  fill: rgba(74, 222, 128, 0.3) !important;
+}
+
+.entity.clickable:hover .icon {
+  filter: brightness(1.4) drop-shadow(0 0 6px rgba(74, 222, 128, 0.8)) !important;
+  transform: scale(1.15);
+}
+
+.entity.clickable:hover .value-text {
+  filter: brightness(1.3) !important;
+}
+
+.entity.clickable:active .clickable-area {
+  fill: rgba(74, 222, 128, 0.5) !important;
+}
+
+.entity.clickable:active .icon,
+.entity.clickable:active .value-text {
+  transform: scale(0.95);
+  opacity: 0.8;
+}
+
+.entity .icon,
+.entity .value-text {
+  fill: rgba(255, 255, 255, 0.7);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Value badge background */
+.entity .value-bg {
+  fill: rgba(30, 30, 46, 0.9);
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 0.3;
+}
+
+/* Light states */
+.entity.light.is-on .icon {
+  filter: drop-shadow(0 0 3px rgba(255, 230, 120, 0.9));
+  animation: pulse-light 2s ease-in-out infinite;
+}
+
+.entity.light.is-off .icon {
+  opacity: 0.3;
+  filter: grayscale(1);
+}
+
+@keyframes pulse-light {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Switch states */
+.entity.switch.is-on .icon {
+  filter: drop-shadow(0 0 2px rgba(74, 222, 128, 0.8));
+}
+
+.entity.switch.is-off .icon {
+  opacity: 0.3;
+}
+
+/* Fan spinning */
+.entity.fan .icon {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.entity.fan.is-on .icon {
+  animation: spin 1.5s linear infinite;
+}
+
+.entity.fan.is-on.speed-1 .icon {
+  animation-duration: 2s;
+}
+
+.entity.fan.is-on.speed-2 .icon {
+  animation-duration: 1s;
+}
+
+.entity.fan.is-on.speed-3 .icon {
+  animation-duration: 0.5s;
+}
+
+.entity.fan.is-off .icon {
+  opacity: 0.3;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Door/window open */
+.entity.door.is-open .icon {
+  filter: drop-shadow(0 0 2px rgba(239, 68, 68, 0.8));
+  animation: pulse-alert 1s ease-in-out infinite;
+}
+
+@keyframes pulse-alert {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Occupancy/motion detected */
+.entity.occupancy.is-on .icon {
+  filter: drop-shadow(0 0 2px rgba(74, 222, 128, 0.8));
+  animation: fade-in 0.3s ease-out;
+}
+
+.entity.occupancy.is-off {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Sound detected */
+.entity.sound.is-on .icon {
+  filter: drop-shadow(0 0 2px rgba(168, 85, 247, 0.8));
+  animation: pulse-sound 0.5s ease-in-out infinite;
+}
+
+@keyframes pulse-sound {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Temperature sensor */
+.entity.sensor.temp .value-bg {
+  fill: rgba(59, 130, 246, 0.3);
+}
+
+.entity.sensor.temp .value-text {
+  fill: #60a5fa;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Humidity sensor */
+.entity.sensor.humidity .value-bg {
+  fill: rgba(34, 197, 94, 0.3);
+}
+
+.entity.sensor.humidity .value-text {
+  fill: #4ade80;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Battery sensor */
+.entity.sensor.battery .value-text {
+  fill: #facc15;
+  font-weight: 600;
+}
+
+.entity.sensor.battery.low .value-bg {
+  fill: rgba(239, 68, 68, 0.3);
+}
+
+.entity.sensor.battery.low .value-text {
+  fill: #f87171;
+  animation: pulse-alert 1s ease-in-out infinite;
+}
+
+/* Climate */
+.entity.climate.is-on .value-bg {
+  fill: rgba(251, 146, 60, 0.3);
+}
+
+.entity.climate.is-on .value-text {
+  fill: #fb923c;
+}
+
+.entity.climate.is-off .value-text {
+  fill: rgba(255, 255, 255, 0.4);
+}
+
+/* Media player */
+.entity.media-player.is-playing .icon {
+  filter: drop-shadow(0 0 3px rgba(168, 85, 247, 0.8));
+  animation: pulse-media 1.5s ease-in-out infinite;
+}
+
+.entity.media-player.is-on .icon {
+  filter: drop-shadow(0 0 2px rgba(74, 222, 128, 0.5));
+}
+
+.entity.media-player.is-off .icon {
+  opacity: 0.3;
+}
+
+@keyframes pulse-media {
+  0%, 100% { filter: drop-shadow(0 0 3px rgba(168, 85, 247, 0.8)); }
+  50% { filter: drop-shadow(0 0 6px rgba(168, 85, 247, 1)); }
+}
+
+/* Camera */
+.entity.camera.is-on .icon {
+  filter: drop-shadow(0 0 2px rgba(74, 222, 128, 0.5));
+}
+
+.entity.camera.is-off .icon {
+  opacity: 0.3;
+}
+
+/* Lock */
+.entity.lock.is-locked .icon {
+  fill: rgba(74, 222, 128, 0.9);
+}
+
+.entity.lock.is-unlocked .icon {
+  fill: rgba(239, 68, 68, 0.9);
+  animation: pulse-alert 1s ease-in-out infinite;
+}
+
+/* Cover (garage door, blinds) */
+.entity.cover.is-open .icon {
+  filter: drop-shadow(0 0 2px rgba(251, 146, 60, 0.8));
+}
+
+.entity.cover.is-closed .icon {
+  opacity: 0.4;
+}
+
+/* Person */
+.entity.person.is-home .icon {
+  filter: drop-shadow(0 0 2px rgba(74, 222, 128, 0.8));
+}
+
+.entity.person.is-away {
+  opacity: 0;
+}
+
+/* Vacuum */
+.entity.vacuum.is-cleaning .icon {
+  animation: vacuum-move 0.5s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 2px rgba(74, 222, 128, 0.8));
+}
+
+@keyframes vacuum-move {
+  from { transform: translateX(-1px); }
+  to { transform: translateX(1px); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .entity,
+  .entity .icon,
+  .entity .value-text {
+    animation: none !important;
+    transition: none !important;
+  }
+}
