@@ -6,10 +6,8 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Home Assistant not configured' });
   }
 
-  // Get the path from the catch-all route
-  const { path } = req.query;
-  const apiPath = Array.isArray(path) ? path.join('/') : path;
-
+  // Get the path from query parameter
+  const apiPath = req.query.path || '';
   const targetUrl = `${HA_URL}/api/${apiPath}`;
 
   try {
