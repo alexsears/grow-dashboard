@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/api/ha/:path*", "destination": "/api/ha/:path*" }
+  ],
+  "functions": {
+    "api/ha/[...path].js": {
+      "runtime": "nodejs20.x"
+    }
+  }
+}
