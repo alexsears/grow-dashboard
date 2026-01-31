@@ -1,0 +1,206 @@
+.grow-hub {
+  padding: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.grow-header {
+  margin-bottom: 1.5rem;
+}
+
+.grow-header h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+}
+
+/* Zone Cards Grid */
+.zone-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.zone-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  position: relative;
+}
+
+.zone-card h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  margin: 0 0 0.75rem 0;
+}
+
+.zone-readings {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.reading-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reading-row .label {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+}
+
+.reading-row .value {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.vpd-row .value {
+  font-weight: 600;
+}
+
+.vpd-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.empty-zones {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.empty-zones .hint {
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Water Section */
+.water-section {
+  margin-bottom: 2rem;
+}
+
+.water-section h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 1rem 0;
+}
+
+.water-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
+
+.water-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+.water-card.clickable {
+  cursor: pointer;
+}
+
+.water-card.clickable:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.water-card.on {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.water-icon {
+  font-size: 1.5rem;
+}
+
+.water-name {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.water-value {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.water-value.active {
+  color: #3b82f6;
+}
+
+/* VPD Legend */
+.vpd-legend {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.vpd-legend h4 {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 0.75rem 0;
+}
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.legend-item .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* Loading/Error states */
+.loading, .error {
+  text-align: center;
+  padding: 3rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.error button {
+  margin-top: 1rem;
+  background: rgba(74, 162, 245, 0.2);
+  border: 1px solid rgba(74, 162, 245, 0.4);
+  color: #4aa2f5;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}

@@ -3,6 +3,7 @@ import { getAreas, getAreaDetails } from "./services/homeAssistant";
 import HouseView from "./components/HouseView";
 import DeviceModal from "./components/DeviceModal";
 import HistoryTab from "./components/HistoryTab";
+import GrowHub from "./components/GrowHub";
 import "./App.css";
 
 export default function App() {
@@ -10,7 +11,7 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState("home");
+  const [activeTab, setActiveTab] = useState("grow");
 
   useEffect(() => {
     loadAreas();
@@ -49,14 +50,20 @@ export default function App() {
         <h1>Home</h1>
         <nav className="tabs">
           <button
-            className={`tab ${activeTab === "home" ? "active" : ""}`}
-            onClick={() => setActiveTab("home")}
+            className={`tab ${activeTab === "grow" ? "active" : ""}`}
+            onClick={() => setActiveTab("grow")}
+          >
+            Grow Hub
+          </button>
+          <button
+            className={`tab ${activeTab === "floor" ? "active" : ""}`}
+            onClick={() => setActiveTab("floor")}
           >
             Floor Plan
           </button>
           <button
-            className={`tab ${activeTab === "history" ? "active" : ""}`}
-            onClick={() => setActiveTab("history")}
+            className={`tab ${activeTab === "activity" ? "active" : ""}`}
+            onClick={() => setActiveTab("activity")}
           >
             Activity
           </button>
@@ -64,7 +71,8 @@ export default function App() {
       </header>
 
       <main className="main">
-        {activeTab === "home" ? (
+        {activeTab === "grow" && <GrowHub />}
+        {activeTab === "floor" && (
           loading ? (
             <div className="loading">Loading rooms...</div>
           ) : error ? (
@@ -75,9 +83,8 @@ export default function App() {
           ) : (
             <HouseView onRoomClick={handleRoomClick} areas={areas} />
           )
-        ) : (
-          <HistoryTab />
         )}
+        {activeTab === "activity" && <HistoryTab />}
       </main>
 
       {selectedRoom && (

@@ -60,6 +60,21 @@ body {
   color: #4aa2f5;
 }
 
+/* Grow Hub */
+.grow-hub {
+  padding: 2rem;
+  text-align: center;
+}
+
+.grow-hub h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.placeholder-text {
+  color: rgba(255, 255, 255, 0.5);
+}
+
 /* Main content */
 .main {
   width: 100%;
