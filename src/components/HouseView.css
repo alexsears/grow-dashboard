@@ -14,7 +14,7 @@
 .entity.clickable .clickable-area {
   transition: fill 0.15s ease;
   pointer-events: all;
-  fill: rgba(30, 30, 50, 0.6);
+  fill: rgba(20, 20, 35, 0.9);
 }
 
 .entity.clickable:hover .clickable-area {
