@@ -413,7 +413,7 @@ export default function HouseView({ onRoomClick, areas }) {
               <title>{visual.title}{controllable ? '\n(click to toggle, hold for controls)' : ''}</title>
               {/* Hit area for clicking */}
               <circle
-                r={Math.max(iconSize * 1.0, 5)}
+                r={Math.max(iconSize * 1.1, 6)}
                 className={controllable ? 'clickable-area' : ''}
                 style={{ pointerEvents: 'all' }}
               />
