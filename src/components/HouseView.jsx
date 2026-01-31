@@ -29,7 +29,7 @@ const STORAGE_KEY = 'entity-placements';
 const VIEWBOX_WIDTH = 100;
 const VIEWBOX_HEIGHT = 150.75; // Matches 995x1500 aspect ratio
 const ICON_SIZE_PX = 20;
-const FLOOR_PLAN_IMAGE = '/house.jpg';
+const FLOOR_PLAN_IMAGE = '/house.png';
 
 // Controllable domains that can be clicked
 const CONTROLLABLE_DOMAINS = ['light', 'switch', 'fan', 'lock', 'cover', 'media_player', 'input_boolean', 'scene', 'script'];
