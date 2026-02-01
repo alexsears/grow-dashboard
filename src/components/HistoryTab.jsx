@@ -178,13 +178,11 @@ export default function HistoryTab() {
   }
 
   function handleCreateAutomation(entityId, suggestion) {
-    const name = entityId.split(".")[1].replace(/_/g, " ");
-    alert(
-      `Create automation:\n\n` +
-      `Trigger: ${suggestion.label}\n` +
-      `Action: Control "${name}"\n\n` +
-      `(In a full implementation, this would open Home Assistant's automation editor)`
-    );
+    // Open HA automation editor with the entity pre-selected
+    // Using the HA URL from the API proxy
+    const haUrl = "https://searshome.duckdns.org";
+    const automationUrl = `${haUrl}/config/automation/edit/new?entity_id=${entityId}`;
+    window.open(automationUrl, "_blank");
   }
 
   async function handleDisableAutomation(automationId) {
