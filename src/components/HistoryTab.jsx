@@ -143,15 +143,28 @@ export default function HistoryTab() {
     setError(null);
     try {
       const data = await getLogbook(hoursBack);
-      // Filter to controllable entities and sort by time
-      const filtered = data
-        .filter((e) => {
-          const domain = e.entity_id?.split(".")[0];
-          return ["light", "switch", "fan", "climate", "cover", "lock", "media_player"].includes(domain);
-        })
+      // Filter to controllable entities
+      const filtered = data.filter((e) => {
+        const domain = e.entity_id?.split(".")[0];
+        return ["light", "switch", "fan", "climate", "cover", "lock", "media_player"].includes(domain);
+      });
+
+      // Deduplicate: keep only most recent event per entity, but count total
+      const entityMap = new Map();
+      filtered.forEach((event) => {
+        const existing = entityMap.get(event.entity_id);
+        if (!existing || new Date(event.when) > new Date(existing.when)) {
+          entityMap.set(event.entity_id, { ...event, eventCount: (existing?.eventCount || 0) + 1 });
+        } else if (existing) {
+          existing.eventCount = (existing.eventCount || 1) + 1;
+        }
+      });
+
+      // Convert to array and sort by most recent
+      const deduplicated = Array.from(entityMap.values())
         .sort((a, b) => new Date(b.when) - new Date(a.when));
 
-      setEvents(filtered);
+      setEvents(deduplicated);
       setPatterns(analyzePatterns(filtered));
     } catch (err) {
       console.error("Failed to load history:", err);
@@ -233,9 +246,10 @@ export default function HistoryTab() {
               const name = event.name || entityId?.split(".")[1]?.replace(/_/g, " ") || "Unknown";
               const isSelected = selectedEntity === entityId;
               const suggestions = getSuggestionsForEntity(entityId, patterns[entityId]);
+              const eventCount = event.eventCount || 1;
 
               return (
-                <div key={`${entityId}-${event.when}-${idx}`} className="event-group">
+                <div key={`${entityId}-${idx}`} className="event-group">
                   <div
                     className={`event-item ${isSelected ? "selected" : ""}`}
                     onClick={() => handleEntityClick(entityId)}
@@ -243,7 +257,10 @@ export default function HistoryTab() {
                     <span className="event-icon">{getEntityIcon(domain)}</span>
                     <div className="event-info">
                       <span className="event-name">{name}</span>
-                      <span className="event-message">{event.message || event.state}</span>
+                      <span className="event-message">
+                        {event.message || event.state}
+                        {eventCount > 1 && <span className="event-count"> ({eventCount}x)</span>}
+                      </span>
                     </div>
                     <span className="event-time">{formatTime(event.when)}</span>
                   </div>

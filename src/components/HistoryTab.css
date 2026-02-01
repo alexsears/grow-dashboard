@@ -113,6 +113,11 @@
   text-overflow: ellipsis;
 }
 
+.event-count {
+  color: rgba(74, 162, 245, 0.8);
+  font-size: 0.75rem;
+}
+
 .event-time {
   color: rgba(255, 255, 255, 0.4);
   font-size: 0.8rem;
