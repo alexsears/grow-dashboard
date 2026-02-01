@@ -275,6 +275,14 @@ export default function GrowHub() {
                     const width = ((seg.end - seg.start) / duration) * 100;
                     const isOnSeg = seg.state === "on";
 
+                    const startDate = new Date(seg.start);
+                    const endDate = new Date(seg.end);
+                    const formatT = (d) => d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    const durationMins = Math.round((seg.end - seg.start) / 60000);
+                    const durationStr = durationMins >= 60
+                      ? `${Math.floor(durationMins/60)}h ${durationMins%60}m`
+                      : `${durationMins}m`;
+
                     return (
                       <div
                         key={i}
@@ -283,6 +291,7 @@ export default function GrowHub() {
                           left: `${Math.max(0, left)}%`,
                           width: `${Math.min(100 - Math.max(0, left), width)}%`,
                         }}
+                        title={isOnSeg ? `ON: ${formatT(startDate)} → ${formatT(endDate)} (${durationStr})` : ''}
                       />
                     );
                   })}

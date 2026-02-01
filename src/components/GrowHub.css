@@ -78,6 +78,11 @@
 
 .timeline-segment.on {
   background: linear-gradient(180deg, #facc15 0%, #eab308 100%);
+  cursor: pointer;
+}
+
+.timeline-segment.on:hover {
+  filter: brightness(1.2);
 }
 
 .timeline-segment.off {
