@@ -124,22 +124,22 @@
   white-space: nowrap;
 }
 
+/* Event details (trigger info + suggestions) */
 .event-details {
-  padding: 10px 12px 12px;
+  padding: 8px 12px 12px;
   background: rgba(0, 0, 0, 0.2);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .trigger-info {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  margin-bottom: 8px;
 }
 
 .trigger-header {
   display: flex;
   align-items: center;
   gap: 6px;
+  margin-bottom: 4px;
 }
 
 .trigger-icon {
@@ -147,44 +147,48 @@
 }
 
 .trigger-label {
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .trigger-name {
-  font-size: 0.9rem;
   color: #4aa2f5;
+  font-size: 0.85rem;
   font-weight: 500;
+  margin-bottom: 2px;
 }
 
 .trigger-source {
-  font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.4);
-  font-style: italic;
+  font-size: 0.7rem;
 }
 
 .disable-btn {
   margin-top: 8px;
-  padding: 8px 16px;
-  background: rgba(239, 68, 68, 0.2);
-  border: 1px solid rgba(239, 68, 68, 0.4);
-  border-radius: 6px;
-  color: #f87171;
-  font-size: 0.8rem;
-  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 8px 12px;
   cursor: pointer;
   transition: all 0.15s;
-  align-self: flex-start;
+  color: #f87171;
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .disable-btn:hover {
-  background: rgba(239, 68, 68, 0.3);
-  border-color: rgba(239, 68, 68, 0.6);
+  background: rgba(239, 68, 68, 0.25);
+  border-color: rgba(239, 68, 68, 0.5);
 }
 
 .automation-suggestions {
+  margin-top: 8px;
+}
 
 .suggestions-header {
   color: rgba(255, 255, 255, 0.6);
