@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getLogbook } from "../services/homeAssistant";
+import { getLogbook, callService } from "../services/homeAssistant";
 import "./HistoryTab.css";
 
 const AUTOMATION_SUGGESTIONS = {
@@ -178,8 +178,6 @@ export default function HistoryTab() {
   }
 
   function handleCreateAutomation(entityId, suggestion) {
-    // For now, show an alert with the automation concept
-    // In a full implementation, this would open HA's automation editor
     const name = entityId.split(".")[1].replace(/_/g, " ");
     alert(
       `Create automation:\n\n` +
@@ -187,6 +185,21 @@ export default function HistoryTab() {
       `Action: Control "${name}"\n\n` +
       `(In a full implementation, this would open Home Assistant's automation editor)`
     );
+  }
+
+  async function handleDisableAutomation(automationId) {
+    if (!automationId) return;
+    const name = automationId.split(".")[1].replace(/_/g, " ");
+    if (confirm(`Disable automation "${name}"?`)) {
+      try {
+        await callService("automation", "turn_off", { entity_id: automationId });
+        alert(`Disabled: ${name}`);
+        loadHistory();
+      } catch (err) {
+        console.error("Failed to disable automation:", err);
+        alert("Failed to disable automation");
+      }
+    }
   }
 
   const uniqueEntities = [...new Set(events.map((e) => e.entity_id).filter(Boolean))];
@@ -265,27 +278,55 @@ export default function HistoryTab() {
                     <span className="event-time">{formatTime(event.when)}</span>
                   </div>
 
-                  {isSelected && suggestions.length > 0 && (
-                    <div className="automation-suggestions">
-                      <div className="suggestions-header">Automate this?</div>
-                      <div className="suggestions-list">
-                        {suggestions.map((s) => (
+                  {isSelected && (
+                    <div className="event-details">
+                      {/* Show what triggered this */}
+                      {event.context_entity_id && (
+                        <div className="trigger-info">
+                          <div className="trigger-header">
+                            <span className="trigger-icon">⚙️</span>
+                            <span className="trigger-label">Triggered by</span>
+                          </div>
+                          <div className="trigger-name">{event.context_name || event.context_entity_id}</div>
+                          {event.context_source && (
+                            <div className="trigger-source">{event.context_source}</div>
+                          )}
                           <button
-                            key={s.type}
-                            className="suggestion-btn"
+                            className="disable-btn"
                             onClick={(e) => {
                               e.stopPropagation();
-                              handleCreateAutomation(entityId, s);
+                              handleDisableAutomation(event.context_entity_id);
                             }}
                           >
-                            <span className="suggestion-icon">{s.icon}</span>
-                            <div className="suggestion-text">
-                              <span className="suggestion-label">{s.label}</span>
-                              <span className="suggestion-desc">{s.desc}</span>
-                            </div>
+                            Disable Automation
                           </button>
-                        ))}
-                      </div>
+                        </div>
+                      )}
+
+                      {/* No trigger context - show suggestions */}
+                      {!event.context_entity_id && suggestions.length > 0 && (
+                        <div className="automation-suggestions">
+                          <div className="suggestions-header">Automate this?</div>
+                          <div className="suggestions-list">
+                            {suggestions.map((s) => (
+                              <button
+                                key={s.type}
+                                className="suggestion-btn"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleCreateAutomation(entityId, s);
+                                }}
+                              >
+                                <span className="suggestion-icon">{s.icon}</span>
+                                <div className="suggestion-text">
+                                  <span className="suggestion-label">{s.label}</span>
+                                  <span className="suggestion-desc">{s.desc}</span>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>

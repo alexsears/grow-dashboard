@@ -124,11 +124,67 @@
   white-space: nowrap;
 }
 
-.automation-suggestions {
-  padding: 8px 12px 12px;
+.event-details {
+  padding: 10px 12px 12px;
   background: rgba(0, 0, 0, 0.2);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
+
+.trigger-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.trigger-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.trigger-icon {
+  font-size: 0.9rem;
+}
+
+.trigger-label {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.trigger-name {
+  font-size: 0.9rem;
+  color: #4aa2f5;
+  font-weight: 500;
+}
+
+.trigger-source {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+}
+
+.disable-btn {
+  margin-top: 8px;
+  padding: 8px 16px;
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 6px;
+  color: #f87171;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  align-self: flex-start;
+}
+
+.disable-btn:hover {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: rgba(239, 68, 68, 0.6);
+}
+
+.automation-suggestions {
 
 .suggestions-header {
   color: rgba(255, 255, 255, 0.6);
