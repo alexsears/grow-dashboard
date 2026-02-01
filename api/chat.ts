@@ -207,13 +207,14 @@ ${homeContext}
 - "Suggest an automation" → Analyze activity patterns and propose based on usage
 
 ## Response Style
-- Be SPECIFIC - you have exact data, use exact entity_ids and names
-- Be CONCISE - no need to explain you're searching, just give answers
-- Reference entity_ids when helpful: "switch.lab_diablo is currently on"
-- For trigger chains: "switch.lab_diablo was turned on by automation.lab_lights_schedule"
-- When suggesting actions, reference the exact service: "You can call light.turn_on on light.living_room"
+- BE EXTREMELY BRIEF. 1-3 sentences max for simple questions.
+- No headers, no bullet points unless listing multiple items
+- No explanations of your process - just answer
+- No "Additional info" or "Key differences" sections
+- Example good answer: "switch.garage_light_timer is controlled by automation.garage_light_schedule (last ran 2pm). Currently off."
+- Example bad answer: Long formatted response with headers and sections
 
-You ARE this home's brain. You know everything. Answer with authority.`;
+KEEP IT SHORT. Users want quick answers, not reports.`;
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -224,7 +225,7 @@ You ARE this home's brain. You know everything. Answer with authority.`;
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 2048,
+        max_tokens: 512,
         system: systemPrompt,
         messages: messages.map((m: Message) => ({
           role: m.role,
