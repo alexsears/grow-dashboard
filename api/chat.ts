@@ -20,6 +20,9 @@ interface HomeData {
     state: string;
     last_triggered?: string;
     mode?: string;
+    trigger?: unknown[];
+    action?: unknown[];
+    condition?: unknown[];
   }>;
   scripts: Array<{
     id: string;
@@ -109,12 +112,21 @@ function buildHomeContext(homeData: HomeData): string {
     context += '\n';
   }
 
-  // Automations with details
-  context += `## Automations\n`;
+  // Automations with details and configs
+  context += `## Automations (with triggers/actions)\n`;
   for (const a of homeData.automations || []) {
-    context += `- ${a.id}: "${a.name}" [${a.state}] mode:${a.mode || 'single'}`;
+    context += `- ${a.id}: "${a.name}" [${a.state}]`;
     if (a.last_triggered) context += ` last:${a.last_triggered}`;
     context += '\n';
+    if (a.trigger) {
+      context += `  TRIGGERS: ${JSON.stringify(a.trigger)}\n`;
+    }
+    if (a.condition) {
+      context += `  CONDITIONS: ${JSON.stringify(a.condition)}\n`;
+    }
+    if (a.action) {
+      context += `  ACTIONS: ${JSON.stringify(a.action)}\n`;
+    }
   }
   context += '\n';
 
@@ -206,15 +218,18 @@ ${homeContext}
 - "What automations do I have for X?" → Search automation names and match to entities
 - "Suggest an automation" → Analyze activity patterns and propose based on usage
 
-## Response Style
-- BE EXTREMELY BRIEF. 1-3 sentences max for simple questions.
-- No headers, no bullet points unless listing multiple items
-- No explanations of your process - just answer
-- No "Additional info" or "Key differences" sections
-- Example good answer: "switch.garage_light_timer is controlled by automation.garage_light_schedule (last ran 2pm). Currently off."
-- Example bad answer: Long formatted response with headers and sections
+## Response Style - CRITICAL
+- MAX 2 SENTENCES for simple questions
+- NO apologies, NO "I can see", NO "Looking at"
+- NO bullet points for single items
+- Just state facts directly
+- If you don't have data, say so in <10 words
+- NEVER start with "You're right" or apologize
 
-KEEP IT SHORT. Users want quick answers, not reports.`;
+Good: "automation.garage_light_schedule controls it, last triggered 2pm."
+Bad: "You're right, I apologize. Looking at the automation name..."
+
+BE TERSE.`;
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',

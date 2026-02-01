@@ -58,14 +58,30 @@ export default function ChatTab() {
         });
       });
 
-      // Extract automations with more detail
-      const automations = (byDomain.automation || []).map(a => ({
-        id: a.id,
-        name: a.name,
-        state: a.state,
-        last_triggered: a.attributes?.last_triggered,
-        mode: a.attributes?.mode,
-        current: a.attributes?.current,
+      // Extract automations with more detail and try to get configs
+      const automations = await Promise.all((byDomain.automation || []).map(async a => {
+        const base = {
+          id: a.id,
+          name: a.name,
+          state: a.state,
+          last_triggered: a.attributes?.last_triggered,
+          mode: a.attributes?.mode,
+        };
+
+        // Try to fetch automation config
+        try {
+          const configId = a.id.replace("automation.", "");
+          const configRes = await fetch(`/api/ha?path=config/automation/config/${configId}`);
+          if (configRes.ok) {
+            const config = await configRes.json();
+            base.trigger = config.trigger;
+            base.action = config.action;
+            base.condition = config.condition;
+          }
+        } catch (e) {
+          // Config not available, that's ok
+        }
+        return base;
       }));
 
       // Extract scripts
