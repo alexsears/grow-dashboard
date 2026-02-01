@@ -1,18 +1,18 @@
 import { useState, useEffect, useRef } from "react";
-import { getStates } from "../services/homeAssistant";
+import { getStates, getLogbook } from "../services/homeAssistant";
 import "./ChatTab.css";
 
 export default function ChatTab() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [homeContext, setHomeContext] = useState("");
+  const [homeData, setHomeData] = useState(null);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
   // Load home context on mount
   useEffect(() => {
-    loadHomeContext();
+    loadHomeData();
   }, []);
 
   // Scroll to bottom when messages change
@@ -20,49 +20,68 @@ export default function ChatTab() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  async function loadHomeContext() {
+  async function loadHomeData() {
     try {
-      const states = await getStates();
+      const [states, logbook] = await Promise.all([
+        getStates(),
+        getLogbook(24).catch(() => []),
+      ]);
 
-      // Build a summary of the home state
-      const lights = states.filter(s => s.entity_id.startsWith("light."));
-      const lightsOn = lights.filter(s => s.state === "on").length;
-
-      const climate = states.filter(s => s.entity_id.startsWith("climate."));
-      const sensors = states.filter(s =>
-        s.entity_id.startsWith("sensor.") &&
-        (s.attributes?.device_class === "temperature" || s.attributes?.device_class === "humidity")
-      );
-
-      const doors = states.filter(s =>
-        s.entity_id.startsWith("binary_sensor.") &&
-        s.attributes?.device_class === "door" &&
-        s.state === "on"
-      );
-
-      let context = `Lights: ${lightsOn}/${lights.length} on\n`;
-
-      if (climate.length > 0) {
-        context += `Climate systems: ${climate.map(c => `${c.attributes?.friendly_name || c.entity_id}: ${c.state}`).join(", ")}\n`;
+      // Fetch automations
+      let automations = [];
+      try {
+        const response = await fetch("/api/ha?path=states");
+        const allStates = await response.json();
+        automations = allStates
+          .filter(s => s.entity_id.startsWith("automation."))
+          .map(a => ({
+            id: a.entity_id,
+            name: a.attributes?.friendly_name || a.entity_id,
+            state: a.state,
+            last_triggered: a.attributes?.last_triggered,
+          }));
+      } catch (e) {
+        console.error("Failed to load automations:", e);
       }
 
-      if (doors.length > 0) {
-        context += `Open doors: ${doors.map(d => d.attributes?.friendly_name || d.entity_id).join(", ")}\n`;
-      }
+      // Organize entities by domain
+      const byDomain = {};
+      states.forEach(s => {
+        const domain = s.entity_id.split(".")[0];
+        if (!byDomain[domain]) byDomain[domain] = [];
+        byDomain[domain].push({
+          id: s.entity_id,
+          name: s.attributes?.friendly_name || s.entity_id.split(".")[1],
+          state: s.state,
+          attributes: s.attributes,
+        });
+      });
 
-      // Get a few temperature readings
-      const temps = sensors
-        .filter(s => s.attributes?.device_class === "temperature")
-        .slice(0, 5)
-        .map(s => `${s.attributes?.friendly_name || s.entity_id.split(".")[1]}: ${s.state}${s.attributes?.unit_of_measurement || "°F"}`);
+      // Get recent activity summary
+      const recentActivity = logbook.slice(0, 50).map(e => ({
+        entity: e.entity_id,
+        name: e.name,
+        message: e.message,
+        time: e.when,
+        triggered_by: e.context_entity_id,
+      }));
 
-      if (temps.length > 0) {
-        context += `Temperatures: ${temps.join(", ")}\n`;
-      }
-
-      setHomeContext(context);
+      setHomeData({
+        entities: byDomain,
+        automations,
+        recentActivity,
+        summary: {
+          totalEntities: states.length,
+          lights: byDomain.light?.length || 0,
+          lightsOn: byDomain.light?.filter(l => l.state === "on").length || 0,
+          switches: byDomain.switch?.length || 0,
+          switchesOn: byDomain.switch?.filter(s => s.state === "on").length || 0,
+          automationsEnabled: automations.filter(a => a.state === "on").length,
+          automationsTotal: automations.length,
+        },
+      });
     } catch (err) {
-      console.error("Failed to load home context:", err);
+      console.error("Failed to load home data:", err);
     }
   }
 
@@ -81,7 +100,7 @@ export default function ChatTab() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: [...messages, { role: "user", content: userMessage }],
-          context: homeContext,
+          homeData,
         }),
       });
 
@@ -106,7 +125,7 @@ export default function ChatTab() {
 
   function clearChat() {
     setMessages([]);
-    loadHomeContext(); // Refresh context
+    loadHomeData(); // Refresh data
   }
 
   return (
@@ -126,19 +145,32 @@ export default function ChatTab() {
       <div className="chat-messages">
         {messages.length === 0 ? (
           <div className="chat-empty">
-            <div className="empty-icon">💬</div>
-            <p>Ask me anything about your home!</p>
-            <div className="suggestions">
-              <button onClick={() => setInput("What lights are on?")}>
-                What lights are on?
-              </button>
-              <button onClick={() => setInput("How can I save energy?")}>
-                How can I save energy?
-              </button>
-              <button onClick={() => setInput("Suggest an automation")}>
-                Suggest an automation
-              </button>
-            </div>
+            <div className="empty-icon">🏠</div>
+            {!homeData ? (
+              <p>Loading home data...</p>
+            ) : (
+              <>
+                <p>I know your entire Home Assistant setup. Ask me anything!</p>
+                <div className="home-stats">
+                  <span>{homeData.summary.totalEntities} entities</span>
+                  <span>{homeData.summary.automationsTotal} automations</span>
+                </div>
+                <div className="suggestions">
+                  <button onClick={() => setInput("What automations control the lab lights?")}>
+                    What controls the lab lights?
+                  </button>
+                  <button onClick={() => setInput("Show me all switches that are on")}>
+                    What switches are on?
+                  </button>
+                  <button onClick={() => setInput("What happened in the last hour?")}>
+                    Recent activity?
+                  </button>
+                  <button onClick={() => setInput("Suggest an automation based on my usage patterns")}>
+                    Suggest automations
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         ) : (
           messages.map((msg, idx) => (
