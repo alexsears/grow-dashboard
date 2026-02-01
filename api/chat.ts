@@ -19,13 +19,33 @@ interface HomeData {
     name: string;
     state: string;
     last_triggered?: string;
+    mode?: string;
   }>;
+  scripts: Array<{
+    id: string;
+    name: string;
+    state: string;
+    last_triggered?: string;
+  }>;
+  scenes: Array<{
+    id: string;
+    name: string;
+  }>;
+  areas: string[];
+  services: Record<string, string[]>;
+  config: {
+    location_name?: string;
+    time_zone?: string;
+    version?: string;
+    unit_system?: Record<string, string>;
+  };
   recentActivity: Array<{
     entity: string;
     name: string;
     message: string;
     time: string;
     triggered_by?: string;
+    context_name?: string;
   }>;
   summary: {
     totalEntities: number;
@@ -33,38 +53,55 @@ interface HomeData {
     lightsOn: number;
     switches: number;
     switchesOn: number;
+    sensors: number;
+    binarySensors: number;
     automationsEnabled: number;
     automationsTotal: number;
+    scriptsTotal: number;
+    scenesTotal: number;
+    areasTotal: number;
   };
 }
 
 function buildHomeContext(homeData: HomeData): string {
   if (!homeData) return 'No home data available.';
 
-  let context = `# HOME ASSISTANT DATA\n\n`;
+  let context = `# HOME ASSISTANT COMPLETE DATA\n\n`;
+
+  // System config
+  if (homeData.config) {
+    context += `## System\n`;
+    context += `- Home: ${homeData.config.location_name || 'Unknown'}\n`;
+    context += `- HA Version: ${homeData.config.version || 'Unknown'}\n`;
+    context += `- Timezone: ${homeData.config.time_zone || 'Unknown'}\n`;
+    context += `- Units: ${homeData.config.unit_system?.temperature || 'Unknown'}\n\n`;
+  }
 
   // Summary
   context += `## Summary\n`;
   context += `- Total entities: ${homeData.summary.totalEntities}\n`;
+  context += `- Areas: ${homeData.summary.areasTotal} (${homeData.areas?.join(', ') || 'none'})\n`;
   context += `- Lights: ${homeData.summary.lightsOn}/${homeData.summary.lights} on\n`;
   context += `- Switches: ${homeData.summary.switchesOn}/${homeData.summary.switches} on\n`;
-  context += `- Automations: ${homeData.summary.automationsEnabled}/${homeData.summary.automationsTotal} enabled\n\n`;
+  context += `- Sensors: ${homeData.summary.sensors} | Binary sensors: ${homeData.summary.binarySensors}\n`;
+  context += `- Automations: ${homeData.summary.automationsEnabled}/${homeData.summary.automationsTotal} enabled\n`;
+  context += `- Scripts: ${homeData.summary.scriptsTotal} | Scenes: ${homeData.summary.scenesTotal}\n\n`;
 
   // All entities by domain
-  context += `## All Entities\n\n`;
+  context += `## All Entities by Domain\n\n`;
   for (const [domain, entities] of Object.entries(homeData.entities)) {
     if (entities.length === 0) continue;
     context += `### ${domain} (${entities.length})\n`;
     for (const e of entities) {
       let line = `- ${e.id}: "${e.name}" = ${e.state}`;
-      // Add key attributes
       if (e.attributes) {
         const attrs: string[] = [];
-        if (e.attributes.device_class) attrs.push(`device_class: ${e.attributes.device_class}`);
-        if (e.attributes.unit_of_measurement) attrs.push(`unit: ${e.attributes.unit_of_measurement}`);
-        if (e.attributes.brightness !== undefined) attrs.push(`brightness: ${e.attributes.brightness}`);
-        if (e.attributes.temperature !== undefined) attrs.push(`temp: ${e.attributes.temperature}`);
-        if (e.attributes.current_temperature !== undefined) attrs.push(`current_temp: ${e.attributes.current_temperature}`);
+        if (e.attributes.device_class) attrs.push(`class:${e.attributes.device_class}`);
+        if (e.attributes.unit_of_measurement) attrs.push(`${e.attributes.unit_of_measurement}`);
+        if (e.attributes.brightness !== undefined) attrs.push(`bright:${Math.round((e.attributes.brightness as number)/2.55)}%`);
+        if (e.attributes.hvac_action) attrs.push(`hvac:${e.attributes.hvac_action}`);
+        if (e.attributes.current_temperature !== undefined) attrs.push(`curr:${e.attributes.current_temperature}°`);
+        if (e.attributes.target_temp_high !== undefined) attrs.push(`target:${e.attributes.target_temp_high}°`);
         if (attrs.length > 0) line += ` (${attrs.join(', ')})`;
       }
       context += line + '\n';
@@ -72,23 +109,54 @@ function buildHomeContext(homeData: HomeData): string {
     context += '\n';
   }
 
-  // Automations
+  // Automations with details
   context += `## Automations\n`;
-  for (const a of homeData.automations) {
-    context += `- ${a.id}: "${a.name}" [${a.state}]`;
-    if (a.last_triggered) {
-      context += ` last triggered: ${a.last_triggered}`;
-    }
+  for (const a of homeData.automations || []) {
+    context += `- ${a.id}: "${a.name}" [${a.state}] mode:${a.mode || 'single'}`;
+    if (a.last_triggered) context += ` last:${a.last_triggered}`;
     context += '\n';
   }
   context += '\n';
 
-  // Recent activity
-  context += `## Recent Activity (last 24h)\n`;
-  for (const activity of homeData.recentActivity.slice(0, 30)) {
-    context += `- ${activity.time}: ${activity.entity} "${activity.name}" - ${activity.message}`;
+  // Scripts
+  if (homeData.scripts?.length) {
+    context += `## Scripts\n`;
+    for (const s of homeData.scripts) {
+      context += `- ${s.id}: "${s.name}" [${s.state}]`;
+      if (s.last_triggered) context += ` last:${s.last_triggered}`;
+      context += '\n';
+    }
+    context += '\n';
+  }
+
+  // Scenes
+  if (homeData.scenes?.length) {
+    context += `## Scenes\n`;
+    for (const s of homeData.scenes) {
+      context += `- ${s.id}: "${s.name}"\n`;
+    }
+    context += '\n';
+  }
+
+  // Available services by domain
+  if (homeData.services && Object.keys(homeData.services).length) {
+    context += `## Available Services (actions you can call)\n`;
+    for (const [domain, svcs] of Object.entries(homeData.services)) {
+      if (svcs.length) {
+        context += `- ${domain}: ${svcs.join(', ')}\n`;
+      }
+    }
+    context += '\n';
+  }
+
+  // Recent activity with trigger chain
+  context += `## Recent Activity (last 48h, showing 100 events)\n`;
+  for (const activity of (homeData.recentActivity || []).slice(0, 100)) {
+    const time = activity.time ? new Date(activity.time).toLocaleString() : '';
+    context += `- [${time}] ${activity.entity} "${activity.name}": ${activity.message}`;
     if (activity.triggered_by) {
-      context += ` (triggered by: ${activity.triggered_by})`;
+      context += ` ← triggered by: ${activity.triggered_by}`;
+      if (activity.context_name) context += ` ("${activity.context_name}")`;
     }
     context += '\n';
   }
@@ -118,26 +186,34 @@ export default async function handler(request: Request) {
     const homeContext = buildHomeContext(homeData);
 
     // Build comprehensive system prompt
-    const systemPrompt = `You are an expert Home Assistant AI with COMPLETE knowledge of this user's smart home. You have access to ALL entities, automations, and recent activity.
+    const systemPrompt = `You are an expert Home Assistant AI with COMPLETE, OMNISCIENT knowledge of this smart home. You have access to EVERYTHING.
 
 ${homeContext}
 
-## Your Capabilities
-- You know EVERY entity, its current state, and attributes
-- You know ALL automations and when they last triggered
-- You can see recent activity and what triggered each event
-- You can identify which automations control which entities by looking at the activity log (triggered_by field)
-- You can suggest new automations based on usage patterns
+## What You Know
+- EVERY entity (${homeData?.summary?.totalEntities || 0} total) with current states and attributes
+- ALL ${homeData?.summary?.automationsTotal || 0} automations with enabled/disabled status and last trigger times
+- ALL ${homeData?.summary?.scriptsTotal || 0} scripts and ${homeData?.summary?.scenesTotal || 0} scenes
+- All ${homeData?.summary?.areasTotal || 0} areas/rooms in the house
+- ALL available services (actions) for every domain
+- 48 hours of activity history with TRIGGER CHAINS (which automation triggered which entity)
+- System config (HA version, timezone, units)
 
-## Response Guidelines
-- Be direct and specific - you have the data, use it
-- When asked about an entity, give exact details from the data above
-- When asked what controls something, check the recent activity for triggered_by references
-- Reference entity IDs when helpful (e.g., switch.lab_diablo)
-- For automations, you can see their names and states - reference them specifically
-- Keep responses concise but complete
+## How to Answer Questions
+- "What controls X?" → Search the activity log for triggered_by references to find the automation
+- "What's on?" → List entities with state="on" from the relevant domain
+- "What happened?" → Summarize recent activity chronologically
+- "What automations do I have for X?" → Search automation names and match to entities
+- "Suggest an automation" → Analyze activity patterns and propose based on usage
 
-You ARE the home assistant. You know this home inside and out.`;
+## Response Style
+- Be SPECIFIC - you have exact data, use exact entity_ids and names
+- Be CONCISE - no need to explain you're searching, just give answers
+- Reference entity_ids when helpful: "switch.lab_diablo is currently on"
+- For trigger chains: "switch.lab_diablo was turned on by automation.lab_lights_schedule"
+- When suggesting actions, reference the exact service: "You can call light.turn_on on light.living_room"
+
+You ARE this home's brain. You know everything. Answer with authority.`;
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',

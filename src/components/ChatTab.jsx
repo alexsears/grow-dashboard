@@ -22,26 +22,26 @@ export default function ChatTab() {
 
   async function loadHomeData() {
     try {
-      const [states, logbook] = await Promise.all([
+      const [states, logbook, services, config] = await Promise.all([
         getStates(),
-        getLogbook(24).catch(() => []),
+        getLogbook(48).catch(() => []), // 48h of activity
+        fetch("/api/ha?path=services").then(r => r.json()).catch(() => []),
+        fetch("/api/ha?path=config").then(r => r.json()).catch(() => ({})),
       ]);
 
-      // Fetch automations
-      let automations = [];
+      // Fetch areas via template
+      let areas = [];
       try {
-        const response = await fetch("/api/ha?path=states");
-        const allStates = await response.json();
-        automations = allStates
-          .filter(s => s.entity_id.startsWith("automation."))
-          .map(a => ({
-            id: a.entity_id,
-            name: a.attributes?.friendly_name || a.entity_id,
-            state: a.state,
-            last_triggered: a.attributes?.last_triggered,
-          }));
+        const areaRes = await fetch("/api/ha?path=template", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            template: "{{ areas() | map('area_name') | list | tojson }}"
+          }),
+        });
+        areas = JSON.parse(await areaRes.text());
       } catch (e) {
-        console.error("Failed to load automations:", e);
+        console.error("Failed to load areas:", e);
       }
 
       // Organize entities by domain
@@ -57,18 +57,63 @@ export default function ChatTab() {
         });
       });
 
+      // Extract automations with more detail
+      const automations = (byDomain.automation || []).map(a => ({
+        id: a.id,
+        name: a.name,
+        state: a.state,
+        last_triggered: a.attributes?.last_triggered,
+        mode: a.attributes?.mode,
+        current: a.attributes?.current,
+      }));
+
+      // Extract scripts
+      const scripts = (byDomain.script || []).map(s => ({
+        id: s.id,
+        name: s.name,
+        state: s.state,
+        last_triggered: s.attributes?.last_triggered,
+      }));
+
+      // Extract scenes
+      const scenes = (byDomain.scene || []).map(s => ({
+        id: s.id,
+        name: s.name,
+      }));
+
       // Get recent activity summary
-      const recentActivity = logbook.slice(0, 50).map(e => ({
+      const recentActivity = logbook.slice(0, 100).map(e => ({
         entity: e.entity_id,
         name: e.name,
         message: e.message,
         time: e.when,
         triggered_by: e.context_entity_id,
+        context_name: e.context_name,
       }));
+
+      // Build services summary (domains and their available services)
+      const servicesSummary = {};
+      if (Array.isArray(services)) {
+        services.forEach(svc => {
+          servicesSummary[svc.domain] = Object.keys(svc.services || {});
+        });
+      }
 
       setHomeData({
         entities: byDomain,
         automations,
+        scripts,
+        scenes,
+        areas,
+        services: servicesSummary,
+        config: {
+          location_name: config.location_name,
+          latitude: config.latitude,
+          longitude: config.longitude,
+          unit_system: config.unit_system,
+          time_zone: config.time_zone,
+          version: config.version,
+        },
         recentActivity,
         summary: {
           totalEntities: states.length,
@@ -76,8 +121,13 @@ export default function ChatTab() {
           lightsOn: byDomain.light?.filter(l => l.state === "on").length || 0,
           switches: byDomain.switch?.length || 0,
           switchesOn: byDomain.switch?.filter(s => s.state === "on").length || 0,
+          sensors: byDomain.sensor?.length || 0,
+          binarySensors: byDomain.binary_sensor?.length || 0,
           automationsEnabled: automations.filter(a => a.state === "on").length,
           automationsTotal: automations.length,
+          scriptsTotal: scripts.length,
+          scenesTotal: scenes.length,
+          areasTotal: areas.length,
         },
       });
     } catch (err) {
@@ -154,6 +204,7 @@ export default function ChatTab() {
                 <div className="home-stats">
                   <span>{homeData.summary.totalEntities} entities</span>
                   <span>{homeData.summary.automationsTotal} automations</span>
+                  <span>{homeData.summary.areasTotal} areas</span>
                 </div>
                 <div className="suggestions">
                   <button onClick={() => setInput("What automations control the lab lights?")}>
