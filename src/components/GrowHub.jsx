@@ -2,6 +2,15 @@ import { useState, useEffect } from "react";
 import { getStates, toggleEntity, getEntityHistory } from "../services/homeAssistant";
 import "./GrowHub.css";
 
+// Light schedule configuration
+const LIGHTS = [
+  { id: "switch.lab1a", name: "Lab 1A", zone: "flower" },
+  { id: "switch.lab_diablo", name: "Diablo", zone: "flower" },
+  { id: "switch.mother_light", name: "Mother", zone: "mother" },
+  { id: "switch.garage_light_timer", name: "Garage", zone: "garage" },
+  { id: "light.nursery_lamp_2", name: "Nursery", zone: "nursery" },
+];
+
 // Zone configuration
 const ZONES = [
   {
@@ -108,19 +117,68 @@ function calculateOnTime(history) {
   return totalOnSeconds;
 }
 
+// Build timeline segments from history
+function buildTimeline(history, hoursBack = 24) {
+  const segments = [];
+  const now = Date.now();
+  const startTime = now - hoursBack * 60 * 60 * 1000;
+
+  if (!history || history.length === 0) return segments;
+
+  // Sort by time
+  const sorted = [...history].sort((a, b) =>
+    new Date(a.last_changed || a.last_updated) - new Date(b.last_changed || b.last_updated)
+  );
+
+  let currentState = sorted[0]?.state;
+  let segmentStart = startTime;
+
+  for (const entry of sorted) {
+    const time = new Date(entry.last_changed || entry.last_updated).getTime();
+    if (time < startTime) {
+      currentState = entry.state;
+      continue;
+    }
+
+    if (entry.state !== currentState) {
+      // Close previous segment
+      segments.push({
+        start: Math.max(segmentStart, startTime),
+        end: time,
+        state: currentState,
+      });
+      segmentStart = time;
+      currentState = entry.state;
+    }
+  }
+
+  // Close final segment
+  segments.push({
+    start: segmentStart,
+    end: now,
+    state: currentState,
+  });
+
+  return segments;
+}
+
 export default function GrowHub() {
   const [states, setStates] = useState({});
   const [runtimes, setRuntimes] = useState({});
+  const [lightHistory, setLightHistory] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadStates();
     loadRuntimes();
+    loadLightHistory();
     const stateInterval = setInterval(loadStates, 5000);
-    const runtimeInterval = setInterval(loadRuntimes, 60000); // Update runtime every minute
+    const runtimeInterval = setInterval(loadRuntimes, 60000);
+    const historyInterval = setInterval(loadLightHistory, 60000);
     return () => {
       clearInterval(stateInterval);
       clearInterval(runtimeInterval);
+      clearInterval(historyInterval);
     };
   }, []);
 
@@ -152,6 +210,21 @@ export default function GrowHub() {
     setRuntimes(newRuntimes);
   }
 
+  async function loadLightHistory() {
+    const newHistory = {};
+
+    await Promise.all(LIGHTS.map(async (light) => {
+      try {
+        const history = await getEntityHistory(light.id, 24);
+        newHistory[light.id] = buildTimeline(history, 24);
+      } catch (err) {
+        console.error(`Failed to load history for ${light.id}:`, err);
+      }
+    }));
+
+    setLightHistory(newHistory);
+  }
+
   async function handleToggle(entityId) {
     await toggleEntity(entityId);
     setTimeout(loadStates, 500);
@@ -165,8 +238,61 @@ export default function GrowHub() {
     return <div className="grow-hub"><div className="loading">Loading...</div></div>;
   }
 
+  // Generate hour labels for timeline
+  const now = new Date();
+  const hours = [];
+  for (let i = 24; i >= 0; i -= 6) {
+    const h = new Date(now - i * 60 * 60 * 1000);
+    hours.push(h.getHours());
+  }
+
   return (
     <div className="grow-hub">
+      {/* Light Schedule */}
+      <div className="lights-section">
+        <h3>Light Schedule (24h)</h3>
+        <div className="lights-timeline">
+          <div className="timeline-hours">
+            <span></span>
+            {hours.map((h, i) => (
+              <span key={i}>{h}:00</span>
+            ))}
+          </div>
+          {LIGHTS.map(light => {
+            const segments = lightHistory[light.id] || [];
+            const isOn = states[light.id]?.state === "on";
+            const startTime = Date.now() - 24 * 60 * 60 * 1000;
+            const duration = 24 * 60 * 60 * 1000;
+
+            return (
+              <div key={light.id} className="timeline-row">
+                <span className={`timeline-label ${isOn ? "on" : ""}`}>
+                  {light.name}
+                </span>
+                <div className="timeline-bar">
+                  {segments.map((seg, i) => {
+                    const left = ((seg.start - startTime) / duration) * 100;
+                    const width = ((seg.end - seg.start) / duration) * 100;
+                    const isOnSeg = seg.state === "on";
+
+                    return (
+                      <div
+                        key={i}
+                        className={`timeline-segment ${isOnSeg ? "on" : "off"}`}
+                        style={{
+                          left: `${Math.max(0, left)}%`,
+                          width: `${Math.min(100 - Math.max(0, left), width)}%`,
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Zone Cards */}
       <div className="zone-grid">
         {ZONES.map(zone => {
