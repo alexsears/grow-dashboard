@@ -137,3 +137,52 @@ export async function getEntityHistory(entityId, hoursBack = 24) {
   const data = await response.json();
   return data[0] || [];
 }
+
+export async function createAutomation(config) {
+  // Generate a unique ID based on timestamp
+  const id = `dashboard_${Date.now()}`;
+  const path = `config/automation/config/${id}`;
+
+  const response = await fetch(getApiUrl(path), {
+    method: "POST",
+    headers,
+    body: JSON.stringify(config),
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`Failed to create automation: ${error}`);
+  }
+
+  return { id, ...config };
+}
+
+export async function getEntityArea(entityId) {
+  const response = await fetch(getApiUrl("template"), {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      template: `{{ area_id('${entityId}') }}`,
+    }),
+  });
+  const text = await response.text();
+  return text.trim() === "None" ? null : text.trim();
+}
+
+export async function getEntityAreas(entityIds) {
+  const template = entityIds.map(id => `"${id}": "{{ area_id('${id}') }}"`).join(", ");
+  const response = await fetch(getApiUrl("template"), {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      template: `{ ${template} }`,
+    }),
+  });
+  const text = await response.text();
+  try {
+    const parsed = JSON.parse(text.replace(/None/g, "null"));
+    return parsed;
+  } catch {
+    return {};
+  }
+}

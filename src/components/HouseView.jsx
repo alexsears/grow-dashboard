@@ -174,7 +174,12 @@ export default function HouseView({ onRoomClick, areas }) {
   const [entityStates, setEntityStates] = useState({});
   const [scale, setScale] = useState(1);
   const [popup, setPopup] = useState(null); // { entityId, x, y, type }
+  const [zoom, setZoom] = useState(1);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [isPanning, setIsPanning] = useState(false);
+  const [panStart, setPanStart] = useState({ x: 0, y: 0 });
   const svgRef = useRef(null);
+  const containerRef = useRef(null);
   const longPressTimer = useRef(null);
   const longPressTriggered = useRef(false);
 
@@ -355,12 +360,140 @@ export default function HouseView({ onRoomClick, areas }) {
     setPopup(null);
   }
 
+  // Zoom handlers
+  function handleZoomIn() {
+    setZoom(z => Math.min(z * 1.3, 4));
+  }
+
+  function handleZoomOut() {
+    setZoom(z => Math.max(z / 1.3, 0.5));
+  }
+
+  function handleResetZoom() {
+    setZoom(1);
+    setPan({ x: 0, y: 0 });
+  }
+
+  function handleWheel(e) {
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? 0.9 : 1.1;
+      setZoom(z => Math.min(Math.max(z * delta, 0.5), 4));
+    }
+  }
+
+  // Pan handlers
+  function handlePanStart(e) {
+    if (e.button === 1 || (e.button === 0 && e.shiftKey)) {
+      e.preventDefault();
+      setIsPanning(true);
+      setPanStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
+    }
+  }
+
+  function handlePanMove(e) {
+    if (isPanning) {
+      setPan({ x: e.clientX - panStart.x, y: e.clientY - panStart.y });
+    }
+  }
+
+  function handlePanEnd() {
+    setIsPanning(false);
+  }
+
+  // Touch zoom/pan
+  const lastTouchDistance = useRef(null);
+  const lastTouchCenter = useRef(null);
+
+  function handleTouchStart(e) {
+    if (e.touches.length === 2) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      lastTouchDistance.current = Math.sqrt(dx * dx + dy * dy);
+      lastTouchCenter.current = {
+        x: (e.touches[0].clientX + e.touches[1].clientX) / 2,
+        y: (e.touches[0].clientY + e.touches[1].clientY) / 2,
+      };
+    }
+  }
+
+  function handleTouchMove(e) {
+    if (e.touches.length === 2 && lastTouchDistance.current) {
+      e.preventDefault();
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      const scale = distance / lastTouchDistance.current;
+      setZoom(z => Math.min(Math.max(z * scale, 0.5), 4));
+      lastTouchDistance.current = distance;
+
+      // Pan with two fingers
+      const center = {
+        x: (e.touches[0].clientX + e.touches[1].clientX) / 2,
+        y: (e.touches[0].clientY + e.touches[1].clientY) / 2,
+      };
+      if (lastTouchCenter.current) {
+        setPan(p => ({
+          x: p.x + (center.x - lastTouchCenter.current.x),
+          y: p.y + (center.y - lastTouchCenter.current.y),
+        }));
+      }
+      lastTouchCenter.current = center;
+    }
+  }
+
+  function handleTouchEnd() {
+    lastTouchDistance.current = null;
+    lastTouchCenter.current = null;
+  }
+
+  function handleDoubleClick(e) {
+    // Don't zoom if clicking on an entity
+    if (e.target.closest('.entity')) return;
+
+    if (zoom >= 2) {
+      handleResetZoom();
+    } else {
+      setZoom(z => Math.min(z * 1.5, 4));
+    }
+  }
+
   const iconSize = ICON_SIZE_PX / scale;
   const valueSize = (ICON_SIZE_PX * 0.7) / scale;
 
   return (
-    <div className="house-view" style={{ position: 'relative' }}>
-      <svg viewBox={`0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`} className="house-svg" ref={svgRef} style={{ pointerEvents: 'all' }}>
+    <div className="house-view" style={{ position: 'relative' }} ref={containerRef}>
+      {/* Zoom controls */}
+      <div className="zoom-controls">
+        <button onClick={handleZoomIn} title="Zoom in">+</button>
+        <button onClick={handleResetZoom} title="Reset zoom">{Math.round(zoom * 100)}%</button>
+        <button onClick={handleZoomOut} title="Zoom out">−</button>
+      </div>
+      {zoom === 1 && <div className="zoom-hint">Double-click or pinch to zoom</div>}
+
+      <div
+        className="floor-plan-container"
+        onWheel={handleWheel}
+        onMouseDown={handlePanStart}
+        onMouseMove={handlePanMove}
+        onMouseUp={handlePanEnd}
+        onMouseLeave={handlePanEnd}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onDoubleClick={handleDoubleClick}
+        style={{ cursor: isPanning ? 'grabbing' : zoom > 1 ? 'grab' : 'default' }}
+      >
+        <svg
+          viewBox={`0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`}
+          className="house-svg"
+          ref={svgRef}
+          style={{
+            pointerEvents: 'all',
+            transform: `scale(${zoom}) translate(${pan.x / zoom}px, ${pan.y / zoom}px)`,
+            transformOrigin: 'center center',
+          }}
+        >
         <defs>
           <filter id="glow">
             <feGaussianBlur stdDeviation="1" result="coloredBlur" />
@@ -455,7 +588,8 @@ export default function HouseView({ onRoomClick, areas }) {
             </g>
           );
         })}
-      </svg>
+        </svg>
+      </div>
 
       {/* Control popup for lights and fans */}
       {popup && (

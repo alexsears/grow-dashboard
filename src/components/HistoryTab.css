@@ -263,3 +263,224 @@
 .error button:hover {
   background: rgba(74, 162, 245, 0.3);
 }
+
+/* Automation Wizard Modal */
+.wizard-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.wizard-modal {
+  background: #1a1a2e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.wizard-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.wizard-header h3 {
+  flex: 1;
+  margin: 0;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.wizard-icon {
+  font-size: 1.3rem;
+}
+
+.wizard-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.wizard-close:hover {
+  color: #fff;
+}
+
+.wizard-target {
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  text-transform: capitalize;
+}
+
+.wizard-step {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wizard-step label {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+}
+
+.wizard-step input[type="time"],
+.wizard-step input[type="number"] {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.wizard-sensors {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.wizard-sensor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+  gap: 10px;
+}
+
+.wizard-sensor:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.wizard-sensor.selected {
+  background: rgba(74, 162, 245, 0.2);
+  border-color: rgba(74, 162, 245, 0.5);
+}
+
+.wizard-sensor.recommended {
+  border-color: rgba(74, 220, 128, 0.4);
+  background: rgba(74, 220, 128, 0.1);
+}
+
+.wizard-sensor.recommended:hover {
+  background: rgba(74, 220, 128, 0.15);
+}
+
+.sensor-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.sensor-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sensor-name {
+  color: #fff;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+}
+
+.top-pick {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #000;
+  font-size: 0.6rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.sensor-reasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.reason-tag {
+  background: rgba(74, 220, 128, 0.2);
+  color: #4adc80;
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.sensor-state {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.sensor-state.active {
+  color: #4adc80;
+  font-weight: 500;
+}
+
+.wizard-threshold {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wizard-threshold input {
+  width: 80px;
+}
+
+.wizard-threshold span {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.wizard-empty {
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  padding: 20px;
+}
+
+.wizard-create {
+  background: rgba(74, 162, 245, 0.3);
+  border: 1px solid rgba(74, 162, 245, 0.5);
+  border-radius: 8px;
+  padding: 12px;
+  color: #4aa2f5;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: all 0.15s;
+}
+
+.wizard-create:hover {
+  background: rgba(74, 162, 245, 0.4);
+}

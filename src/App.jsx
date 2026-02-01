@@ -4,6 +4,7 @@ import HouseView from "./components/HouseView";
 import DeviceModal from "./components/DeviceModal";
 import HistoryTab from "./components/HistoryTab";
 import GrowHub from "./components/GrowHub";
+import ChatTab from "./components/ChatTab";
 import "./App.css";
 
 export default function App() {
@@ -67,6 +68,12 @@ export default function App() {
           >
             Activity
           </button>
+          <button
+            className={`tab ${activeTab === "chat" ? "active" : ""}`}
+            onClick={() => setActiveTab("chat")}
+          >
+            💬 Chat
+          </button>
         </nav>
       </header>
 
@@ -85,6 +92,7 @@ export default function App() {
           )
         )}
         {activeTab === "activity" && <HistoryTab />}
+        {activeTab === "chat" && <ChatTab />}
       </main>
 
       {selectedRoom && (

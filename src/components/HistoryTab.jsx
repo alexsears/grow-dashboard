@@ -1,6 +1,89 @@
 import { useState, useEffect } from "react";
-import { getLogbook, callService } from "../services/homeAssistant";
+import { getLogbook, callService, createAutomation, getStates, getEntityAreas } from "../services/homeAssistant";
 import "./HistoryTab.css";
+
+// Extract room/location keywords from entity names
+function extractRoomKeywords(entityId) {
+  const name = entityId.split(".")[1] || "";
+  const keywords = new Set();
+
+  const roomPatterns = [
+    "living", "bedroom", "kitchen", "bathroom", "garage", "office", "basement",
+    "attic", "hallway", "entrance", "front", "back", "master", "guest", "kids",
+    "dining", "laundry", "closet", "patio", "deck", "porch", "lab", "flower",
+    "mother", "nursery", "tent", "grow", "veg", "clone"
+  ];
+
+  roomPatterns.forEach(room => {
+    if (name.toLowerCase().includes(room)) {
+      keywords.add(room);
+    }
+  });
+
+  return keywords;
+}
+
+// Score how related two entities are based on naming
+function getNameSimilarityScore(entity1, entity2) {
+  const keywords1 = extractRoomKeywords(entity1);
+  const keywords2 = extractRoomKeywords(entity2);
+
+  let matches = 0;
+  keywords1.forEach(k => {
+    if (keywords2.has(k)) matches++;
+  });
+
+  return matches;
+}
+
+// Domain compatibility matrix - which triggers make sense for which targets
+const DOMAIN_PAIRINGS = {
+  light: {
+    motion: 80,      // motion → light is classic
+    occupancy: 80,
+    presence: 60,
+    door: 40,        // entry lighting
+    illuminance: 50, // turn on when dark
+  },
+  switch: {
+    motion: 60,
+    door: 40,
+    presence: 50,
+  },
+  fan: {
+    temperature: 70,
+    humidity: 80,
+    motion: 30,
+  },
+  climate: {
+    temperature: 60,
+    humidity: 40,
+    window: 50,      // turn off when window opens
+    presence: 60,    // eco when away
+    door: 30,
+  },
+  cover: {
+    sun: 60,
+    temperature: 40,
+    window: 30,
+    presence: 40,
+  },
+  lock: {
+    door: 80,        // lock after door closes
+    presence: 70,    // lock when leaving
+    motion: 20,
+  },
+  media_player: {
+    motion: 40,
+    presence: 50,
+  },
+};
+
+// Get domain pairing score
+function getDomainPairingScore(targetDomain, triggerDeviceClass, triggerType) {
+  const pairings = DOMAIN_PAIRINGS[targetDomain] || {};
+  return pairings[triggerDeviceClass] || pairings[triggerType] || 0;
+}
 
 const AUTOMATION_SUGGESTIONS = {
   light: [
@@ -134,6 +217,10 @@ export default function HistoryTab() {
   const [hoursBack, setHoursBack] = useState(24);
   const [patterns, setPatterns] = useState({});
 
+  // Automation wizard state
+  const [wizard, setWizard] = useState(null); // { targetEntity, suggestion, step, triggerEntity, triggerValue, availableTriggers }
+  const [allStates, setAllStates] = useState([]);
+
   useEffect(() => {
     loadHistory();
   }, [hoursBack]);
@@ -177,12 +264,186 @@ export default function HistoryTab() {
     setSelectedEntity(selectedEntity === entityId ? null : entityId);
   }
 
-  function handleCreateAutomation(entityId, suggestion) {
-    // Open HA automation editor with the entity pre-selected
-    // Using the HA URL from the API proxy
-    const haUrl = "https://searshome.duckdns.org";
-    const automationUrl = `${haUrl}/config/automation/edit/new?entity_id=${entityId}`;
-    window.open(automationUrl, "_blank");
+  // Trigger type configs
+  const TRIGGER_CONFIGS = {
+    sunset: { needsSensor: false },
+    schedule: { needsSensor: false, needsTime: true },
+    motion: { needsSensor: true, sensorFilter: (e) => e.entity_id.startsWith("binary_sensor.") && e.attributes?.device_class === "motion" },
+    door: { needsSensor: true, sensorFilter: (e) => e.entity_id.startsWith("binary_sensor.") && (e.attributes?.device_class === "door" || e.attributes?.device_class === "opening") },
+    presence: { needsSensor: true, sensorFilter: (e) => e.entity_id.startsWith("person.") || e.entity_id.startsWith("device_tracker.") },
+    temperature: { needsSensor: true, needsThreshold: true, sensorFilter: (e) => e.entity_id.startsWith("sensor.") && e.attributes?.device_class === "temperature" },
+    humidity: { needsSensor: true, needsThreshold: true, sensorFilter: (e) => e.entity_id.startsWith("sensor.") && e.attributes?.device_class === "humidity" },
+    window: { needsSensor: true, sensorFilter: (e) => e.entity_id.startsWith("binary_sensor.") && e.attributes?.device_class === "window" },
+  };
+
+  async function handleCreateAutomation(entityId, suggestion) {
+    const config = TRIGGER_CONFIGS[suggestion.type] || {};
+
+    // If no sensor needed, create directly
+    if (!config.needsSensor && !config.needsTime) {
+      await finalizeAutomation(entityId, suggestion, null, null);
+      return;
+    }
+
+    // Load available triggers
+    let states = allStates;
+    if (states.length === 0) {
+      states = await getStates();
+      setAllStates(states);
+    }
+
+    let availableTriggers = config.sensorFilter
+      ? states.filter(config.sensorFilter)
+      : [];
+
+    // Get areas for target and all potential triggers
+    const allEntityIds = [entityId, ...availableTriggers.map(t => t.entity_id)];
+    let entityAreas = {};
+    try {
+      entityAreas = await getEntityAreas(allEntityIds);
+    } catch (err) {
+      console.error("Failed to get entity areas:", err);
+    }
+
+    const targetArea = entityAreas[entityId];
+
+    // Find entities that were active around the same time (from events)
+    const recentTriggerEntities = new Set();
+    events.forEach(e => {
+      if (e.context_entity_id) {
+        recentTriggerEntities.add(e.context_entity_id);
+      }
+    });
+
+    const targetDomain = entityId.split(".")[0];
+
+    // Score and rank triggers
+    availableTriggers = availableTriggers.map(trigger => {
+      let score = 0;
+      let reasons = [];
+
+      const triggerDeviceClass = trigger.attributes?.device_class;
+      const triggerArea = entityAreas[trigger.entity_id];
+
+      // 1. Same area = highest priority (+100)
+      if (targetArea && triggerArea && targetArea === triggerArea) {
+        score += 100;
+        reasons.push("Same room");
+      }
+
+      // 2. Domain/device_class pairing bonus (+0-80)
+      const pairingScore = getDomainPairingScore(targetDomain, triggerDeviceClass, suggestion.type);
+      if (pairingScore > 0) {
+        score += pairingScore;
+        if (pairingScore >= 60) {
+          reasons.push("Great match");
+        }
+      }
+
+      // 3. Name similarity (+30 per match)
+      const nameSimilarity = getNameSimilarityScore(entityId, trigger.entity_id);
+      if (nameSimilarity > 0) {
+        score += nameSimilarity * 30;
+        if (!reasons.includes("Same room")) {
+          reasons.push("Related area");
+        }
+      }
+
+      // 4. Recently triggered something in history (+20)
+      if (recentTriggerEntities.has(trigger.entity_id)) {
+        score += 25;
+        reasons.push("Used recently");
+      }
+
+      // 5. Currently active bonus (+5)
+      if (trigger.state === "on" || trigger.state === "home" || trigger.state === "detected") {
+        score += 5;
+      }
+
+      // 6. Penalize potentially noisy sensors
+      const triggerName = trigger.entity_id.toLowerCase();
+      if (triggerName.includes("battery") || triggerName.includes("signal") || triggerName.includes("update")) {
+        score -= 50;
+      }
+
+      return {
+        ...trigger,
+        score,
+        reasons,
+        area: triggerArea,
+        deviceClass: triggerDeviceClass,
+      };
+    });
+
+    // Sort by score descending
+    availableTriggers.sort((a, b) => b.score - a.score);
+
+    // Auto-select top recommendation if it's a strong match (score >= 150)
+    const topMatch = availableTriggers[0];
+    const autoSelect = topMatch && topMatch.score >= 150 ? topMatch.entity_id : null;
+
+    setWizard({
+      targetEntity: entityId,
+      targetArea,
+      suggestion,
+      step: config.needsTime ? "time" : "sensor",
+      triggerEntity: autoSelect,
+      triggerValue: config.needsThreshold ? "75" : config.needsTime ? "18:00" : null,
+      availableTriggers,
+    });
+  }
+
+  async function finalizeAutomation(entityId, suggestion, triggerEntity, triggerValue) {
+    const domain = entityId.split(".")[0];
+    const entityName = entityId.split(".")[1].replace(/_/g, " ");
+
+    const getService = (on = true) => {
+      if (domain === "cover") return on ? "cover.open_cover" : "cover.close_cover";
+      if (domain === "lock") return on ? "lock.unlock" : "lock.lock";
+      return on ? `${domain}.turn_on` : `${domain}.turn_off`;
+    };
+
+    let config = {
+      alias: `${suggestion.label} - ${entityName}`,
+      description: `Created from dashboard: ${suggestion.desc}`,
+      mode: "single",
+      trigger: [],
+      action: [{ service: getService(true), target: { entity_id: entityId } }],
+    };
+
+    switch (suggestion.type) {
+      case "sunset":
+        config.trigger = [{ platform: "sun", event: "sunset" }];
+        break;
+      case "schedule":
+        config.trigger = [{ platform: "time", at: `${triggerValue}:00` }];
+        break;
+      case "motion":
+      case "door":
+      case "window":
+        config.trigger = [{ platform: "state", entity_id: triggerEntity, to: "on" }];
+        if (suggestion.type === "window") {
+          config.action = [{ service: getService(false), target: { entity_id: entityId } }];
+        }
+        break;
+      case "presence":
+        config.trigger = [{ platform: "state", entity_id: triggerEntity, to: "home" }];
+        break;
+      case "temperature":
+      case "humidity":
+        config.trigger = [{ platform: "numeric_state", entity_id: triggerEntity, above: parseFloat(triggerValue) }];
+        break;
+    }
+
+    try {
+      await createAutomation(config);
+      setWizard(null);
+      alert(`Created: ${config.alias}`);
+      loadHistory();
+    } catch (err) {
+      console.error("Failed to create automation:", err);
+      alert(`Failed: ${err.message}`);
+    }
   }
 
   async function handleDisableAutomation(automationId) {
@@ -332,6 +593,101 @@ export default function HistoryTab() {
             })}
           </div>
         </>
+      )}
+
+      {/* Automation Wizard Modal */}
+      {wizard && (
+        <div className="wizard-overlay" onClick={() => setWizard(null)}>
+          <div className="wizard-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="wizard-header">
+              <span className="wizard-icon">{wizard.suggestion.icon}</span>
+              <h3>{wizard.suggestion.label}</h3>
+              <button className="wizard-close" onClick={() => setWizard(null)}>×</button>
+            </div>
+
+            <div className="wizard-target">
+              Target: <strong>{wizard.targetEntity.split(".")[1].replace(/_/g, " ")}</strong>
+            </div>
+
+            {wizard.step === "time" && (
+              <div className="wizard-step">
+                <label>Trigger time:</label>
+                <input
+                  type="time"
+                  value={wizard.triggerValue}
+                  onChange={(e) => setWizard({ ...wizard, triggerValue: e.target.value })}
+                />
+                <button
+                  className="wizard-create"
+                  onClick={() => finalizeAutomation(wizard.targetEntity, wizard.suggestion, null, wizard.triggerValue)}
+                >
+                  Create Automation
+                </button>
+              </div>
+            )}
+
+            {wizard.step === "sensor" && (
+              <div className="wizard-step">
+                <label>Select trigger {wizard.suggestion.type}:</label>
+                {wizard.availableTriggers.length === 0 ? (
+                  <div className="wizard-empty">No {wizard.suggestion.type} sensors found</div>
+                ) : (
+                  <div className="wizard-sensors">
+                    {wizard.availableTriggers.map((s, idx) => (
+                      <button
+                        key={s.entity_id}
+                        className={`wizard-sensor ${wizard.triggerEntity === s.entity_id ? "selected" : ""} ${s.score >= 100 ? "recommended" : ""}`}
+                        onClick={() => setWizard({ ...wizard, triggerEntity: s.entity_id })}
+                      >
+                        <div className="sensor-main">
+                          <div className="sensor-name-row">
+                            <span className="sensor-name">
+                              {s.attributes?.friendly_name || s.entity_id.split(".")[1].replace(/_/g, " ")}
+                            </span>
+                            {idx === 0 && s.score >= 100 && (
+                              <span className="top-pick">Top pick</span>
+                            )}
+                          </div>
+                          {s.reasons && s.reasons.length > 0 && (
+                            <span className="sensor-reasons">
+                              {s.reasons.map((r, i) => (
+                                <span key={i} className="reason-tag">{r}</span>
+                              ))}
+                            </span>
+                          )}
+                        </div>
+                        <span className={`sensor-state ${s.state === "on" || s.state === "home" ? "active" : ""}`}>
+                          {s.state}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {TRIGGER_CONFIGS[wizard.suggestion.type]?.needsThreshold && wizard.triggerEntity && (
+                  <div className="wizard-threshold">
+                    <label>Trigger above:</label>
+                    <input
+                      type="number"
+                      value={wizard.triggerValue}
+                      onChange={(e) => setWizard({ ...wizard, triggerValue: e.target.value })}
+                    />
+                    <span>{wizard.suggestion.type === "temperature" ? "°F" : "%"}</span>
+                  </div>
+                )}
+
+                {wizard.triggerEntity && (
+                  <button
+                    className="wizard-create"
+                    onClick={() => finalizeAutomation(wizard.targetEntity, wizard.suggestion, wizard.triggerEntity, wizard.triggerValue)}
+                  >
+                    Create Automation
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );
