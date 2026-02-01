@@ -7,6 +7,7 @@ export default function ChatTab() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [homeData, setHomeData] = useState(null);
+  const homeDataRef = useRef(null);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -99,7 +100,7 @@ export default function ChatTab() {
         });
       }
 
-      setHomeData({
+      const data = {
         entities: byDomain,
         automations,
         scripts,
@@ -129,7 +130,10 @@ export default function ChatTab() {
           scenesTotal: scenes.length,
           areasTotal: areas.length,
         },
-      });
+      };
+      homeDataRef.current = data;
+      setHomeData(data);
+      console.log("Home data loaded:", data.summary);
     } catch (err) {
       console.error("Failed to load home data:", err);
     }
@@ -139,10 +143,19 @@ export default function ChatTab() {
     e.preventDefault();
     if (!input.trim() || loading) return;
 
+    // Use ref for latest data (state might be stale in closure)
+    let currentHomeData = homeDataRef.current;
+    if (!currentHomeData) {
+      await loadHomeData();
+      currentHomeData = homeDataRef.current;
+    }
+
     const userMessage = input.trim();
     setInput("");
     setMessages(prev => [...prev, { role: "user", content: userMessage }]);
     setLoading(true);
+
+    console.log("Sending with homeData:", currentHomeData?.summary);
 
     try {
       const response = await fetch("/api/chat", {
@@ -150,7 +163,7 @@ export default function ChatTab() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: [...messages, { role: "user", content: userMessage }],
-          homeData,
+          homeData: currentHomeData,
         }),
       });
 
