@@ -98,6 +98,41 @@ export default function SamsungRemote() {
           ))}
         </select>
 
+        {/* Volume Control */}
+        <div className="volume-control">
+          <button
+            className={`vol-btn mute ${attrs.is_volume_muted ? "muted" : ""}`}
+            onClick={() => sendCommand("KEY_MUTE")}
+            disabled={loading}
+          >
+            {attrs.is_volume_muted ? "🔇" : "🔊"}
+          </button>
+          <button className="vol-btn" onClick={() => sendCommand("KEY_VOLDOWN")} disabled={loading}>−</button>
+          <div className="vol-slider-wrapper">
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={attrs.volume_level ? Math.round(attrs.volume_level * 100) : 50}
+              onChange={async (e) => {
+                const vol = parseInt(e.target.value) / 100;
+                await fetch("/api/ha?path=services/media_player/volume_set", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    entity_id: selectedTV.media,
+                    volume_level: vol,
+                  }),
+                });
+                setTimeout(fetchTVState, 300);
+              }}
+              className="vol-slider"
+            />
+            <span className="vol-level">{attrs.volume_level ? Math.round(attrs.volume_level * 100) : "--"}%</span>
+          </div>
+          <button className="vol-btn" onClick={() => sendCommand("KEY_VOLUP")} disabled={loading}>+</button>
+        </div>
+
         <div className={`tv-screen ${isOn ? "on" : "off"}`}>
           {isOn ? (
             <>
@@ -113,12 +148,6 @@ export default function SamsungRemote() {
                   <div className="tv-status">TV is on</div>
                 )}
               </div>
-              {attrs.volume_level !== undefined && (
-                <div className="tv-volume">
-                  🔊 {Math.round(attrs.volume_level * 100)}%
-                  {attrs.is_volume_muted && " (muted)"}
-                </div>
-              )}
             </>
           ) : (
             <div className="tv-off-message">
