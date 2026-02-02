@@ -41,6 +41,21 @@ export default function SamsungRemote() {
           command: command,
         }),
       });
+
+      // Auto-select user after power on (TV shows user selection screen)
+      if (command === "KEY_POWER" && !isOn) {
+        setTimeout(async () => {
+          await fetch("/api/ha?path=services/remote/send_command", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              entity_id: selectedTV.remote,
+              command: "KEY_ENTER",
+            }),
+          });
+        }, 4000); // Wait 4s for TV to boot to user selection
+      }
+
       setTimeout(fetchTVState, 500);
     } catch (err) {
       console.error("Failed to send command:", err);
