@@ -5,6 +5,7 @@ import DeviceModal from "./components/DeviceModal";
 import HistoryTab from "./components/HistoryTab";
 import GrowHub from "./components/GrowHub";
 import ChatTab from "./components/ChatTab";
+import SamsungRemote from "./components/SamsungRemote";
 import "./App.css";
 
 export default function App() {
@@ -74,6 +75,12 @@ export default function App() {
           >
             💬 Chat
           </button>
+          <button
+            className={`tab ${activeTab === "remote" ? "active" : ""}`}
+            onClick={() => setActiveTab("remote")}
+          >
+            📺 Remote
+          </button>
         </nav>
       </header>
 
@@ -93,6 +100,7 @@ export default function App() {
         )}
         {activeTab === "activity" && <HistoryTab />}
         {activeTab === "chat" && <ChatTab />}
+        {activeTab === "remote" && <SamsungRemote />}
       </main>
 
       {selectedRoom && (
