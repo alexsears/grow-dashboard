@@ -20,9 +20,9 @@ const FAVORITES = [
   {
     id: "freeze_dance",
     name: "Freeze Dance",
-    thumbnail: "https://i.ytimg.com/vi/2UcZWXvgMZE/mqdefault.jpg",
+    thumbnail: "https://i.ytimg.com/vi/02H502iplUU/mqdefault.jpg",
     type: "youtube",
-    videoId: "2UcZWXvgMZE"
+    videoId: "02H502iplUU"
   },
   {
     id: "cbs",
