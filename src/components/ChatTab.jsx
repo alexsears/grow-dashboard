@@ -7,6 +7,8 @@ export default function ChatTab() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [homeData, setHomeData] = useState(null);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [loadingStatus, setLoadingStatus] = useState("");
   const homeDataRef = useRef(null);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -23,12 +25,18 @@ export default function ChatTab() {
 
   async function loadHomeData() {
     try {
+      setLoadingProgress(10);
+      setLoadingStatus("Fetching states...");
+
       const [states, logbook, services, config] = await Promise.all([
         getStates(),
         getLogbook(48).catch(() => []), // 48h of activity
         fetch("/api/ha?path=services").then(r => r.json()).catch(() => []),
         fetch("/api/ha?path=config").then(r => r.json()).catch(() => ({})),
       ]);
+
+      setLoadingProgress(40);
+      setLoadingStatus("Loading areas...");
 
       // Fetch areas via template
       let areas = [];
@@ -45,6 +53,9 @@ export default function ChatTab() {
         console.error("Failed to load areas:", e);
       }
 
+      setLoadingProgress(50);
+      setLoadingStatus("Organizing entities...");
+
       // Organize entities by domain
       const byDomain = {};
       states.forEach(s => {
@@ -57,6 +68,9 @@ export default function ChatTab() {
           attributes: s.attributes,
         });
       });
+
+      setLoadingProgress(60);
+      setLoadingStatus("Loading automation configs...");
 
       // Extract automations with more detail and try to get configs
       const automations = await Promise.all((byDomain.automation || []).map(async a => {
@@ -83,6 +97,9 @@ export default function ChatTab() {
         }
         return base;
       }));
+
+      setLoadingProgress(80);
+      setLoadingStatus("Processing scripts & scenes...");
 
       // Extract scripts
       const scripts = (byDomain.script || []).map(s => ({
@@ -147,9 +164,18 @@ export default function ChatTab() {
           areasTotal: areas.length,
         },
       };
+      setLoadingProgress(100);
+      setLoadingStatus("Ready!");
+
       homeDataRef.current = data;
       setHomeData(data);
       console.log("Home data loaded:", data.summary);
+
+      // Reset progress after a brief moment
+      setTimeout(() => {
+        setLoadingProgress(0);
+        setLoadingStatus("");
+      }, 500);
     } catch (err) {
       console.error("Failed to load home data:", err);
     }
@@ -227,7 +253,15 @@ export default function ChatTab() {
           <div className="chat-empty">
             <div className="empty-icon">🏠</div>
             {!homeData ? (
-              <p>Loading home data...</p>
+              <div className="loading-container">
+                <p>{loadingStatus || "Loading home data..."}</p>
+                <div className="progress-bar">
+                  <div
+                    className="progress-fill"
+                    style={{ width: `${loadingProgress}%` }}
+                  />
+                </div>
+              </div>
             ) : (
               <>
                 <p>I know your entire Home Assistant setup. Ask me anything!</p>

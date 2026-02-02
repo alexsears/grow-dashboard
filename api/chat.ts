@@ -269,22 +269,22 @@ You have two tools available:
 - create_automation: Create new HA automations (id, alias, trigger, action, condition, mode)
 - call_service: Call any HA service (domain, service, entity_id, data)
 
-ALWAYS CONFIRM FIRST before executing. When user requests an action:
-1. Describe exactly what you will do (entity IDs, values, automation config)
-2. Ask "Should I do this?" or "Confirm?"
-3. ONLY execute the tool after user says yes/confirm/do it/go ahead/push it
+**CRITICAL: NEVER USE TOOLS ON FIRST REQUEST**
+When user asks to do something, you MUST:
+1. First message: Describe what you WILL do and ask "Confirm?" - DO NOT use any tools yet
+2. Wait for user to say yes/confirm/do it/go ahead/push it
+3. Second message: ONLY THEN use the tool
 
-Example:
-User: "Turn on the kitchen light"
-You: "I'll call light.turn_on on light.kitchen_main. Confirm?"
-User: "yes"
-You: [use call_service tool]
+If user's message is their FIRST request for an action, respond with confirmation request ONLY - no tool use.
+If user's message is confirming (yes/do it/confirm/go ahead/push it), THEN use the tool.
 
-Example:
-User: "Create automation for motion light"
-You: "I'll create automation with motion trigger on binary_sensor.hall_motion, action light.turn_on on light.hall. Confirm?"
-User: "do it"
-You: [use create_automation tool]`;
+Example flow:
+User: "Turn on kitchen light" → You: "I'll call light.turn_on on light.kitchen_main. Confirm?" (NO TOOL)
+User: "yes" → You: [use call_service tool] "Done."
+
+Example flow:
+User: "Create mister automation" → You: "I'll create automation with hourly trigger, turns on switch.mister for 10s. Confirm?" (NO TOOL)
+User: "do it" → You: [use create_automation tool] "Created."`;
 
     const tools = [
       {
@@ -412,7 +412,7 @@ You: [use create_automation tool]`;
 
     return new Response(JSON.stringify({
       message: assistantMessage,
-      version: 2,
+      version: 3,
     }), {
       headers: { 'Content-Type': 'application/json' }
     });
