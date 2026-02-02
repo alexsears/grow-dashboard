@@ -13,9 +13,9 @@ const FAVORITES = [
   {
     id: "miss_rachel",
     name: "Miss Rachel",
-    thumbnail: "https://i.ytimg.com/vi/dEuN4wVz5dA/mqdefault.jpg",
+    thumbnail: "https://i.ytimg.com/vi/h67AgK4EHq4/mqdefault.jpg",
     type: "youtube",
-    videoId: "dEuN4wVz5dA"
+    videoId: "h67AgK4EHq4"
   },
   {
     id: "freeze_dance",
