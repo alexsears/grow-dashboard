@@ -63,6 +63,24 @@ export default function SamsungRemote() {
     setLoading(false);
   }
 
+  async function launchApp(appName) {
+    setLoading(true);
+    try {
+      await fetch("/api/ha?path=services/media_player/select_source", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          entity_id: selectedTV.media,
+          source: appName,
+        }),
+      });
+      setTimeout(fetchTVState, 1000);
+    } catch (err) {
+      console.error("Failed to launch app:", err);
+    }
+    setLoading(false);
+  }
+
   const isOn = tvState?.state === "on" || tvState?.state === "playing" || tvState?.state === "paused";
   const attrs = tvState?.attributes || {};
 
@@ -182,12 +200,36 @@ export default function SamsungRemote() {
         </div>
 
         {/* App Buttons */}
-        <div className="remote-section app-row">
+        <div className="remote-section app-grid">
           <button className="app-btn netflix" onClick={() => sendCommand("KEY_NETFLIX")} disabled={loading}>
-            NETFLIX
+            Netflix
           </button>
           <button className="app-btn prime" onClick={() => sendCommand("KEY_AMAZON")} disabled={loading}>
-            prime video
+            Prime
+          </button>
+          <button className="app-btn youtube" onClick={() => sendCommand("KEY_YOUTUBE")} disabled={loading}>
+            YouTube
+          </button>
+          <button className="app-btn youtubetv" onClick={() => launchApp("YouTube TV")} disabled={loading}>
+            YouTube TV
+          </button>
+          <button className="app-btn disney" onClick={() => launchApp("Disney+")} disabled={loading}>
+            Disney+
+          </button>
+          <button className="app-btn max" onClick={() => launchApp("Max")} disabled={loading}>
+            Max
+          </button>
+          <button className="app-btn hulu" onClick={() => launchApp("Hulu")} disabled={loading}>
+            Hulu
+          </button>
+          <button className="app-btn peacock" onClick={() => launchApp("Peacock")} disabled={loading}>
+            Peacock
+          </button>
+          <button className="app-btn spotify" onClick={() => launchApp("Spotify")} disabled={loading}>
+            Spotify
+          </button>
+          <button className="app-btn plex" onClick={() => launchApp("Plex")} disabled={loading}>
+            Plex
           </button>
         </div>
       </div>

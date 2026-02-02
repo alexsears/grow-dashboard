@@ -395,22 +395,23 @@
 }
 
 /* App Buttons */
-.app-row {
-  flex-direction: column;
-  gap: 6px;
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
   width: 100%;
-  padding: 0 8px;
+  padding: 0 4px;
 }
 
 .app-btn {
-  width: 100%;
-  padding: 8px;
+  padding: 7px 4px;
   border: none;
   border-radius: 4px;
-  font-size: 0.6rem;
-  font-weight: 700;
+  font-size: 0.55rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.15s;
+  color: #fff;
 }
 
 .app-btn:hover:not(:disabled) {
@@ -426,16 +427,16 @@
   cursor: not-allowed;
 }
 
-.app-btn.netflix {
-  background: #e50914;
-  color: #fff;
-}
-
-.app-btn.prime {
-  background: #00a8e1;
-  color: #fff;
-  font-weight: 400;
-}
+.app-btn.netflix { background: #e50914; }
+.app-btn.prime { background: #00a8e1; }
+.app-btn.youtube { background: #ff0000; }
+.app-btn.youtubetv { background: #ff0000; }
+.app-btn.disney { background: #113ccf; }
+.app-btn.max { background: #002be7; }
+.app-btn.hulu { background: #1ce783; color: #000; }
+.app-btn.peacock { background: #000; border: 1px solid #333; }
+.app-btn.spotify { background: #1db954; }
+.app-btn.plex { background: #e5a00d; color: #000; }
 
 /* Responsive */
 @media (max-width: 600px) {
