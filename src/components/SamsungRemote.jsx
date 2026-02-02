@@ -9,6 +9,30 @@ const TV_OPTIONS = [
   { id: "guest", name: "Guest", remote: "remote.guest_tv", media: "media_player.guest_tv" },
 ];
 
+const FAVORITES = [
+  {
+    id: "miss_rachel",
+    name: "Miss Rachel",
+    thumbnail: "https://i.ytimg.com/vi/dEuN4wVz5dA/mqdefault.jpg",
+    type: "youtube",
+    videoId: "dEuN4wVz5dA"
+  },
+  {
+    id: "freeze_dance",
+    name: "Freeze Dance",
+    thumbnail: "https://i.ytimg.com/vi/2UcZWXvgMZE/mqdefault.jpg",
+    type: "youtube",
+    videoId: "2UcZWXvgMZE"
+  },
+  {
+    id: "cbs",
+    name: "CBS",
+    thumbnail: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/CBS_logo.svg/200px-CBS_logo.svg.png",
+    type: "youtubetv",
+    channel: "CBS"
+  },
+];
+
 export default function SamsungRemote() {
   const [selectedTV, setSelectedTV] = useState(TV_OPTIONS[0]);
   const [tvState, setTvState] = useState(null);
@@ -77,6 +101,39 @@ export default function SamsungRemote() {
       setTimeout(fetchTVState, 1000);
     } catch (err) {
       console.error("Failed to launch app:", err);
+    }
+    setLoading(false);
+  }
+
+  async function playFavorite(favorite) {
+    setLoading(true);
+    try {
+      if (favorite.type === "youtube") {
+        // Play YouTube video directly
+        await fetch("/api/ha?path=services/media_player/play_media", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            entity_id: selectedTV.media,
+            media_content_type: "url",
+            media_content_id: `https://www.youtube.com/watch?v=${favorite.videoId}`,
+          }),
+        });
+      } else if (favorite.type === "youtubetv") {
+        // Launch YouTube TV then navigate to channel
+        await fetch("/api/ha?path=services/media_player/select_source", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            entity_id: selectedTV.media,
+            source: "YouTube TV",
+          }),
+        });
+        // TODO: Channel selection would need additional navigation
+      }
+      setTimeout(fetchTVState, 2000);
+    } catch (err) {
+      console.error("Failed to play favorite:", err);
     }
     setLoading(false);
   }
@@ -155,6 +212,21 @@ export default function SamsungRemote() {
               <div>{tvState?.state === "unavailable" ? "Unavailable" : "TV is off"}</div>
             </div>
           )}
+        </div>
+
+        {/* Favorites */}
+        <div className="favorites-row">
+          {FAVORITES.map(fav => (
+            <button
+              key={fav.id}
+              className="favorite-btn"
+              onClick={() => playFavorite(fav)}
+              disabled={loading}
+            >
+              <img src={fav.thumbnail} alt={fav.name} />
+              <span>{fav.name}</span>
+            </button>
+          ))}
         </div>
       </div>
 
