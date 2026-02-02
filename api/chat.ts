@@ -176,6 +176,39 @@ function buildHomeContext(homeData: HomeData): string {
   return context;
 }
 
+const HA_URL = process.env.HA_URL;
+const HA_TOKEN = process.env.HA_TOKEN;
+
+async function callHA(path: string, method = 'GET', body?: unknown) {
+  const response = await fetch(`${HA_URL}/api/${path}`, {
+    method,
+    headers: {
+      'Authorization': `Bearer ${HA_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  return response;
+}
+
+async function createAutomation(id: string, config: unknown) {
+  const response = await callHA(`config/automation/config/${id}`, 'POST', config);
+  if (!response.ok) {
+    throw new Error(`Failed to create automation: ${await response.text()}`);
+  }
+  // Reload automations
+  await callHA('services/automation/reload', 'POST', {});
+  return { success: true, id };
+}
+
+async function callService(domain: string, service: string, data: unknown) {
+  const response = await callHA(`services/${domain}/${service}`, 'POST', data);
+  if (!response.ok) {
+    throw new Error(`Failed to call ${domain}.${service}: ${await response.text()}`);
+  }
+  return { success: true };
+}
+
 export default async function handler(request: Request) {
   if (request.method !== 'POST') {
     return new Response('Method not allowed', { status: 405 });
@@ -198,7 +231,7 @@ export default async function handler(request: Request) {
     const homeContext = buildHomeContext(homeData);
 
     // Build comprehensive system prompt
-    const systemPrompt = `You are an expert Home Assistant AI with COMPLETE, OMNISCIENT knowledge of this smart home. You have access to EVERYTHING.
+    const systemPrompt = `You are an expert Home Assistant AI with COMPLETE, OMNISCIENT knowledge of this smart home. You can VIEW and CONTROL everything.
 
 ${homeContext}
 
@@ -229,9 +262,70 @@ ${homeContext}
 Good: "automation.garage_light_schedule controls it, last triggered 2pm."
 Bad: "You're right, I apologize. Looking at the automation name..."
 
-BE TERSE.`;
+BE TERSE.
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+## Actions - YOU CAN EXECUTE THEM
+You have two tools available:
+- create_automation: Create new HA automations (id, alias, trigger, action, condition, mode)
+- call_service: Call any HA service (domain, service, entity_id, data)
+
+ALWAYS CONFIRM FIRST before executing. When user requests an action:
+1. Describe exactly what you will do (entity IDs, values, automation config)
+2. Ask "Should I do this?" or "Confirm?"
+3. ONLY execute the tool after user says yes/confirm/do it/go ahead/push it
+
+Example:
+User: "Turn on the kitchen light"
+You: "I'll call light.turn_on on light.kitchen_main. Confirm?"
+User: "yes"
+You: [use call_service tool]
+
+Example:
+User: "Create automation for motion light"
+You: "I'll create automation with motion trigger on binary_sensor.hall_motion, action light.turn_on on light.hall. Confirm?"
+User: "do it"
+You: [use create_automation tool]`;
+
+    const tools = [
+      {
+        name: "create_automation",
+        description: "Create a new automation in Home Assistant",
+        input_schema: {
+          type: "object",
+          properties: {
+            id: { type: "string", description: "Unique ID for the automation (lowercase, underscores)" },
+            alias: { type: "string", description: "Human-readable name" },
+            trigger: { type: "array", description: "List of triggers" },
+            action: { type: "array", description: "List of actions" },
+            condition: { type: "array", description: "Optional conditions" },
+            mode: { type: "string", enum: ["single", "restart", "queued", "parallel"], description: "Automation mode" }
+          },
+          required: ["id", "alias", "trigger", "action"]
+        }
+      },
+      {
+        name: "call_service",
+        description: "Call a Home Assistant service (e.g., turn on a light, run a script)",
+        input_schema: {
+          type: "object",
+          properties: {
+            domain: { type: "string", description: "Service domain (light, switch, automation, etc.)" },
+            service: { type: "string", description: "Service name (turn_on, turn_off, toggle, etc.)" },
+            entity_id: { type: "string", description: "Target entity ID" },
+            data: { type: "object", description: "Additional service data" }
+          },
+          required: ["domain", "service"]
+        }
+      }
+    ];
+
+    const apiMessages = messages.map((m: Message) => ({
+      role: m.role,
+      content: m.content,
+    }));
+
+    // First API call with tools
+    let response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -240,12 +334,10 @@ BE TERSE.`;
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 512,
+        max_tokens: 1024,
         system: systemPrompt,
-        messages: messages.map((m: Message) => ({
-          role: m.role,
-          content: m.content,
-        })),
+        messages: apiMessages,
+        tools,
       }),
     });
 
@@ -254,11 +346,73 @@ BE TERSE.`;
       throw new Error(`Anthropic API error: ${error}`);
     }
 
-    const data = await response.json();
-    const assistantMessage = data.content[0]?.text || 'No response';
+    let data = await response.json();
+
+    // Handle tool use - loop until we get a final response
+    while (data.stop_reason === 'tool_use') {
+      const toolUseBlocks = data.content.filter((block: { type: string }) => block.type === 'tool_use');
+      const toolResults = [];
+
+      for (const toolUse of toolUseBlocks) {
+        let result;
+        try {
+          if (toolUse.name === 'create_automation') {
+            const { id, alias, trigger, action, condition, mode } = toolUse.input;
+            const config = { alias, trigger, action, condition, mode: mode || 'single' };
+            result = await createAutomation(id, config);
+          } else if (toolUse.name === 'call_service') {
+            const { domain, service, entity_id, data: serviceData } = toolUse.input;
+            result = await callService(domain, service, { entity_id, ...serviceData });
+          } else {
+            result = { error: `Unknown tool: ${toolUse.name}` };
+          }
+        } catch (err) {
+          result = { error: err instanceof Error ? err.message : 'Tool execution failed' };
+        }
+
+        toolResults.push({
+          type: 'tool_result',
+          tool_use_id: toolUse.id,
+          content: JSON.stringify(result),
+        });
+      }
+
+      // Send tool results back to Claude
+      response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': ANTHROPIC_API_KEY,
+          'anthropic-version': '2023-06-01',
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1024,
+          system: systemPrompt,
+          messages: [
+            ...apiMessages,
+            { role: 'assistant', content: data.content },
+            { role: 'user', content: toolResults },
+          ],
+          tools,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(`Anthropic API error: ${error}`);
+      }
+
+      data = await response.json();
+    }
+
+    // Extract final text response
+    const textBlocks = data.content.filter((block: { type: string }) => block.type === 'text');
+    const assistantMessage = textBlocks.map((b: { text: string }) => b.text).join('\n') || 'Done.';
 
     return new Response(JSON.stringify({
       message: assistantMessage,
+      version: 2,
     }), {
       headers: { 'Content-Type': 'application/json' }
     });

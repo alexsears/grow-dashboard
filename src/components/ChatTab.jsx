@@ -189,6 +189,7 @@ export default function ChatTab() {
         throw new Error(data.error);
       }
 
+      console.log("Chat API version:", data.version);
       setMessages(prev => [...prev, { role: "assistant", content: data.message }]);
     } catch (err) {
       console.error("Chat error:", err);
